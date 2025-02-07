@@ -10,18 +10,22 @@ Note: if you are new to SEDNA or still need general help to work in SEDNA, pleas
 ```
 # parent dir
 /share/all/midori2_database
+
 # sub-databases
 /share/all/midori2_database/2024-10-13_customblast_sp_uniq_COI/		
 ```
+*if you add addintional databases please add them to the list above*
+
 ---
 
 ## Setting up the [MIDORI2 database](https://www.reference-midori.info/)
 
 NCBI GenBank databases are known to have various problems such as erroneous identification of organisms, potential lack of sequence curation, ets. This is where Midori2 can help. 
 
-[**Midori2**](https://www.reference-midori.info/) is a set of publicly accessable, already curated mitochondrial marker or amino acid databases (from NCBI GenBank) that get updated every few months and are useful for metabarcoding analyses. In addition, these databases have also pre-formatted to fit many common metabarcoding pipelines, and raw sequences are also available if your desired formatt is not included.
+[**Midori2**](https://www.reference-midori.info/) is a set of publicly accessable, already curated mitochondrial marker or amino acid databases (from NCBI GenBank) that get updated every few months and are useful for metabarcoding analyses. In addition, these databases have also pre-formatted to fit many common metabarcoding pipelines, and raw sequences are also available if your desired format is not included.
 
 Key features:
+
 	* Public (easily downloaded ith wget or other protocols)
 	* Updated every few months
 	* Already curated mtDNA databases from NCBI
@@ -38,22 +42,18 @@ See Midori2's README in their website for more info.
 
 **SEDNA SETUP** 
 
-I went ahead and downloaded and setup the (Midori2 database)[https://www.reference-midori.info/] in SEDNA for rainbow_bridge.
+I went ahead and downloaded and setup the [Midori2 database](https://www.reference-midori.info/) in SEDNA for rainbow_bridge.
 
 Parent directory for midori2 databases:
 ```
 /share/all/midori2_database
 ```
 
-* rainbow_bridge is not one of the already available formats.
+
+***NOTE:*** `rainbow_bridge` is not one of the already available formats.
 	* Not a problme! We can download the RAW dataset and create a custom blast dataset :)
 
 I decided to start by setting up the COI species "sp" , "uniq" which retains all haplotypes from all taxonomic labels. For instance, this will include all sequences that have been matched to only a genus or a family. 
-
-This database lives in:
-```
-/share/all/midori2_database/
-```
 
 ### Download Database
 
@@ -69,7 +69,7 @@ wget -c https://www.reference-midori.info/download/Databases/GenBank261_2024-10-
 
 ### Prep Fasta for makeblastdb
 
-*Next problems:*
+Next problems:
 
 * Midori2 raw fasta files have sequence names with the entire taxonomic information making these super long and makeblastdb has a limit of 50 characters.
 * makeblastdb requires a taxid_map file where the read names and NCBI taxonomic id are provided in the column1 and column2, respectively (tab separated)
@@ -85,6 +85,7 @@ Cleanning includes:
 3. Makes the taxid_map file. Luckily the ncbi taxid of each species is given by midori2 already. This script harvest this info.
 
 ***NOTE:*** This process might take a while so might be a good idea to use a screen
+
 
 Move to the working dir (one level about the downloaded database)
 ``` 
@@ -164,6 +165,6 @@ When you use this, make sure to specify the full path and the basename but do no
 /share/all/midori2_database/2024-10-13_customblast_sp_uniq_COI/midori2_customblast_sp_uniq
 ```
 
-***Perfect!!!*** Now you have a custom BLAST database ready for `rainbow_bridge`
+**Perfect!!!** Now you have a custom BLAST database ready for `rainbow_bridge`
 
 ---
