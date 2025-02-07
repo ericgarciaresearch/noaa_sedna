@@ -24,6 +24,8 @@ NCBI GenBank databases are known to have various problems such as erroneous iden
 
 [**Midori2**](https://www.reference-midori.info/) is a set of publicly accessable, already curated mitochondrial marker or amino acid databases (from NCBI GenBank) that get updated every few months and are useful for metabarcoding analyses. In addition, these databases have also pre-formatted to fit many common metabarcoding pipelines, and raw sequences are also available if your desired format is not included.
 
+	* porque
+
 **Key features:**
 	
 	* Public
