@@ -24,28 +24,19 @@ NCBI GenBank databases are known to have various problems such as erroneous iden
 
 [**Midori2**](https://www.reference-midori.info/) is a set of publicly accessable, already curated mitochondrial marker or amino acid databases (from NCBI GenBank) that get updated every few months and are useful for metabarcoding analyses. In addition, these databases have also pre-formatted to fit many common metabarcoding pipelines, and raw sequences are also available if your desired format is not included.
 
-	* porque
-
 **Key features:**
 	
-	* Public
-
-	* Public (easily downloaded ith wget or other protocols)
-
-	* Updated every few months
-
-	* Already curated mtDNA databases from NCBI
-
-	* Several formats available:  RDP,  MOTHUR, QIIME, SPINGO, SINTAX, DADA2, and BLAST+.
-
-	* Raw sequence database available for custom databases
-
-	* Multiple database types:
-		* "AA" = amino acid sequence database 
-		* "NUC" = nucleic acid sequence database 
-		* "sp" = those databases include sequences that lack binomial species-level description, such as "sp.," "aff.," "nr.," "cf.," "complex," and "nomen nudum." 
-		* "UNIQ" = UNIQ files contain all unique haplotypes associated with each species.
-		* "LONGEST" = LONGEST files contain the longest sequence for each species.
+* Public (easily downloaded ith wget or other protocols)
+* Updated every few months
+* Already curated mtDNA databases from NCBI
+* Several formats available:  RDP,  MOTHUR, QIIME, SPINGO, SINTAX, DADA2, and BLAST+.
+* Raw sequence database available for custom databases
+* Multiple database types:
+	* "AA" = amino acid sequence database 
+	* "NUC" = nucleic acid sequence database 
+	* "sp" = those databases include sequences that lack binomial species-level description, such as "sp.," "aff.," "nr.," "cf.," "complex," and "nomen nudum." 
+	* "UNIQ" = UNIQ files contain all unique haplotypes associated with each species.
+	* "LONGEST" = LONGEST files contain the longest sequence for each species.
 
 See Midori2's README in their website for more info. 
 
