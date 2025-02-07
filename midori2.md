@@ -27,10 +27,15 @@ NCBI GenBank databases are known to have various problems such as erroneous iden
 Key features:
 
 	* Public (easily downloaded ith wget or other protocols)
+
 	* Updated every few months
+
 	* Already curated mtDNA databases from NCBI
+
 	* Several formats available:  RDP,  MOTHUR, QIIME, SPINGO, SINTAX, DADA2, and BLAST+.
+
 	* Raw sequence database available for custom databases
+
 	* Multiple database types:
 		* "AA" = amino acid sequence database 
 		* "NUC" = nucleic acid sequence database 
