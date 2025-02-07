@@ -1,53 +1,46 @@
 # Working on SEDNA
 
-This README document general information and procedures to work on NOAA’s supercomputer [SEDNA](https://docs.google.com/document/d/1nn0T0OWEsQCBoCdaH6DSY69lQSbK3XnPlseyyQuU2Lc/edit?tab=t.0)
+This README documents general information and provides a loose guide to help you work on NOAA’s supercomputer **SEDNA**
 
-## Using SEDNA for the first time
+Please read the [SEDNA information and best practices](https://docs.google.com/document/d/1nn0T0OWEsQCBoCdaH6DSY69lQSbK3XnPlseyyQuU2Lc/edit?tab=t.0)
 
-This is a loose guide to help you use SEDNA
+Many of the steps and info in this README were copied from the above document.
 
-**Specs:**
+---
+
+## SEDNA info
+
+**SEDNA General Specs:**
 
 * Head (login) node
 * NFS storage
-* fast scratch storage (43 Tb and 91 Tb on two different RAID0 arrays
-* shared storage
-* 36 standard compute nodes
-	* node01-28:  96 GB of memory, 12x 8GB
-		* **SLURM PARTITION: standard**
-	* node29-36: 192 GB of memory, 12x 16GB
-		* **SLURM PARTITION: medmem** (default partition; 8hr default time for jobs)
-* 4 high memory nodes
-	* 1.5 TB of memory, 24x 64GB
-		* **SLURM PARTITION: himem**
-	* have their own scratch (/data) space
+* Fast scratch storage (43 Tb and 91 Tb on two different RAID0 arrays)
+* Shared storage
+
+** Nodes and Partitions:**
+
+36 standard compute nodes across
+	* **SLURM PARTITION: standard**
+		* node01-28:  96 GB of memory, 12x 8GB
+		* Default partition; 8hr default time for jobs
+	* **SLURM PARTITION: medmem** 
+		* node29-36: 192 GB of memory, 12x 16GB
+4 high memory nodes
+	* **SLURM PARTITION: himem**
+		* himeme01-04: 1.5 TB of memory, 24x 64GB
+		* have their own scratch (/data) space
 
 
 Is possible to run jobs in multiple partitions with”
 ```
 #SBATCH -p standard, medme
 ```
-—
-## SLURM script examples
 
-	Example Scripts:
-
-	Regular Job Script:
-	#!/bin/bash
-
-#SBATCH --job-name=<job name>
-#SBATCH --output=<name of log file>
-
-#SBATCH --mail-user=<email address>
-# See manual for other options for --mail-type
-#SBATCH --mail-type=ALL
-
-#SBATCH -p <name of partition to use, without this option uses default partition>
-#SBATCH -c <number of cpus to ask for>
-
-—
+---
 
 ## SEDNA SETUP
+
+**SEDNA Account**
 
 First of all, you need to get an account setup. Talk to your supervisor for this. 
 * you will need to create an new password:
@@ -57,16 +50,17 @@ First of all, you need to get an account setup. Talk to your supervisor for this
 	* contain digits and symbols
 
 
-*Connecting to SEDNA:*
+**Connecting to SEDNA:**
 
-You need to be in the VPN
+You need to be in the VPN. Ask IT to help you set up the VPN in your computer.
 
-Address:  sedna.nwfsc2.noaa.gov (IP: 161.55.52.157)
+Address:  ***sedna.nwfsc2.noaa.gov*** (IP: 161.55.52.157)
 
 Navigation to Sedna (on the NMFS network, or through VPN): 
 ```
 ssh <username>@sedna.nwfsc2.noaa.gov
 ```
+*your username will be given to you once you setup an account*
 
 Read the [SEDNA bioinformatics cluster information, use & best practices](https://docs.google.com/document/d/1nn0T0OWEsQCBoCdaH6DSY69lQSbK3XnPlseyyQuU2Lc/edit?tab=t.0)
 
@@ -75,9 +69,11 @@ Each user has 4TB of space in their home directory. You can check your quota wit
 ssh nfs quota -s
 ```
 
+---
+
 ## Modules
 
-Most software is stored in modules. To used modules do this once (only need to do it one time but you will need to log out and back in for the changes to take effect the first time):
+Most software is stored in modules. To use modules ***do this once*** (only need to do it one time but you will need to log out and back in for the changes to take effect the first time):
 
 ```
 echo 'export MODULEPATH=${MODULEPATH}:/opt/bioinformatics/modulefiles' >> ~/.bashrc
@@ -89,34 +85,62 @@ If this worked, you should now be able to see the list of modules with:
 module av
 ```
 
+this will look something like:
+```
+-------------------------------------------------------------------------- /opt/modulefiles ---------------------------------------------------------------------------
+   gcc/8.3.1    mpich/3.3.2-gcc-8.3.1    mvapich2/2.3.3-gcc-8.3.1    openmpi/3.1.6-gcc-8.3.1    openmpi/4.0.3-gcc-8.3.1 (D)
+
+------------------------------------------------------------------- /opt/bioinformatics/modulefiles -------------------------------------------------------------------
+   R/3.4.2                            bio/blast/2.15.0+       (D)    bio/msmc2/2.1.2                  bio/stacks/2.55
+   R/4.0.3                            bio/busco/4.1.4                bio/neestimator/2.1              bio/stacks/2.62
+   R/4.4.1                     (D)    bio/busco/5.2.2                bio/newhybrids/202211            bio/stacks/2.65                (D)
+   aligners/bowtie2/2.4.2             bio/busco/5.3.2         (D)    bio/ngsadmix/32                  bio/stringtie/2.2.0
+   aligners/bowtie2/2.5.0      (D)    bio/cactus/1.2.3               bio/ngsld/1.1.1                  bio/structure/2.3.4
+   aligners/bwa-mem2/2.2.1            bio/cellranger/3.1.0           bio/ngsld/1.2.0           (D)    bio/subread/2.0.3
+   aligners/bwa/0.7.17                bio/cellranger/6.0.0    (D)    bio/ngsrelate/20210126           bio/treepl/202412
+   aligners/hisat2/2.2.1              bio/clumpp/1.1.2               bio/ngstools/202202              bio/trf/4.09
+   aligners/lastz/1.04.22             bio/clustalo/1.2.4             bio/ohana/202105                 bio/trimmomatic/0.39
+   aligners/minimap2/2.18             bio/colony/2.0.6.7             bio/papara/2.5                   bio/vcftools/0.1.16
+   aligners/mummer/4.0.0rc1           bio/dadasnake/0.11.1           bio/paup/4.0a168                 bio/vep/103.1
+   aligners/salmon/1.4.0              bio/decona/0.1.2               bio/pcangsd/0.99                 bio/vsearch/2.29.2
+```
+
 To load modules:
 ```
 module load <program>
 ```
 
-To see a list of loaded modules you would type the following.
+To see a list of loaded modules you would type the following:
 ```
 module list
 ```
 
-If you load different versions of the same program might cause issues. If needed unload the version not needed first then load the correct one.
+Loading different versions of the same program might cause issues. If needed, unload the version not going to use first then load the correct one.
 ```
 module unload <program>
 ```
 
 `module purge` will unload all modules.
 
-
+---
 
 ## Dependencies and other installation
 
+Different pipelines and programs will need diffferent dependencies. Some might be installed already, others you can intall yourself, and other you will need to request intallation.
+
+Install requests and general help is available via the [SEDNA helpdesk google form](https://docs.google.com/forms/d/e/1FAIpQLSf2tDl9nJjihmHX9hM6ytMI3ToldqERVem1ge25-kp3JHw3tQ/viewform)
+
+see example below
+
+### rainbow_bridge installation
+
 You will need to activate various dependencies to use rainbow_bridge and other tools. 
 
-Start with activating mamba with:
+Start with activating 'mamba' with:
 ```
 /opt/bioinformatics/mambaforge/bin/mamba init
 ```
-This needs to be run only once. This will modify your .bashrc so you need to exit your shell and reconnect after.
+***This needs to be run only once***. This will modify your .bashrc so you need to exit your shell and reconnect again after.
 
 
 To double check that this worked you can type the following commands:
@@ -139,11 +163,11 @@ busco-5.4.7          	/opt/bioinformatics/mambaforge/envs/busco-5.4.7
 cd-hit-4.8.1         	/opt/bioinformatics/mambaforge/envs/cd-hit-4.8.1
 cutadapt-4.4         	/opt/bioinformatics/mambaforge/envs/cutadapt-4.4
 decona-0.1.2         	/opt/bioinformatics/mambaforge/envs/decona-0.1.2
-Etc
-Etc
+...
+
 ```
 
-Now…To activate a conda/mamba environment type”
+Now… to activate a conda/mamba environment type:
 ```
 mamba activate <env>
 ```
@@ -152,7 +176,7 @@ When a user is done using mamba they just need to type
 mamba deactivate
 ```
 
-Note: SLURM does not read .bashrc or .bash_profile when launching a job via sbatch. If you want to use mamba with a sbatch job you need to add the following to your job script before you activate mamba (this is assuming you added the eval line to your .bashrc)
+**Note: SLURM does not read .bashrc or .bash_profile when launching a job via sbatch. If you want to use mamba with a sbatch job you need to add the following to your job script before you activate mamba (this is assuming you added the eval line to your .bashrc)**
 
 Your script needs to have:
 ```
@@ -170,7 +194,7 @@ mamba activate nextflow-24.04.4
 
 When I activate nextflow, this deactivates singularity, and 
 
-vicevers. I need to know how to activates both simultaneously.
+viceversa. I need to know how to activates both simultaneously.
 
 1. Maybe I can activate one of the above using conda ???
 2.-
@@ -190,32 +214,91 @@ Great! You are ready to use Singularity.
 
 
 
-
-
 ## Usage 
+
+* It is recommended that you run programs/pipeline using a SLURM script.
+	* This will help you keep track of your work and Help with reproducibility
+	* See SLURM script examples at the end of this README
 
 * If you are going to be using singularity or nextflow straight from the terminal. You need to log into a computing node (i.e. do not do work/analyses in the login node)
 
-Grab a node (see the beginning of this document to choose a node):
+Grab a node (see the beginning of this document to learn about the available nodes):
+
+Fisrt see the current node usage with:
 ```
-ssh node39
+sinfo
+```
+This will show you something like:
+```
+PARTITION AVAIL  TIMELIMIT  NODES  STATE NODELIST 
+standard*    up   infinite      7    mix node[10-13,25-26,28] 
+standard*    up   infinite     10  alloc node[01-09,27] 
+standard*    up   infinite     11   idle node[14-24] 
+himem        up   infinite      2    mix himem[01-02] 
+himem        up   infinite      2   idle himem[03-04] 
+medmem       up   infinite      1    mix node29 
+medmem       up   infinite      7   idle node[30-36] 
+```
+In this case, there are 11 standard nodes (node14-24) and 7 medmem nodes (node30-36) that are "idle" meaning that they are available.
+
+ssh into an idle node with:
+```
+ssh node33
 ```
 
 Activate singularity and/or nextflow as before.
 
 * If you are going to execute bash script (recommended), you don’t need to grab a node, the SLURM will automatically place your job in the specified node(s). Just include the activation of singularity and nextflow in your script.
 
-
-++++++++++++++++++
+---
 
 ## Setting up the (MIDORI2 database)[https://www.reference-midori.info/]
 
-I went ahead to download and setup the (Midori2 database)[https://www.reference-midori.info/] in SEDNA
+### Midori2 SEDNA location
+```
+/share/all/midori2_database
+```
 
-Temporary PWD:
+NCBI GenBank databases are known to have various problems such as erroneous identification of organisms, potential lack of sequence curation, ets. This is where Midori2 can help. 
+
+**Midori2** is a set of publicly accessable, already curated mitochondrial marker or amino acid databases (from NCBI GenBank) that get updated every few months and are useful for metabarcoding analyses. In addition, these databases have also pre-formatted to fit many common metabarcoding pipelines, and raw sequences are also available if your desired formatt is not included.
+
+Key features:
+	* Public (easily downloaded ith wget or other protocols)
+	* Updated every few months
+	* Already curated mtDNA databases from NCBI
+	* Several formats available:  RDP,  MOTHUR, QIIME, SPINGO, SINTAX, DADA2, and BLAST+.
+	* Raw sequence database available for custom databases
+	* Multiple database types:
+		* "AA" = amino acid sequence database 
+		* "NUC" = nucleic acid sequence database 
+		* "sp" = those databases include sequences that lack binomial species-level description, such as "sp.," "aff.," "nr.," "cf.," "complex," and "nomen nudum." 
+		* "UNIQ" = UNIQ files contain all unique haplotypes associated with each species.
+		* "LONGEST" = LONGEST files contain the longest sequence for each species.
+
+See Midori2's README in their website for more info. 
+
+**SEDNA SETUP** 
+
+I went ahead and downloaded and setup the (Midori2 database)[https://www.reference-midori.info/] in SEDNA
+
+Parent directory for midori2 databases
+```
+/share/all/midori2_database
+```
+
+I decided to start by setting up the COI species "sp" "uniq" which retains all haplotypes from all taxonomic labels. For instance, this will include all sequences that have been matched to only a genus or a family. 
+
+This database lives in:
 ```
 /home/egarcia/databases/midori2_customblast_sp_uniq
 ```
+
+
+
+
+
+
 
 I downloaded the SP Uniq COI to begin with
 ```
@@ -329,3 +412,56 @@ QUESTIONS:
 
 Should I put Midori2 in scratch/blastdb?
 
+
+---
+
+---
+
+## SLURM script examples
+
+Regular Job Script:
+```
+#!/bin/bash
+
+#SBATCH --job-name=<job name>
+#SBATCH --output=<name of log file>
+
+#SBATCH --mail-user=<email address>
+# See manual for other options for --mail-type
+#SBATCH --mail-type=ALL
+
+#SBATCH -p <name of partition to use, without this option uses default partition>
+#SBATCH -c <number of cpus to ask for>
+
+#SBATCH -t <walltime in mins or mins:secs or hrs:mins:secs (see manual)>
+#SBATCH -D <folder to change to when starting the job>
+
+# Commands to run
+```
+
+Array Job Script:
+```
+#!/bin/bash
+
+#SBATCH --job-name=<job name>
+
+# The %A is replaced with the jobID 
+# The %a is replaced by the array ID
+#SBATCH --output=job_logfile.%A.%a.txt
+
+# Set array size, in this case 1 through 10 but limit the number of
+# array sub jobs to 2 at a time.
+# see the BLAST example in Appendix C in the SEDNA info & best practices doc
+#SBATCH --array=1-10%2
+
+#SBATCH -c <number of cores to ask for per array job>
+
+# Other SBATCH options
+
+# Commands to run for each array job
+# Note: The variable SLURM_ARRAY_TASK_ID gets set to the array job ID
+```
+
+More examples available in the [SEDNA info & best practices doc](https://docs.google.com/document/d/1nn0T0OWEsQCBoCdaH6DSY69lQSbK3XnPlseyyQuU2Lc/edit?tab=t.0)
+
+---
