@@ -21,17 +21,17 @@ Many of the steps and info in this README were copied from the above document.
 
 36 standard compute nodes across
 
-	* **SLURM PARTITION: standard**
-		* node01-28:  96 GB of memory, 12x 8GB
-		* Default partition; 8hr default time for jobs
-	* **SLURM PARTITION: medmem** 
-		* node29-36: 192 GB of memory, 12x 16GB
+* **SLURM PARTITION: standard**
+	* node01-28:  96 GB of memory, 12x 8GB
+	* Default partition; 8hr default time for jobs
+* **SLURM PARTITION: medmem** 
+	* node29-36: 192 GB of memory, 12x 16GB
+
 4 high memory nodes
 
-	* **SLURM PARTITION: himem**
-		* himeme01-04: 1.5 TB of memory, 24x 64GB
-		* have their own scratch (/data) space
-
+* **SLURM PARTITION: himem**
+	* himeme01-04: 1.5 TB of memory, 24x 64GB
+	* have their own scratch (/data) space
 
 Is possible to run jobs in multiple partitions with”
 ```
@@ -47,10 +47,10 @@ Is possible to run jobs in multiple partitions with”
 First of all, you need to get an account setup. Talk to your supervisor for this. 
 
 You will need to create an new password:
-	* 14 characters long
-	* cannot have the same character twice in a row , for example “aa” , “55”
-	* both upper and lower case characters
-	* contain digits and symbols
+* 14 characters long
+* cannot have the same character twice in a row , for example “aa” , “55”
+* both upper and lower case characters
+* contain digits and symbols
 
 
 **Connecting to SEDNA:**
@@ -222,13 +222,13 @@ Maybe I can activate one of the above using conda ???
 
 ---
 
-## Usage 
+## SEDNA Usage 
 
 * It is recommended that you run programs/pipelines using a SLURM script.
 	* This will help you keep track of your work and help with reproducibility
 	* See SLURM script examples at the end of this README
 
-* If you are going to be throubleshooting, doing analyses, using singularity or nextflow straight from the terminal, etc., you need to log into a computing node (i.e. do not do work/analyses in the login node)
+* If you are going to be throubleshooting, doing analyses, using singularity or nextflow straight from the terminal, etc., you need to log into a computing node (i.e. do not do work/analyses in the login node).
 
 Grab a node (see the beginning of this document to learn about the available nodes):
 
@@ -255,55 +255,67 @@ ssh into an idle node with:
 ssh node33
 ```
 
-Activate singularity and/or nextflow as before.
-
 * If you are going to execute bash script (recommended), you don’t need to grab a node, the SLURM will automatically place your job in the specified node(s). Just include the activation of singularity and nextflow in your script.
+* You can activate straight in terminal singularity or nextflow as shown above. However, these two are not available simultaneously which is what `rainbow_bridge` needs
+* You will  need a SLURM script to run `rainbow_bridge`
 
 ---
 
-## Setting up the [MIDORI2 database](https://www.reference-midori.info/)
+### [Midori2 Databases](https://www.reference-midori.info/) for metabarcoding analyses on SEDNA 
 
-### Midori2 SEDNA Parent location
+If you are going to be doing any metabarcoding analyses, you might be interested in using the [Midori2 Databse](https://www.reference-midori.info/)
+
+## Midori2 Databases SEDNA locations
 ```
+# parent dir
 /share/all/midori2_database
+
+# sub-databases
+/share/all/midori2_database/2024-10-13_customblast_sp_uniq_COI/
 ```
+*if you add addintional databases please add them to the list above*
 
-NCBI GenBank databases are known to have various problems such as erroneous identification of organisms, potential lack of sequence curation, ets. This is where Midori2 can help. 
+### Setting up the [MIDORI2 database](https://www.reference-midori.info/)
 
-**Midori2** is a set of publicly accessable, already curated mitochondrial marker or amino acid databases (from NCBI GenBank) that get updated every few months and are useful for metabarcoding analyses. In addition, these databases have also pre-formatted to fit many common metabarcoding pipelines, and raw sequences are also available if your desired formatt is not included.
+NCBI GenBank databases are known to have various problems such as erroneous identification of organisms, potential lack of sequence curation, ets.
+This is where Midori2 can help. 
+
+[**Midori2**](https://www.reference-midori.info/) is a set of publicly accessable, already curated mitochondrial marker or amino acid databases 
+(from NCBI GenBank) that get updated every few months and are useful for metabarcoding analyses. In addition, these databases have also pre-formatted
+ to fit many common metabarcoding pipelines, and raw sequences are also available if your desired format is not included.
 
 Key features:
 
-	* Public (easily downloaded ith wget or other protocols)
-	* Updated every few months
-	* Already curated mtDNA databases from NCBI
-	* Several formats available:  RDP,  MOTHUR, QIIME, SPINGO, SINTAX, DADA2, and BLAST+.
-	* Raw sequence database available for custom databases
-	* Multiple database types:
-		* "AA" = amino acid sequence database 
-		* "NUC" = nucleic acid sequence database 
-		* "sp" = those databases include sequences that lack binomial species-level description, such as "sp.," "aff.," "nr.," "cf.," "complex," and "nomen nudum." 
-		* "UNIQ" = UNIQ files contain all unique haplotypes associated with each species.
-		* "LONGEST" = LONGEST files contain the longest sequence for each species.
+* Public (easily downloaded ith wget or other protocols)
+* Updated every few months
+* Already curated mtDNA databases from NCBI
+* Several formats available:  RDP,  MOTHUR, QIIME, SPINGO, SINTAX, DADA2, and BLAST+.
+* Raw sequence database available for custom databases
+* Multiple database types:
+	* "AA" = amino acid sequence database 
+	* "NUC" = nucleic acid sequence database 
+	* "sp" = those databases include sequences that lack binomial species-level description, such as "sp.," "aff.," "nr.," "cf.," "complex," and "nomen nudum." 
+	* "UNIQ" = UNIQ files contain all unique haplotypes associated with each species.
+	* "LONGEST" = LONGEST files contain the longest sequence for each species.
 
 See Midori2's README in their website for more info. 
 
 **SEDNA SETUP** 
 
-I went ahead and downloaded and setup the (Midori2 database)[https://www.reference-midori.info/] in SEDNA
+I went ahead and setup the [Midori2 database](https://www.reference-midori.info/) in SEDNA for rainbow_bridge.
 
-Parent directory for midori2 databases
-```
-/share/all/midori2_database
-```
+I decided to start by setting up the COI species "sp", uniq  "uniq", which retains all haplotypes from all taxonomic labels. For instance, this will include
+ all sequences that have been matched to only a genus or a family (see Key features above and Midori2 README)
 
-I decided to start by setting up the COI species "sp" "uniq" which retains all haplotypes from all taxonomic labels. For instance, this will include all sequences that have been matched to only a genus or a family. 
-
-This database lives in:
+	* Lastest version as in Feb 6, 2025 `2024-10-13`
+	* When you use this, make sure to specify the full path and the basename but do not include the extensions (.ndb|.nhr|.nos etc). For example:
 ```
-/home/egarcia/databases/midori2_customblast_sp_uniq
+/share/all/midori2_database/2024-10-13_customblast_sp_uniq_COI/midori2_customblast_sp_uniq
 ```
 
+***NOTES:***
+* The Midori2 database gets updated every 2 months. Make sure you are using the latest version available and note which version you are using.
+* If you want to learn how I made the custom database, update an existing or create a new database see my [midori2 page](https://github.com/ericgarciaresearch/noaa_sedna/blob/main/midori2.md)
 
 ---
 
@@ -356,71 +368,3 @@ More examples available in the [SEDNA info & best practices doc](https://docs.go
 
 ---
 
-# Midori2 SEDNA Databases
-
-This README documents general information about Midori2 Databases and provides a loose guide to help you use, setup or update these on NOAA’s supercomputer **SEDNA**
-
-Note: if you are new to SEDNA or still need general help to work in SEDNA, please start by reading the [SEDNA information and best practices](https://docs.google.com/document/d/1nn0T0OWEsQCBoCdaH6DSY69lQSbK3XnPlseyyQuU2Lc/edit?tab=t.0) and/or the [Working on SEDNA README]()
-
----
-
-## Midori2 Databases SEDNA locations
-```
-# parent dir
-/share/all/midori2_database
-
-# sub-databases
-/share/all/midori2_database/2024-10-13_customblast_sp_uniq_COI/		
-```
-*if you add addintional databases please add them to the list above*
-
----
-
-## Setting up the [MIDORI2 database](https://www.reference-midori.info/)
-
-NCBI GenBank databases are known to have various problems such as erroneous identification of organisms, potential lack of sequence curation, ets. This is where Midori2 can help. 
-
-[**Midori2**](https://www.reference-midori.info/) is a set of publicly accessable, already curated mitochondrial marker or amino acid databases (from NCBI GenBank) that get updated every few months and are useful for metabarcoding analyses. In addition, these databases have also pre-formatted to fit many common metabarcoding pipelines, and raw sequences are also available if your desired format is not included.
-
-Key features:
-
-	* Public (easily downloaded ith wget or other protocols)
-	* Updated every few months
-	* Already curated mtDNA databases from NCBI
-	* Several formats available:  RDP,  MOTHUR, QIIME, SPINGO, SINTAX, DADA2, and BLAST+.
-	* Raw sequence database available for custom databases
-	* Multiple database types:
-		* "AA" = amino acid sequence database 
-		* "NUC" = nucleic acid sequence database 
-		* "sp" = those databases include sequences that lack binomial species-level description, such as "sp.," "aff.," "nr.," "cf.," "complex," and "nomen nudum." 
-		* "UNIQ" = UNIQ files contain all unique haplotypes associated with each species.
-		* "LONGEST" = LONGEST files contain the longest sequence for each species.
-
-See Midori2's README in their website for more info. 
-
-**SEDNA SETUP** 
-
-I went ahead and downloaded and setup the [Midori2 database](https://www.reference-midori.info/) in SEDNA for rainbow_bridge.
-
-Parent directory for midori2 databases:
-```
-/share/all/midori2_database
-```
-
-***NOTES:***
-	
-* `rainbow_bridge` is not one of the already available formats.
-		* Not a problme! We can download the RAW dataset and create a custom blast dataset :)
-	* The Midori2 database gets updated every 2 months. Make sure you download the latest and note which version you are using.
-
-I decided to start by setting up the COI species "sp" , "uniq" which retains all haplotypes from all taxonomic labels. For instance, this will include all sequences that have been matched to only a genus or a family. 
-
-	* Lastest version as in Feb 6, 2025 `2024-10-13`
-	* When you use this, make sure to specify the full path and the basename but do not include the extensions (.ndb|.nhr|.nos etc). For example:
-```
-/share/all/midori2_database/2024-10-13_customblast_sp_uniq_COI/midori2_customblast_sp_uniq
-```
-
-If you want to learn how I made the custom database, update an existing or create a new database see my [midori2 page](https://github.com/ericgarciaresearch/noaa_sedna/blob/main/midori2.md)
-
----
