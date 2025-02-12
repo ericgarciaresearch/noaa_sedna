@@ -2,7 +2,8 @@
 
 This README documents general information about Midori2 Databases and provides a loose guide to help you use, setup or update these on NOAA’s supercomputer **SEDNA**
 
-Note: if you are new to SEDNA or still need general help to work in SEDNA, please start by reading the [SEDNA information and best practices](https://docs.google.com/document/d/1nn0T0OWEsQCBoCdaH6DSY69lQSbK3XnPlseyyQuU2Lc/edit?tab=t.0) and/or the [Working on SEDNA README]()
+Note: if you are new to SEDNA or still need general help to work in SEDNA, please start by reading the [SEDNA information and best practices](https://docs.google.com/document/d/1nn0T0OWEsQCBoCdaH6DSY69lQSbK3XnPlseyyQuU2Lc/edit?tab=t.0) and/or the
+ [Working on SEDNA README](https://github.com/ericgarciaresearch/noaa_sedna)
 
 NCBI GenBank databases are known to have various problems such as erroneous identification of organisms, potential lack of sequence curation, ets. This is where Midori2 can help. 
 

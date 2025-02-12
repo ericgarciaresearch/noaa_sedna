@@ -65,7 +65,7 @@ ssh <username>@sedna.nwfsc2.noaa.gov
 ```
 *your username will be given to you once you setup an account*
 
-Now read the [SEDNA bioinformatics cluster information, use & best practices](https://docs.google.com/document/d/1nn0T0OWEsQCBoCdaH6DSY69lQSbK3XnPlseyyQuU2Lc/edit?tab=t.0)
+Now read the [SEDNA bioinformatics cluster information, use & best practices](https://docs.google.com/document/d/1nn0T0OWEsQCBoCdaH6DSY69lQSbK3XnPlseyyQuU2Lc/edit?tab=t.0) if you haven't done so already.
 
 Each user has 4TB of space in their home directory. You can check your quota with:
 ```
@@ -127,17 +127,12 @@ module unload <program>
 
 ---
 
-## Dependencies and other installation
+## Dependencies activation and other installation
 
 Different pipelines and programs will need diffferent dependencies. Some might be installed already, others you can install yourself, and others you will need to request intallation.
 
 Install requests and general help is available via the [SEDNA helpdesk google form](https://docs.google.com/forms/d/e/1FAIpQLSf2tDl9nJjihmHX9hM6ytMI3ToldqERVem1ge25-kp3JHw3tQ/viewform)
 
-see example below:
-
-### rainbow_bridge installation
-
-You will need to activate various dependencies to use rainbow_bridge and other tools. 
 
 Start with activating 'mamba' with:
 ```
@@ -159,6 +154,9 @@ conda 23.10.0
 Then:
 ```
 mamba env list
+```
+should give you:
+```
 # conda environments:
 #
 base                 	/opt/bioinformatics/mambaforge
@@ -170,11 +168,13 @@ decona-0.1.2         	/opt/bioinformatics/mambaforge/envs/decona-0.1.2
 
 ```
 
-Now… to activate a conda/mamba environment type:
+Now...
+
+To activate a conda/mamba environment type:
 ```
 mamba activate <env>
 ```
-When a user is done using mamba they just need to type
+and when a user is done using mamba they just need to type
 ```
 mamba deactivate
 ```
@@ -188,8 +188,15 @@ source ~/.bashrc
 
 Ok, now you should be able to use module and environment with mamba, etc. 
 
-
 ---
+
+**Example:**
+
+### rainbow_bridge dependency installation
+
+You will need to activate various dependencies to use rainbow_bridge and other tools.
+
+
 
 ***(DEPRECATED Feb 6, 2025)***
 
@@ -368,3 +375,30 @@ More examples available in the [SEDNA info & best practices doc](https://docs.go
 
 ---
 
+## rainbow_bridge at SEDNA
+
+This is an example of one of the pipelines that Eric has installed in SEDNA. Many other pipelines/modules/software are available.
+
+[rainbow_bridge](https://github.com/mhoban/rainbow_bridge) is a flexible pipeline for eDNA and metabarcoding analyses. It can process raw or already filtered sequences
+ from single- or paired-end datasets. This pipeline can be used to create zero-radius operational taxonomic units (zOTUs),
+abundance tables, and assign taxonomy (via BLAST and/or [insect](https://github.com/shaunpwilkinson/insect))
+ along with dropping to the lowest common ancestor (LCA). The pipeline can also help with taxon filtering/remapping,
+ decontamination, rarefaction, etc.
+
+Key Features:
+
+* eDAN - Metabarcoding analysese
+* Can handle multiple types and states of data
+        * Single- or paired-end
+        * Raw or filtered
+* flexible and open source.
+        * Operated openly in commandline
+        * Can easily adjust settings, parameters, filters, etc
+        * GitHub Repository
+        * Developers are very useful with suggestions and changes
+* Multiple types of taxonomic classification
+* Produces phyloseq object for downstream analyses
+
+To learn how to use this pipelin in SEDAN go to [rainbow_bridge README for SEDNA](https://github.com/ericgarciaresearch/noaa_sedna/blob/main/rainbow_bridge_README.md)
+
+---
