@@ -381,7 +381,7 @@ This is an example of one of the pipelines that Eric has installed in SEDNA. Man
 
 [rainbow_bridge](https://github.com/mhoban/rainbow_bridge) is a flexible pipeline for eDNA and metabarcoding analyses. It can process raw or already filtered sequences
  from single- or paired-end datasets. This pipeline can be used to create zero-radius operational taxonomic units (zOTUs),
-abundance tables, and assign taxonomy (via BLAST and/or [insect](https://github.com/shaunpwilkinson/insect))
+abundance tables, and assign taxonomy (via [BLAST](https://blast.ncbi.nlm.nih.gov/Blast.cgi) and/or [insect](https://github.com/shaunpwilkinson/insect))
  along with dropping to the lowest common ancestor (LCA). The pipeline can also help with taxon filtering/remapping,
  decontamination, rarefaction, etc.
 

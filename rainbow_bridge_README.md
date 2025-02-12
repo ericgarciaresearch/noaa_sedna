@@ -4,13 +4,13 @@ This is guide to help you use [rainbow_bridge](https://github.com/mhoban/rainbow
 
 `rainbow_bridge` is a flexible pipeline for eDNA and metabarcoding analyses. It can process raw or already filtered sequences
  from single- or paired-end datasets. This pipeline can be used to create zero-radius operational taxonomic units (zOTUs),
-abundance tables, and assign taxonomy (via BLAST and/or [insect](https://github.com/shaunpwilkinson/insect))
+abundance tables, and assign taxonomy (via [BLAST](https://blast.ncbi.nlm.nih.gov/Blast.cgi) and/or [insect](https://github.com/shaunpwilkinson/insect))
  along with dropping to the lowest common ancestor (LCA). The pipeline can also help with taxon filtering/remapping,
  decontamination, rarefaction, etc.
 
 Key Features:
 
-* eDAN - Metabarcoding analysese
+* eDAN - Metabarcoding analyses
 * Can handle multiple types and states of data
 	* Single- or paired-end
 	* Raw or filtered
