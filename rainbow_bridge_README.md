@@ -36,9 +36,28 @@ if you are new to SEDNA, have not configured modules and mamba in your SEDNA .ba
 
 ## Using rainbow_bridge in SEDNA
 
-Log into SEDNA and change directory to where your data files are.
+Log into SEDNA. First we will do a test run and then we will run rainbow_bridge in real data using sbatch scripts
 
-### Checking if rainbow_bridge is working fine
+There are two ways that you are able to run `rainbow_bridge`:
+
+1. Locally, by downloading the main [rainbow_bridge GitHub repo](https://github.com/mhoban/rainbow_bridge):
+```
+git clone https://github.com/mhoban/rainbow_bridge
+```
+then using the *rainbow_bridge.nf* in this repo (like the test run below).
+
+or
+
+2. Remotely, by executing `rainbow_bridge` directly from the main Git repo, i.e., using the internet.
+* see below
+
+**Note: I would recommend running remotely given that if there are recent updates to the pipeline, which do happen, your local copy of the code might not have these updates which will likely break something down the road**
+
+That being said, I have used the local execution when I had issues running it remotely but I needed to run the data. Yet, this did force me to doublecheck for any potential errors.
+
+---
+
+### TEST-RUN: Checking if rainbow_bridge is working fine and local execution
 
 *You probably only to do this the very first time you're trying to use `rainbow_bridge`*
 
@@ -76,6 +95,7 @@ You should see the dir called `rainbow_bridge-test`. Navigate inside:
 cd rainbow_bridge-test
 ```
 
+
 **Activating `rainbow_bridge`**
 ```
 module load bio/rainbow_bridge/202502
@@ -97,6 +117,7 @@ If you are running rainbow_bridge in a sbatch script, then **make sure to includ
 source ~/.bashrc
 ```
 The above is needed because SEDNA does not automatically sources your bash configuration in scripts.
+
 
 **Running `rainbow_bridge`**
 ```
@@ -137,24 +158,8 @@ If you got these results, you are ready to try running rainbow_bridge in a scrip
 
 ---
 
-## Running `rainbow_bridge` using sbatch scripts
+### Running `rainbow_bridge` using sbatch scripts
 
-There are two ways that you are able to run `rainbow_bridge`
-
-1. Locally, by downloading the main [rainbow_bridge GitHub repo](https://github.com/mhoban/rainbow_bridge):
-```
-git clone https://github.com/mhoban/rainbow_bridge
-```
-then using the *rainbow_bridge.nf* in this repo (similar to the test above).
-
-or
-
-2. Remotely, by executing `rainbow_bridge` directly in the Git repo, i.e., using the internet.
-* see below
-
-I would recommend running remotely given that if there are recent updates to the pipeline, which do happen, your local copy of the code might not have these updates which will likely break something down the road.
-
-That being said, I have used the local execution when I had issues running it remotely but I needed to run the data. This did force me to doublecheck for any potential errors though.
 
 
 
