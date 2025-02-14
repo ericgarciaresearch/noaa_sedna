@@ -34,6 +34,18 @@ if you are new to SEDNA, have not configured modules and mamba in your SEDNA .ba
 
 ---
 
+### Project Organization and Management
+
+Organization of projects is not a trivial thing. It can be the differnce between failure or increasingly efficient progress. A very popular tool to help organize and manage projects is [GitHub](https://github.com/). If you don't have a github account, I would you highly recommend [openning one ](https://github.com/signup)
+
+**GitHub** is the web interface for ***Git***, which is a version control software that allow multiple people to share and work simultaneously in the same code/document. 
+
+In GitHub you can then have repositories for each of your project. **You should strongly consider having a repo for each of your projects, including rainbow_bridge metabarcoding analyses**. Check with your organization,lab or PI, they might already have a github policy, in which case you can follow that. I personally keep copies of repos in my personal account when the original repo exist under an organization.
+
+***Git*** is automatically available in SEDNA. No need to load it.
+
+---
+
 ## Using rainbow_bridge in SEDNA
 
 Log into SEDNA. First we will do a test run and then we will run rainbow_bridge in real data using sbatch scripts
