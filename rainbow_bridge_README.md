@@ -95,8 +95,8 @@ You should see the dir called `rainbow_bridge-test`. Navigate inside:
 cd rainbow_bridge-test
 ```
 
-
-
+&nbsp;
+&nbsp;
 
 **Activating `rainbow_bridge`**
 ```
@@ -121,8 +121,8 @@ source ~/.bashrc
 The above is needed because SEDNA does not automatically sources your bash configuration in scripts.
 
 
-
-
+&nbsp;
+&nbsp;
 **Running `rainbow_bridge`**
 ```
 rainbow_bridge.nf -params-file single_demuxed.yml --blast-db ./blastdb/single_demuxed
