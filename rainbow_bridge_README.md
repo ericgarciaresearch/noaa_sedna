@@ -123,6 +123,7 @@ The above is needed because SEDNA does not automatically sources your bash confi
 
 &nbsp;
 &nbsp;
+
 **Running `rainbow_bridge`**
 ```
 rainbow_bridge.nf -params-file single_demuxed.yml --blast-db ./blastdb/single_demuxed
