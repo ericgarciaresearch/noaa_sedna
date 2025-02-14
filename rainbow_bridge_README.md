@@ -100,7 +100,7 @@ cd rainbow_bridge-test
 ```
 module load bio/rainbow_bridge/202502
 ```
-(or you can just run module load `bio/rainbow_bridge` but it will default to the newest version if there are multiple versions)
+(or you can just run module load `bio/rainbow_bridge` but it will default to the newest version if there are multiple versions)(if you haven't enable modules go back to the SEDNA REDME)
 
 Unlike with the manually activation of `Nextflow` and `Singularity`, this module already contains  both simultaneously. For instance, if you try to load the last two manually, the second load will replace the first one, and rainbow_bridge will fail because it will be missing one of these dependencies.
 
