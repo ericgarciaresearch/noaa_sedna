@@ -96,6 +96,8 @@ cd rainbow_bridge-test
 ```
 
 
+
+
 **Activating `rainbow_bridge`**
 ```
 module load bio/rainbow_bridge/202502
@@ -117,6 +119,8 @@ If you are running rainbow_bridge in a sbatch script, then **make sure to includ
 source ~/.bashrc
 ```
 The above is needed because SEDNA does not automatically sources your bash configuration in scripts.
+
+
 
 
 **Running `rainbow_bridge`**
