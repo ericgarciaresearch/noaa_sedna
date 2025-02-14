@@ -59,7 +59,7 @@ That being said, I have used the local execution when I had issues running it re
 
 ### TEST-RUN: Checking if rainbow_bridge is working fine and local execution
 
-*You probably only to do this the very first time you're trying to use `rainbow_bridge`*
+*You probably only need to do this test the very first time you're trying to use `rainbow_bridge`*
 
 We can easily do this test using the [rainbow_bridge test data](https://github.com/mhoban/rainbow_bridge-test).
 
