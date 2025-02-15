@@ -246,7 +246,7 @@ Take a momment to review your files:
  * Check the sizes
  	* do you have consistent number of reads across samples? or a biased distribution?
 
-***Make a sample.map file**
+***Make a sample.map file***
 
 See the rainbow_bridge README for all the different scenarios. In my case, I currently have demultiplexed paired-end files. To run `rainbow_bridge` in this dataset I will need to make a `sample.map` which is a simple text file with the 3 columns: the base name, name of the forward, and reverse files.
 
@@ -286,6 +286,24 @@ Once you're satisfied, delete the intermediate files
 rm basenames R1names R2names
 ```
 
+***Making a Barcodes file***
+
+*A barcode file is necessary except for demultiplexed runs where the PCR primers have already been removed*
+
+See rainbow README for details but briefly here are the examples given:
+
+* Non-demultiplexed runs: This format includes forward/reverse sample barcodes and forward/reverse PCR primers to separate sequences into the appropriate samples. Barcodes are separated with a colon and combined in a single column while primers are given in separate columns. For example:
+
+| #assay | sample | barcodes | forward_primer | reverse_primer | extra_information |
+|---|---|---|---|---|---|
+|16S-Fish | B001 | GTGTGACA:AGCTTGAC | CGCTGTTATCCCTADRGTAACT | GACCCTATGGAGCTTTAGAC | EFMSRun103_Elib90
+|16S-Fish | B002 | GTGTGACA:GACAACAC | CGCTGTTATCCCTADRGTAACT | GACCCTATGGAGCTTTAGAC | EFMSRun103_Elib90
+
+
+Demultiplexed runs: Since sequences have already been separated into samples, this format omits the barcodes (using just a colon, ':' in their place) but includes the primers. For example:
+
+#assay	sample	barcodes	forward_primer	reverse_primer	extra_information
+primer	V9_18S	:	GTACACACCGCCCGTC	TGATCCTTCTGCAGGTTCACCTAC	
 
 
 
