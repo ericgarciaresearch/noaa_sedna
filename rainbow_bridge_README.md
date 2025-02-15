@@ -195,6 +195,9 @@ If you got these results, you are ready to try running rainbow_bridge in a scrip
 
 ### Running `rainbow_bridge` using sbatch scripts
 
+&nbsp;
+&nbsp;
+
 **Organization:**
 
 This is the organization I am following at the momment. Feel free to follow this or modify.
@@ -231,6 +234,9 @@ Document all your moves in your README. This is very important because:
 * Allows your future self to understand what you did now
 * Might be useful to copy the format from a repo that is fully or semi-complete so you get some structure or you can build upon that format
 
+&nbsp;
+&nbsp;
+
 **Setting up your DATA**
 
 Transfer your data files inside your data subdir:
@@ -245,6 +251,9 @@ Take a momment to review your files:
  * Do you have all the files? whas the transfer successful
  * Check the sizes
  	* do you have consistent number of reads across samples? or a biased distribution?
+
+
+&nbsp;
 
 ***Make a sample.map file***
 
@@ -286,6 +295,8 @@ Once you're satisfied, delete the intermediate files
 rm basenames R1names R2names
 ```
 
+&nbsp;
+
 ***Making a Barcodes file***
 
 *A barcode file is necessary except for demultiplexed runs where the PCR primers have already been removed*
@@ -299,11 +310,11 @@ See rainbow README for details but briefly here are the examples given:
 |16S-Fish | B001 | GTGTGACA:AGCTTGAC | CGCTGTTATCCCTADRGTAACT | GACCCTATGGAGCTTTAGAC | EFMSRun103_Elib90
 |16S-Fish | B002 | GTGTGACA:GACAACAC | CGCTGTTATCCCTADRGTAACT | GACCCTATGGAGCTTTAGAC | EFMSRun103_Elib90
 
+* Demultiplexed runs: Since sequences have already been separated into samples, this format omits the barcodes (using just a colon, ':' in their place) but includes the primers. For example:
 
-Demultiplexed runs: Since sequences have already been separated into samples, this format omits the barcodes (using just a colon, ':' in their place) but includes the primers. For example:
-
-#assay	sample	barcodes	forward_primer	reverse_primer	extra_information
-primer	V9_18S	:	GTACACACCGCCCGTC	TGATCCTTCTGCAGGTTCACCTAC	
+| #assay | sample | barcodes | forward_primer | reverse_primer | extra_information |
+|---|---|---|---|---|---|
+|primer | V9_18S | : | GTACACACCGCCCGTC | TGATCCTTCTGCAGGTTCACCTAC | | 
 
 
 
