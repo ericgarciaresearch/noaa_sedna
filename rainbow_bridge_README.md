@@ -223,7 +223,7 @@ nano projects/MiFishU/README.md
 ```
 where:
 * **nano** is the text editor I like but you can use whatever other one (vim for example). Here is one [nano tutorial](https://www.geeksforgeeks.org/nano-text-editor-in-linux/) of many in the web
-* "md" stands for markdown, which is the language you will be writing your READMEs on. Here is an online course in [md for GitHub](https://github.com/skills/communicate-using-markdown)
+* "**md**" stands for markdown, which is the language you will be writing your READMEs on. Here is an online course in [md for GitHub](https://github.com/skills/communicate-using-markdown)
 
 Document all your moves in your README. This is very important because:
 * Documents that work you have done
@@ -231,7 +231,60 @@ Document all your moves in your README. This is very important because:
 * Allows your future self to understand what you did now
 * Might be useful to copy the format from a repo that is fully or semi-complete so you get some structure or you can build upon that format
 
+**Setting up your DATA**
 
+Transfer your data files inside your data subdir:
+```
+mv or cp <files> projects/MiFishU/data
+```
+
+Take a momment to review your files:
+* is your data demultiplexed?
+* are the data single- or paired-end?
+	* do you have same number of forward and reverse files?
+ * Do you have all the files? whas the transfer successful
+ * Check the sizes
+ 	* do you have consistent number of reads across samples? or a biased distribution?
+
+***Make a sample.map file**
+
+See the rainbow_bridge README for all the different scenarios. In my case, I currently have demultiplexed paired-end files. To run `rainbow_bridge` in this dataset I will need to make a `sample.map` which is a simple text file with the 3 columns: the base name, name of the forward, and reverse files.
+
+Thus, for file names such as:
+```
+JV183.1_MiFishU_WhitneyJonathan_S040845.1.R1.fastq.gz
+JV183.1_MiFishU_WhitneyJonathan_S040845.1.R2.fastq.gz
+JV183.1_MiFishU_WhitneyJonathan_S040846.1.R1.fastq.gz
+JV183.1_MiFishU_WhitneyJonathan_S040846.1.R2.fastq.gz
+JV183.1_MiFishU_WhitneyJonathan_S040853.1.R1.fastq.gz
+JV183.1_MiFishU_WhitneyJonathan_S040853.1.R2.fastq.gz
+JV183.1_MiFishU_WhitneyJonathan_S040854.1.R1.fastq.gz
+JV183.1_MiFishU_WhitneyJonathan_S040854.1.R2.fastq.gz
+...
+```
+
+The sample file can be created with the following commands:
+```
+cd projects/MiFishU/data/					#navigate into your data dir
+ls *gz | sed 's/\.R[12].fastq.gz//' | sort | uniq > basenames	#get the base names
+ls *R1.fastq.gz > R1names					#get the forward names
+ls *R2.fastq.gz > R2names					#get the reverse names
+paste basenames R1names R2names > sample.map			#puts all of them together
+```
+
+Inspect your `sample.map` files and make sure it looks ok. Mine looks like this:
+```
+JV183.1_MiFishU_WhitneyJonathan_S040845.1       JV183.1_MiFishU_WhitneyJonathan_S040845.1.R1.fastq.gz   JV183.1_MiFishU_WhitneyJonathan_S040845.1.R2.fastq.gz
+JV183.1_MiFishU_WhitneyJonathan_S040846.1       JV183.1_MiFishU_WhitneyJonathan_S040846.1.R1.fastq.gz   JV183.1_MiFishU_WhitneyJonathan_S040846.1.R2.fastq.gz
+JV183.1_MiFishU_WhitneyJonathan_S040853.1       JV183.1_MiFishU_WhitneyJonathan_S040853.1.R1.fastq.gz   JV183.1_MiFishU_WhitneyJonathan_S040853.1.R2.fastq.gz
+JV183.1_MiFishU_WhitneyJonathan_S040854.1       JV183.1_MiFishU_WhitneyJonathan_S040854.1.R1.fastq.gz   JV183.1_MiFishU_WhitneyJonathan_S040854.1.R2.fastq.gz
+...
+```
+
+Once you're satisfied, delete the intermediate files
+```
+rm basenames R1names R2names
+```
 
 
 
