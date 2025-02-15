@@ -297,13 +297,15 @@ rm basenames R1names R2names
 
 &nbsp;
 
-***Making a Barcodes file***
+***Making a Barcode file***
 
 *A barcode file is necessary except for demultiplexed runs where the PCR primers have already been removed*
 
 See rainbow README for details but briefly here are the examples given:
 
 * Non-demultiplexed runs: This format includes forward/reverse sample barcodes and forward/reverse PCR primers to separate sequences into the appropriate samples. Barcodes are separated with a colon and combined in a single column while primers are given in separate columns. For example:
+
+unmuxed_barcode.tsv
 
 | #assay | sample | barcodes | forward_primer | reverse_primer | extra_information |
 |---|---|---|---|---|---|
@@ -312,9 +314,33 @@ See rainbow README for details but briefly here are the examples given:
 
 * Demultiplexed runs: Since sequences have already been separated into samples, this format omits the barcodes (using just a colon, ':' in their place) but includes the primers. For example:
 
+demuxed_barcode.tsv
+
 | #assay | sample | barcodes | forward_primer | reverse_primer | extra_information |
 |---|---|---|---|---|---|
 |primer | V9_18S | : | GTACACACCGCCCGTC | TGATCCTTCTGCAGGTTCACCTAC | | 
 
 
+&nbsp;
 
+***Making a Parameter yml file***
+
+When running rainbow with a sbatch script, you can either include the complete command in the script using flags such as 
+```
+--paired --reads ../data/ --barcode '../data/*.tsv'
+```
+
+Or you can make a yml parameter file where you specified all the setting used by each run. For example:
+```
+nano data/pared_demuxed.yml
+```
+```
+paired: true
+demultiplexed-by: index
+reads: ../data/
+sample-map: ../data/sample.map
+barcode: ../data/demuxed_barcode.tsv
+...
+```
+There are several parameters sets available. See rainbow README for all of these.
+fastqc: true
