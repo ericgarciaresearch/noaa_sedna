@@ -340,7 +340,8 @@ demultiplexed-by: index
 reads: ../data/
 sample-map: ../data/sample.map
 barcode: ../data/demuxed_barcode.tsv
+fastqc: true
 ...
 ```
 There are several parameters sets available. See rainbow README for all of these.
-fastqc: true
+
