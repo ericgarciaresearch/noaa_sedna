@@ -195,11 +195,44 @@ If you got these results, you are ready to try running rainbow_bridge in a scrip
 
 ### Running `rainbow_bridge` using sbatch scripts
 
+**Organization:**
+
+This is the organization I am following at the momment. Feel free to follow this or modify.
+
+From you home directory, create a subdir called "projects"
+```
+cd ~		# this always takes you home regardless of your current location
+mkdir projects
+ ```
+
+Here, you can then place project as a GitHub repository (You can create repos straight from the command line or at GitHub and then clone it). Currently:
+```
+mkdir projects/MiFishU
+```
+
+In here, make the following subdirectories: data, scripts and analyses
+```
+mkdir projects/MiFishU/data		# this is where you'll place your datafiles
+mkdir projects/MiFishU/scripts		# place your scripts here
+mkdir projects/MiFishU/analyses		# create subdirectories here for each rainbow run (w/diff. parameters etc)
+```
+
+If you have not made a README, make one:
+```
+nano projects/MiFishU/README.md
+```
+where:
+* **nano** is the text editor I like but you can use whatever other one (vim for example). Here is one [nano tutorial](https://www.geeksforgeeks.org/nano-text-editor-in-linux/) of many in the web
+* "md" stands for markdown, which is the language you will be writing your READMEs on. Here is an online course in [md for GitHub](https://github.com/skills/communicate-using-markdown)
+
+Document all your moves in your README. This is very important because:
+* Documents that work you have done
+* Allows other to replicate your work
+* Allows your future self to understand what you did now
+* Might be useful to copy the format from a repo that is fully or semi-complete so you get some structure or you can build upon that format
 
 
 
- 
-    	 
 
 
 
