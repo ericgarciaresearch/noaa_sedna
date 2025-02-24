@@ -1,0 +1,34 @@
+##########################################
+###    Rainbow_bridge Master Config   ####
+##########################################
+
+# Contains most of the options/settings/flags available for rainbow_bridge
+# To use, comment or uncooment alternate flags, or choose the correct option for individual flags
+
+###> Your data
+#single: true            # true or false. Is your data single or paired-end?
+paired: true		# true or false. Is your data single or paired-end?
+
+demultiplexed-by: index			# options: index, barcode or combine. Is your data demultiplexed? index (Illumina indices, previously-demultiplexed, the default), barcode (barcoded primers, not demultiplexed), or combined (pooled barcoded primers across Illumina index pairs).
+reads: ../../data/			# path to sequence files
+sample-map: ../../data/sample.map			# specify sample.map
+barcode: ../../data/paired_demuxed_barcode.tsv			# specify barcode file 
+
+###> Processes
+fastqc: true			# true or false. Do you want to run fastqc on files?
+blast: true			# true or false. Do you want to run blast?
+blast-db: '/share/all/midori2_database/2024-10-13_customblast_sp_uniq_COI/midori2_customblast_sp_uniq'			# location of database (ncbi or custom). Path and name (without extension)
+publish-mode: copy			# options: symlink, copy or <maybe another>. Generate links or copies (default: symlink)?
+alpha: 5			# "5" for COI, "2" for 16s, interpret for others 
+zotu-identity: 1			# amount of grouping allowed
+max-query-results: 1000
+primer-mismatch: 2
+lulu: true
+collapse-taxonomy: true
+dropped: "LCA_dropped"
+qcov: 0
+percent-identity: 0
+evalue: 0.1
+lca-qcov: 70
+lca-pid: 70
+lca-diff: 1
