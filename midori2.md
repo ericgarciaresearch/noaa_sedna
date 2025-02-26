@@ -146,6 +146,16 @@ midori2_customblast_sp_uniq.nto
 ```
 where `midori2_customblast_sp_uniq` is just the name I chose for the output in the previous command.
 
+If you got an error about not finding the `taxid_map`, similar to:
+```
+Command line argument error: Argument "taxid_map". File is not accessible:  `taxid_map'
+```
+
+then try:
+```
+singularity exec --bind "$(pwd)":/mnt ../blast_latest.sif makeblastdb -in /mnt/MIDORI2_UNIQ_SP_NUC_GB263_CO1_RAW_cleanedformakeblastdb.fasta -parse_seqids -dbtype nucl -taxid_map /mnt/taxid_map -out /mnt/midori2_customblast_sp_uniq
+```
+
 Now, check that the database was created correctly:
 ```
 singularity exec ../blast_latest.sif blastdbcmd -info -db midori2_customblast_sp_uniq
