@@ -210,19 +210,19 @@ mkdir projects
 
 Here, you can then place project as a GitHub repository (You can create repos straight from the command line or at GitHub and then clone it). Currently:
 ```
-mkdir projects/MiFishU
+mkdir projects/MiFishU-test
 ```
 
 In here, make the following subdirectories: data, scripts and analyses
 ```
-mkdir projects/MiFishU/data		# this is where you'll place your datafiles
-mkdir projects/MiFishU/scripts		# place your scripts here
-mkdir projects/MiFishU/analyses		# create subdirectories here for each rainbow run (w/diff. parameters etc)
+mkdir projects/MiFishU-test/data		# this is where you'll place your datafiles
+mkdir projects/MiFishU-test/scripts		# place your scripts here
+mkdir projects/MiFishU-test/analyses		# create subdirectories here for each rainbow run (w/diff. parameters etc)
 ```
 
 If you have not made a README, make one:
 ```
-nano projects/MiFishU/README.md
+nano projects/MiFishU-test/README.md
 ```
 where:
 * **nano** is the text editor I like but you can use whatever other one (vim for example). Here is one [nano tutorial](https://www.geeksforgeeks.org/nano-text-editor-in-linux/) of many in the web
@@ -241,7 +241,7 @@ Document all your moves in your README. This is very important because:
 
 Transfer your data files inside your data subdir:
 ```
-mv or cp <files> projects/MiFishU/data
+mv or cp <files> projects/MiFishU-test/data
 ```
 
 Take a momment to review your files:
@@ -274,7 +274,7 @@ JV183.1_MiFishU_WhitneyJonathan_S040854.1.R2.fastq.gz
 
 The sample file can be created with the following commands:
 ```
-cd projects/MiFishU/data/					#navigate into your data dir
+cd projects/MiFishU-test/data/					#navigate into your data dir
 ls *gz | sed 's/\.R[12].fastq.gz//' | sort | uniq > basenames	#get the base names
 ls *R1.fastq.gz > R1names					#get the forward names
 ls *R2.fastq.gz > R2names					#get the reverse names
