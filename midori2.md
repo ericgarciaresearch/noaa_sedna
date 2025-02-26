@@ -146,7 +146,7 @@ midori2_customblast_sp_uniq.nto
 ```
 where `midori2_customblast_sp_uniq` is just the name I chose for the output in the previous command.
 
-If you got an error about not finding the `taxid_map`, similar to:
+If you got an singularity error about not finding the `taxid_map`, similar to:
 ```
 Command line argument error: Argument "taxid_map". File is not accessible:  `taxid_map'
 ```
@@ -171,7 +171,12 @@ Date: Jan 30, 2025  8:23 PM	Longest sequence: 2,298 bases
 BLASTDB Version: 5 
 ```
 
-***If you see errors or messages about mapping, there might be issues and you might have to remake the database.***
+Note that if you had the singularity error in the previous step, you're likely will have to use the same trick (bind directly the files for singluarity), with:
+```
+singularity exec --bind "$(pwd)":/mnt ../blast_latest.sif blastdbcmd -info -db /mnt/midori2_customblast_sp_uniq
+```
+
+***If you see other errors or messages about mapping, there might be issues and you might have to remake the database.***
 
 Now, open permissions to avoid potential problems accessing the database:
 ```
