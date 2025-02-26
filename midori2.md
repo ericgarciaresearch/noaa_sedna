@@ -67,6 +67,12 @@ cd 2024-10-13_customblast_sp_uniq_COI
 wget -c https://www.reference-midori.info/download/Databases/GenBank261_2024-10-13/RAW_sp/uniq/MIDORI2_UNIQ_SP_NUC_GB263_CO1_RAW.fasta.gz
 ```
 
+Now umcompress the file for the next step:
+```
+cd 2024-10-13_customblast_sp_uniq_COI
+gunzip MIDORI2_UNIQ_SP_NUC_GB263_CO1_RAW.fasta.gz
+```
+
 ***NOTE:*** The Midori2 database get updated every 2 months. Make sure you download the latest and note which version you are using.
 
 ### Prep Fasta for makeblastdb
@@ -97,7 +103,7 @@ cd /share/all/midori2_database
 Execute `clean_midori2fasta_for_makeblastdb.sh` with:
 ```
 # bash clean_midori2fasta_for_makeblastdb.sh  <input dir> <input_fasta> <output_fasta>
-bash clean_midori2fasta_for_makeblastdb.sh 2024-10-13_customblast_sp_uniq_COI 2024-10-13_customblast_sp_uniq_COI/MIDORI2_UNIQ_SP_NUC_GB263_CO1_RAW.fasta MIDORI2_UNIQ_SP_NUC_GB263_CO1_RAW_cleanedformakeblastdb.fasta
+bash clean_midori2fasta_for_makeblastdb.sh 2024-10-13_customblast_sp_uniq_COI MIDORI2_UNIQ_SP_NUC_GB263_CO1_RAW.fasta MIDORI2_UNIQ_SP_NUC_GB263_CO1_RAW_cleanedformakeblastdb.fasta
 ```
 where `input_dir` is the directory with the midori2 file you downloaded, `input_fasta` is the input file name, and `output_fasta` is the "cleaned" output file name, which will be used to make the database
 
