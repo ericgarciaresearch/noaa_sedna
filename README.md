@@ -375,7 +375,7 @@ More examples available in the [SEDNA info & best practices doc](https://docs.go
 
 ---
 
-## [rainbow_bridge at SEDNA](https://github.com/ericgarciaresearch/noaa_sedna/tree/main/rainbow_bridge)
+## rainbow_bridge at SEDNA
 
 This is an example of one of the pipelines that Eric has installed in SEDNA. Many other pipelines/modules/software are available.
 
