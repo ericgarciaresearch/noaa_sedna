@@ -375,7 +375,7 @@ More examples available in the [SEDNA info & best practices doc](https://docs.go
 
 ---
 
-## rainbow_bridge at SEDNA
+## [rainbow_bridge at SEDNA](https://github.com/ericgarciaresearch/noaa_sedna/tree/main/rainbow_bridge)
 
 This is an example of one of the pipelines that Eric has installed in SEDNA. Many other pipelines/modules/software are available.
 
@@ -399,6 +399,6 @@ Key Features:
 * Multiple types of taxonomic classification
 * Produces phyloseq object for downstream analyses
 
-To learn how to use this pipelin in SEDAN go to [rainbow_bridge README for SEDNA](https://github.com/ericgarciaresearch/noaa_sedna/blob/main/rainbow_bridge_README.md)
+To learn how to use this pipeline in SEDAN go to [rainbow_bridge README for SEDNA](https://github.com/ericgarciaresearch/noaa_sedna/blob/main/rainbow_bridge_README.md) or to go the [rainbow_bridge SEDNA subdir](https://github.com/ericgarciaresearch/noaa_sedna/tree/main/rainbow_bridge)
 
 ---
