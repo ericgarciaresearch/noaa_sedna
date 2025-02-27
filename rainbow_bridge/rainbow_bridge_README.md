@@ -374,16 +374,16 @@ yes CATAGTGGGGTATCTAATCCCAGTTTG | head -n52 > rp	# prints the rprimer 52 time
 yes MiFishU 163-185bp. Confirmed in JVB1836-MiFishU-testmethods.txt | head -n52		# prints extra info 52 times
 paste assay sample barcodes fp rp xinfo > body		# creates the body of the file
 echo -e "#assay\tsample\tbarcodes\tforward_primer\treverse_primer\textra_information" > header		# creates the header
-cat header body > demuxed_barcodes.tsv		# puts the last two together
-rm assay sample barcodes fp rp xinfo body header		# clean up
+cat header body > demuxed_barcodes.tsv	# puts the last two together
+rm assay sample barcodes fp rp xinfo body header	# clean up
 ```
 
 My file then looks like:
 ```
 #assay  sample  barcodes        forward_primer  reverse_primer  extra_information
-12S     JV183.1_MiFishU_WhitneyJonathan_S040845.1       :       GTCGGTAAAACTCGTGCCAGC   CATAGTGGGGTATCTAATCCCAGTTTG     MiFishU 163-185bp. Confirmed in>
-12S     JV183.1_MiFishU_WhitneyJonathan_S040846.1       :       GTCGGTAAAACTCGTGCCAGC   CATAGTGGGGTATCTAATCCCAGTTTG     MiFishU 163-185bp. Confirmed in>
-12S     JV183.1_MiFishU_WhitneyJonathan_S040853.1       :       GTCGGTAAAACTCGTGCCAGC   CATAGTGGGGTATCTAATCCCAGTTTG     MiFishU 163-185bp. Confirmed in>
+12S     JV183.1_MiFishU_WhitneyJonathan_S040845.1       :       GTCGGTAAAACTCGTGCCAGC   CATAGTGGGGTATCTAATCCCAGTTTG     MiFishU 163-185bp. Confirmed in JVB1836-MiFishU-testmethods.txt
+12S     JV183.1_MiFishU_WhitneyJonathan_S040846.1       :       GTCGGTAAAACTCGTGCCAGC   CATAGTGGGGTATCTAATCCCAGTTTG     MiFishU 163-185bp. Confirmed in JVB1836-MiFishU-testmethods.txt
+12S     JV183.1_MiFishU_WhitneyJonathan_S040853.1       :       GTCGGTAAAACTCGTGCCAGC   CATAGTGGGGTATCTAATCCCAGTTTG     MiFishU 163-185bp. Confirmed in JVB1836-MiFishU-testmethods.txt
 ```
 
 &nbsp;
