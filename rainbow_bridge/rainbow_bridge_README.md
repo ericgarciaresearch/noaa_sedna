@@ -18,7 +18,8 @@ if you are new to SEDNA, have not configured modules and mamba in your SEDNA .ba
 - [Project managemet](#Project-management)
 - [rainbow_bridge in SEDNA](#rainbow_bridge-in-SEDNA)
 - [Ways to run rainbow_bridge](#ways-to-run-rainbow_bridge)
-  - [Test-Run](#TEST-RUN:-Checking-if-rainbow_bridge-is-working-fine-and-local-execution)
+  - [Test Run](#TEST-RUN:-Checking-if-rainbow_bridge-is-working-fine-and-local-execution)
+  - (#TEST-RUN:-Checking-if-rainbow_bridge-is-working-fine-and-local-execution)
   - [Running rainbow_bridge using sbatch scripts](#running-rainbow_bridge-using-sbatch-scripts)
 - [:rocket: Setting up your rainbow_bridge project](#setting-up-your-rainbow_bridge-project)
   - [📁 Organization](#organization)
@@ -131,7 +132,7 @@ That being said, I have used the local execution when I had issues running it re
 
 ---
 
-## TEST-RUN: Checking if rainbow_bridge is working fine and local execution
+## TEST RUN: Checking if rainbow_bridge is working fine and local execution
 
 
 Log into SEDNA and do a test run to see if rainbow_bridge is working for you. Then, you can work on your actual meatabarcoding project.
