@@ -342,13 +342,14 @@ We have listed the current list of primers used in PIFSC in the file [PIFSC_Meta
 ```
 
 This files looks like this:
-```
-Primer Set	JonahVentures_name	Primer Name	Reference	Primer_seq_FWD	Primer_seq_REV	Target Taxa	Amplicon size	Confirmation_notes
-COI	UniCOI	mlCOIintF; jgHCO2198	Leray et al. 2013	GGWACWGGWTGAACWGTWTAYCCYCC	TAIACYTCIGGRTGICCRAARAAYCA	Metazoans	304-313	confimed in JVB1836-UniCOI-testmethods.txt, which has a different reverse than what we originally requested
-16S-Fish	16SDegenerate	16SF/D; 16S2R-degenerate	Deagle et al. 2007; Berry et al. 2017	GACCCTATGGAGCTTTAGAC	CGCTGTTATCCCTADRGTAACT	Fish	178-228	confirmed in JVB1836-16SDegenerate-testmethods.txt
-12S-MiFish	MiFishU	MiFish-U-F; MiFish-U-R	Miya et al. 2015	GTCGGTAAAACTCGTGCCAGC	CATAGTGGGGTATCTAATCCCAGTTTG	Fish	163-185	confirmed in JVB1836-MiFishU-testmethods.txt
-18S V1-3	18S_400	18S_1F; 18S_400R	Pochon et al. 2013	GCCAGTAGTCATATGCTTGTCT	GCCTGCTGCCTTCCTT	Eukaryotes	336-423	confirmed in JVB1836-18S_400-testmethods.txt![image](https://github.com/user-attachments/assets/ecaa7953-f78d-462b-b931-3b417915f90b)
-```
+
+|Primer Set | JonahVentures_name | Primer Name | Reference | Primer_seq_FWD | Primer_seq_REV | Target Taxa | Amplicon size | | Confirmation_notes |
+|---|---|---|---|---|---|---|---|---|
+|COI | UniCOI | mlCOIintF; jgHCO2198 | Leray et al. 2013 | GGWACWGGWTGAACWGTWTAYCCYCC | TAIACYTCIGGRTGICCRAARAAYCA | Metazoans | 304-313 | confimed in JVB1836-UniCOI-testmethods.txt, which has a different reverse than what we originally requested
+|16S-Fish | 16SDegenerate | 16SF/D; 16S2R-degenerate | Deagle et al. 2007; Berry et al. 2017 | GACCCTATGGAGCTTTAGAC | CGCTGTTATCCCTADRGTAACT | Fish | 178-228 | confirmed in JVB1836-16SDegenerate-testmethods.txt
+|12S-MiFish | MiFishU | MiFish-U-F; MiFish-U-R | Miya et al. 2015 | GTCGGTAAAACTCGTGCCAGC | CATAGTGGGGTATCTAATCCCAGTTTG | Fish | 163-185 | confirmed in JVB1836-MiFishU-testmethods.txt
+|18S V1-3 | 18S_400 | 18S_1F; 18S_400R | Pochon et al. 2013 | GCCAGTAGTCATATGCTTGTCT | GCCTGCTGCCTTCCTT | Eukaryotes | 336-423 | confirmed in JVB1836-18S_400-testmethods.txt
+
 For PIFSC projects, use the above info to make your ***barcode.tsv*** file. 
 
 Example:
