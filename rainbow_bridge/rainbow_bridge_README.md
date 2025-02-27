@@ -343,6 +343,12 @@ We have listed the current list of primers used in PIFSC in the file [PIFSC_Meta
 
 This files looks like this:
 
+| Primer Set | JonahVentures_name | Primer Name | Reference | Primer_seq_FWD | Primer_seq_REV | Target Taxa | Amplicon size | | Confirmation_notes |
+|---|---|---|---|---|---|---|---|---|
+| COI | UniCOI | mlCOIintF; jgHCO2198 | Leray et al. 2013 | GGWACWGGWTGAACWGTWTAYCCYCC | TAIACYTCIGGRTGICCRAARAAYCA | Metazoans | 304-313 | confimed in JVB1836-UniCOI-testmethods.txt |
+
+
+
 |Primer Set | JonahVentures_name | Primer Name | Reference | Primer_seq_FWD | Primer_seq_REV | Target Taxa | Amplicon size | | Confirmation_notes |
 |---|---|---|---|---|---|---|---|---|
 |COI | UniCOI | mlCOIintF; jgHCO2198 | Leray et al. 2013 | GGWACWGGWTGAACWGTWTAYCCYCC | TAIACYTCIGGRTGICCRAARAAYCA | Metazoans | 304-313 | confimed in JVB1836-UniCOI-testmethods.txt, which has a different reverse than what we originally requested
