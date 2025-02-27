@@ -15,11 +15,11 @@ if you are new to SEDNA, have not configured modules and mamba in your SEDNA .ba
 
 # Table of Contents
 - [:rainbow: rainbow_bridge intro](#rainbow_bridge-intro)
-- [📓 Project organization and Managemet](#Project-organization-and-Management)
-- [💻 rainbow_bridge in SEDNA](#rainbow_bridge-in-SEDNA)
-- [:runner: Ways to run rainbow_bridge](#ways-to-run-rainbow_bridge)
-- [:test_tube: Test-Run](#test-run)
-- [🔤 Running rainbow_bridge using sbatch scripts](#running-rainbow_bridge-using-sbatch-scripts)
+- [Project organization and Managemet](#Project-organization-and-Management)
+- [rainbow_bridge in SEDNA](#rainbow_bridge-in-SEDNA)
+- [Ways to run rainbow_bridge](#ways-to-run-rainbow_bridge)
+- [Test-Run](#test-run)
+- [Running rainbow_bridge using sbatch scripts](#running-rainbow_bridge-using-sbatch-scripts)
 - [:rocket: Setting up your rainbow_bridge project](#setting-up-your-rainbow_bridge-project)
   - [📁 Organization](#organization)
   - [:dna: Your DATA](#your-data)
