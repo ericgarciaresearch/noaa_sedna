@@ -2,7 +2,7 @@
 
 This guide will help you use [rainbow_bridge](https://github.com/mhoban/rainbow_bridge) in SEDNA. 
 
-Please take a few hours to get familiar witht the rainbow_bridge README (previous link), there is a lot of relevent information that is too long to explain the details in here.
+Please take a few hours (not kidding :slightly_smiling_face:) to get familiar with the rainbow_bridge README (previous link), there is a lot of relevent information that is too long to explain the details in here.
 
 ---
 
