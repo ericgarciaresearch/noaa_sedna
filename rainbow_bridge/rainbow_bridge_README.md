@@ -379,12 +379,11 @@ rm assay sample barcodes fp rp xinfo body header	# clean up
 ```
 
 My file then looks like:
-```
-#assay  sample  barcodes        forward_primer  reverse_primer  extra_information
-12S     JV183.1_MiFishU_WhitneyJonathan_S040845.1       :       GTCGGTAAAACTCGTGCCAGC   CATAGTGGGGTATCTAATCCCAGTTTG     MiFishU 163-185bp. Confirmed in JVB1836-MiFishU-testmethods.txt
-12S     JV183.1_MiFishU_WhitneyJonathan_S040846.1       :       GTCGGTAAAACTCGTGCCAGC   CATAGTGGGGTATCTAATCCCAGTTTG     MiFishU 163-185bp. Confirmed in JVB1836-MiFishU-testmethods.txt
-12S     JV183.1_MiFishU_WhitneyJonathan_S040853.1       :       GTCGGTAAAACTCGTGCCAGC   CATAGTGGGGTATCTAATCCCAGTTTG     MiFishU 163-185bp. Confirmed in JVB1836-MiFishU-testmethods.txt
-```
+|#assay | sample | barcodes | forward_primer | reverse_primer | extra_information
+|---||---||---||---||---||---|
+|12S | JV183.1_MiFishU_WhitneyJonathan_S040845.1 |   : |   GTCGGTAAAACTCGTGCCAGC | CATAGTGGGGTATCTAATCCCAGTTTG | MiFishU 163-185bp. Confirmed in JVB1836-MiFishU-testmethods.txt
+|12S | JV183.1_MiFishU_WhitneyJonathan_S040846.1 |   : |   GTCGGTAAAACTCGTGCCAGC | CATAGTGGGGTATCTAATCCCAGTTTG | MiFishU 163-185bp. Confirmed in JVB1836-MiFishU-testmethods.txt
+|12S | JV183.1_MiFishU_WhitneyJonathan_S040853.1 |   : |   GTCGGTAAAACTCGTGCCAGC | CATAGTGGGGTATCTAATCCCAGTTTG | MiFishU 163-185bp. Confirmed in JVB1836-MiFishU-testmethods.txt
 
 &nbsp;
 
