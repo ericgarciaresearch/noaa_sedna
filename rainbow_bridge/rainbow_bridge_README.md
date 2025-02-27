@@ -15,21 +15,21 @@ if you are new to SEDNA, have not configured modules and mamba in your SEDNA .ba
 
 # Table of Contents
 - [:rainbow: rainbow_bridge intro](#rainbow_bridge-intro)
-- [Project organization and Managemet](#Project-organization-and-Management
-- [rainbow_bridge in SEDNA](# rainbow_bridge in SEDNA)
-- [Ways to run rainbow_bridge](#ways-to-run-rainbow_bridge)
-- [Test-Run](#test-run)
+- [Project organization and Managemet](#Project-organization-and-Management)
+- [rainbow_bridge in SEDNA](#rainbow_bridge-in-SEDNA)
+- [:runner: Ways to run rainbow_bridge](#ways-to-run-rainbow_bridge)
+- [:test_tube: Test-Run](#test-run)
 - [Running rainbow_bridge using sbatch scripts](#running-rainbow_bridge-using-sbatch-scripts)
-- [Setting up your rainbow_bridge project](#setting-up-your-rainbow_bridge-project)
+- [:rocket: Setting up your rainbow_bridge project](#setting-up-your-rainbow_bridge-project)
   - [Organization](#organization)
-  - [Your DATA](#your-data)
+  - [:dna: Your DATA](#your-data)
   - [Make a sample.map file](#make-a-samplemap-file)
   - [Making a Barcode file](#making-a-barcode-file)
   - [Making a Parameter yml file](#making-a-parameter-yml-file)
 
 ---
 
-# :rainbow: rainbow_bridge intro
+# rainbow_bridge intro
 
 [rainbow_bridge](https://github.com/mhoban/rainbow_bridge) is a flexible pipeline for eDNA and metabarcoding analyses. It can process raw or already filtered sequences from single- or paired-end datasets. This pipeline can be used to create zero-radius operational taxonomic units (zOTUs), abundance tables, and assign taxonomy (via [BLAST](https://blast.ncbi.nlm.nih.gov/Blast.cgi) and/or [insect](https://github.com/shaunpwilkinson/insect))
  along with dropping to the lowest common ancestor (LCA). The pipeline can also help with taxon filtering/remapping,
@@ -55,7 +55,7 @@ Note that `rainbow_bridge` is a fork of [eDNAFlow](https://github.com/mahsa-mous
 
 ---
 
-# Project Organization and Management
+# Project organization and Management
 
 Organization of projects is not a trivial thing. It can be the differnce between failure or increasingly efficient progress. A very popular tool to help organize and manage projects is [GitHub](https://github.com/). If you don't have a github account, I would you highly recommend [openning one ](https://github.com/signup)
 
