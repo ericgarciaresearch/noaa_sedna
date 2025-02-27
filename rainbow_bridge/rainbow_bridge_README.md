@@ -15,7 +15,7 @@ if you are new to SEDNA, have not configured modules and mamba in your SEDNA .ba
 
 # Table of Contents
 - [:rainbow: rainbow_bridge intro](#rainbow_bridge-intro)
-- [Project organization and Managemet](#Project-organization-and-Management)
+- [Project managemet](#Project-management)
 - [rainbow_bridge in SEDNA](#rainbow_bridge-in-SEDNA)
 - [Ways to run rainbow_bridge](#ways-to-run-rainbow_bridge)
 - [Test-Run](#test-run)
@@ -55,7 +55,7 @@ Note that `rainbow_bridge` is a fork of [eDNAFlow](https://github.com/mahsa-mous
 
 ---
 
-# Project organization and Management
+# Project management
 
 Organization of projects is not a trivial thing. It can be the differnce between failure or increasingly efficient progress. A very popular tool to help organize and manage projects is [GitHub](https://github.com/). If you don't have a github account, I would you highly recommend [openning one ](https://github.com/signup)
 
