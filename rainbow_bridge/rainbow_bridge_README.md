@@ -131,7 +131,7 @@ That being said, I have used the local execution when I had issues running it re
 
 ---
 
-### TEST-RUN: Checking if rainbow_bridge is working fine and local execution
+# TEST-RUN: Checking if rainbow_bridge is working fine and local execution
 
 
 Log into SEDNA and do a test run to see if rainbow_bridge is working for you. Then, you can work on your actual meatabarcoding project.
