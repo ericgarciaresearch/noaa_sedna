@@ -81,9 +81,9 @@ rainbow_bridge uses two main dependencies `Nextflow` and `Singularity`. Both of 
 
 * Log into SEDNA
 * ssh into a compute node if you are running rainbow_bridge straight in the terminal
-  ```
-  ssh node<choose a node>
-  ```
+```
+ssh node<choose a node>
+```
 * Activate `rainbow_bridge`
 
 ```
