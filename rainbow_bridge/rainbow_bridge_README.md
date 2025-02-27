@@ -14,7 +14,7 @@ if you are new to SEDNA, have not configured modules and mamba in your SEDNA .ba
 ---
 
 # Table of Contents
-- [rainbow_bridge intro](#rainbow_bridge intro)
+- [:rainbow: rainbow_bridge intro](#rainbow_bridge-intro)
 - [Project organization and Managemet](#Project-organization-and-Management
 - [rainbow_bridge in SEDNA](# rainbow_bridge in SEDNA)
 - [Ways to run rainbow_bridge](#ways-to-run-rainbow_bridge)
@@ -29,7 +29,7 @@ if you are new to SEDNA, have not configured modules and mamba in your SEDNA .ba
 
 ---
 
-# rainbow_bridge intro
+# :rainbow: rainbow_bridge intro
 
 [rainbow_bridge](https://github.com/mhoban/rainbow_bridge) is a flexible pipeline for eDNA and metabarcoding analyses. It can process raw or already filtered sequences from single- or paired-end datasets. This pipeline can be used to create zero-radius operational taxonomic units (zOTUs), abundance tables, and assign taxonomy (via [BLAST](https://blast.ncbi.nlm.nih.gov/Blast.cgi) and/or [insect](https://github.com/shaunpwilkinson/insect))
  along with dropping to the lowest common ancestor (LCA). The pipeline can also help with taxon filtering/remapping,
