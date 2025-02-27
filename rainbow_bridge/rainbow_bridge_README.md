@@ -1,12 +1,37 @@
-# rainbow_bridge README for SEDNA (NOAA's supercomputer)
+# Rainbow Bridge for SEDNA (NOAA's supercomputer)
 
 This guide will help you use [rainbow_bridge](https://github.com/mhoban/rainbow_bridge) in SEDNA. 
 
 Please take a few hours to get familiar witht the rainbow_bridge README (previous link), there is a lot of relevent information that is too long to explain the details in here.
 
-`rainbow_bridge` is a flexible pipeline for eDNA and metabarcoding analyses. It can process raw or already filtered sequences
- from single- or paired-end datasets. This pipeline can be used to create zero-radius operational taxonomic units (zOTUs),
-abundance tables, and assign taxonomy (via [BLAST](https://blast.ncbi.nlm.nih.gov/Blast.cgi) and/or [insect](https://github.com/shaunpwilkinson/insect))
+---
+
+### Need SEDNA help?
+
+if you are new to SEDNA, have not configured modules and mamba in your SEDNA .bashrc, or still need more info about working on SEDNA, etc., please start by reading the [SEDNA information and best practices](https://docs.google.com/document/d/1nn0T0OWEsQCBoCdaH6DSY69lQSbK3XnPlseyyQuU2Lc/edit?tab=t.0) and/or the 
+[Working on SEDNA README](https://github.com/ericgarciaresearch/noaa_sedna)
+
+---
+
+# Table of Contents
+- [rainbow_bridge intro](#rainbow_bridge intro)
+- [Project organization and Managemet](#Project-organization-and-Management
+- [rainbow_bridge in SEDNA](# rainbow_bridge in SEDNA)
+- [Ways to run rainbow_bridge](#ways-to-run-rainbow_bridge)
+- [Test-Run](#test-run)
+- [Running rainbow_bridge using sbatch scripts](#running-rainbow_bridge-using-sbatch-scripts)
+- [Setting up your rainbow_bridge project](#setting-up-your-rainbow_bridge-project)
+  - [Organization](#organization)
+  - [Your DATA](#your-data)
+  - [Make a sample.map file](#make-a-samplemap-file)
+  - [Making a Barcode file](#making-a-barcode-file)
+  - [Making a Parameter yml file](#making-a-parameter-yml-file)
+
+---
+
+# rainbow_bridge intro
+
+[rainbow_bridge](https://github.com/mhoban/rainbow_bridge) is a flexible pipeline for eDNA and metabarcoding analyses. It can process raw or already filtered sequences from single- or paired-end datasets. This pipeline can be used to create zero-radius operational taxonomic units (zOTUs), abundance tables, and assign taxonomy (via [BLAST](https://blast.ncbi.nlm.nih.gov/Blast.cgi) and/or [insect](https://github.com/shaunpwilkinson/insect))
  along with dropping to the lowest common ancestor (LCA). The pipeline can also help with taxon filtering/remapping,
  decontamination, rarefaction, etc.
 
@@ -27,16 +52,10 @@ Key Features:
 Note that `rainbow_bridge` is a fork of [eDNAFlow](https://github.com/mahsa-mousavi/eDNAFlow) with added flexibility, capability,
  and compatibility. Refer to the original documentation and description of eDNAFlow as needed.
 
----
-
-### Need SEDNA help?
-
-if you are new to SEDNA, have not configured modules and mamba in your SEDNA .bashrc, or still need more info about working on SEDNA, etc., please start by reading the [SEDNA information and best practices](https://docs.google.com/document/d/1nn0T0OWEsQCBoCdaH6DSY69lQSbK3XnPlseyyQuU2Lc/edit?tab=t.0) and/or the 
-[Working on SEDNA README](https://github.com/ericgarciaresearch/noaa_sedna)
 
 ---
 
-### Project Organization and Management
+# Project Organization and Management
 
 Organization of projects is not a trivial thing. It can be the differnce between failure or increasingly efficient progress. A very popular tool to help organize and manage projects is [GitHub](https://github.com/). If you don't have a github account, I would you highly recommend [openning one ](https://github.com/signup)
 
@@ -48,17 +67,50 @@ In GitHub you can then have repositories for each of your project. **You should 
 
 ---
 
-## rainbow_bridge in SEDNA
+# rainbow_bridge in SEDNA
 
 The [rainbow_bridge SEDNA Git Subdirectory](https://github.com/ericgarciaresearch/noaa_sedna/tree/main/rainbow_bridge) was created to facilitate researchers to use rainbow_bridge in SEDNA.
 
 This subdir contains this README itself as well as several scripts and resources to this aim. You can explore this subdir and/or follow the guide below
 
+rainbow_bridge uses two main dependencies `Nextflow` and `Singularity`. Both of these have been installed in SEDNA in a single environment but this needs to be activated
+
+**DO NOT** sun `rainbow_bridge` straight in the login node, ssh into a compute node if you are not using sbatch scripts.
+
+**Activating rainbow_bridge**
+
+* Log into SEDNA
+* ssh into a compute node if you are running rainbow_bridge straight in the terminal
+  ```
+  ssh node<choose a node>
+  ```
+* Activate `rainbow_bridge`
+
+```
+module load bio/rainbow_bridge/202502
+```
+(or you can just run module load `bio/rainbow_bridge` but it will default to the newest version if there are multiple versions)(if you haven't enable modules go back to the SEDNA REDME)
+
+Unlike with the manually activation of `Nextflow` and `Singularity`, this module already contains  both simultaneously. For instance, if you try to independently load the last two manually, the second load will replace the first one, and rainbow_bridge will fail because it will be missing one of these dependencies.
+
+Note: At the moment we are using a single node (all 20 cores + all 192 GB of memory) till we can get NextFlow to interface with the scheduler **(Use a medmen node: node29-36)**
+
+Now activate the mamba environment with:
+```
+mamba activate rainbow_bridge
+```
+This activates `rainbow_bridge` in your current session. 
+
+If you are running rainbow_bridge in a sbatch script, then **make sure to include the following in your script before any mamba commands:**
+```
+source ~/.bashrc
+```
+The above is needed because SEDNA does not automatically sources your bash configuration in scripts.
+
+
 ---
 
-**Guide for using rainbow_bridge in SEDNA**
-
-Log into SEDNA. First we will do a test run and then we will run rainbow_bridge in real data using sbatch scripts. You can skip the test if you know rainbow_bridge is already working for you.
+# Ways to run rainbow_bridge
 
 There are two ways that you are able to run `rainbow_bridge`:
 
@@ -81,7 +133,10 @@ That being said, I have used the local execution when I had issues running it re
 
 ### TEST-RUN: Checking if rainbow_bridge is working fine and local execution
 
-*You probably only need to do this test the very first time you're trying to use `rainbow_bridge`*
+
+Log into SEDNA and do a test run to see if rainbow_bridge is working for you. Then, you can work on your actual meatabarcoding project.
+
+*You probably only need to do this test the very first time you're trying to use `rainbow_bridge`. You can skip this step is you know rainbow is already working for you*
 
 We can easily do this test using the [rainbow_bridge test data](https://github.com/mhoban/rainbow_bridge-test).
 
@@ -120,28 +175,18 @@ cd rainbow_bridge-test
 &nbsp;
 &nbsp;
 
-**Activating `rainbow_bridge`**
+**Activate rainbow_bridge**
+
+Load the `rainbow_bridge` module:
 ```
 module load bio/rainbow_bridge/202502
 ```
-(or you can just run module load `bio/rainbow_bridge` but it will default to the newest version if there are multiple versions)(if you haven't enable modules go back to the SEDNA REDME)
-
-Unlike with the manually activation of `Nextflow` and `Singularity`, this module already contains  both simultaneously. For instance, if you try to load the last two manually, the second load will replace the first one, and rainbow_bridge will fail because it will be missing one of these dependencies.
-
-Note: At the moment we are using a single node (all 20 cores + all 192 GB of memory) till we can get NextFlow to interface with the scheduler **(Use a medmen node: node29-36)**
 
 Now activate the mamba environment with:
 ```
 mamba activate rainbow_bridge
 ```
 This activates `rainbow_bridge` in your current session. 
-
-If you are running rainbow_bridge in a sbatch script, then **make sure to include the following in your script before any mamba commands:**
-```
-source ~/.bashrc
-```
-The above is needed because SEDNA does not automatically sources your bash configuration in scripts.
-
 
 &nbsp;
 &nbsp;
@@ -201,12 +246,16 @@ If you got these results, you are ready to try running rainbow_bridge in a scrip
 
 ---
 
-### Running `rainbow_bridge` using sbatch scripts
+# Running `rainbow_bridge` using sbatch scripts
 
 &nbsp;
 &nbsp;
 
-**Organization:**
+---
+
+# Setting up your rainbow_bridge project
+
+## Organization
 
 This is the organization I am following at the momment. Feel free to follow this or modify.
 
@@ -245,7 +294,7 @@ Document all your moves in your README. This is very important because:
 &nbsp;
 &nbsp;
 
-**Setting up your DATA**
+## Your DATA
 
 Transfer your data files inside your data subdir:
 ```
@@ -263,7 +312,7 @@ Take a momment to review your files:
 
 &nbsp;
 
-***Make a sample.map file***
+## Make a sample.map file
 
 See the rainbow_bridge README for all the different scenarios. In my case, I currently have demultiplexed paired-end files. To run `rainbow_bridge` in this dataset I will need to make a `sample.map` which is a simple text file with the 3 columns: the base name, name of the forward, and reverse files.
 
@@ -305,7 +354,7 @@ rm basenames R1names R2names
 
 &nbsp;
 
-***Making a Barcode file***
+## Making a Barcode file
 
 The main purpose of the barcode file is to list the barcode that identify each sample as well as the primers used in the sequencing. *rainbow_bridge* uses this file to demultiplex and strip primers as needed. Additional information can also be place in this file.
 
@@ -389,7 +438,7 @@ My file then looks like:
 
 &nbsp;
 
-***Making a Parameter yml file***
+## Making a Parameter yml file
 
 When running rainbow with a sbatch script, you can either include the complete command in the script using flags such as 
 ```
