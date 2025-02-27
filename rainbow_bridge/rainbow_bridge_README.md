@@ -48,9 +48,17 @@ In GitHub you can then have repositories for each of your project. **You should 
 
 ---
 
-## Using rainbow_bridge in SEDNA
+## rainbow_bridge in SEDNA
 
-Log into SEDNA. First we will do a test run and then we will run rainbow_bridge in real data using sbatch scripts
+The [rainbow_bridge SEDNA Git Subdirectory](https://github.com/ericgarciaresearch/noaa_sedna/tree/main/rainbow_bridge) was created to facilitate researchers to use rainbow_bridge in SEDNA.
+
+This subdir contains this README itself as well as several scripts and resources to this aim. You can explore this subdir and/or follow the guide below
+
+---
+
+**Guide for using rainbow_bridge in SEDNA**
+
+Log into SEDNA. First we will do a test run and then we will run rainbow_bridge in real data using sbatch scripts. You can skip the test if you know rainbow_bridge is already working for you.
 
 There are two ways that you are able to run `rainbow_bridge`:
 
@@ -208,7 +216,7 @@ cd ~		# this always takes you home regardless of your current location
 mkdir projects
  ```
 
-Here, you can then place project as a GitHub repository (You can create repos straight from the command line or at GitHub and then clone it). Currently:
+Here, you can then place projects as a GitHub repositories (You can create repos straight from the command line or at GitHub and then clone it). Currently:
 ```
 mkdir projects/MiFishU-test
 ```
@@ -299,11 +307,13 @@ rm basenames R1names R2names
 
 ***Making a Barcode file***
 
+The main purpose of the barcode file is to list the barcode that identify each sample as well as the primers used in the sequencing. *rainbow_bridge* uses this file to demultiplex and strip primers as needed. Additional information can also be place in this file.
+
 *A barcode file is necessary except for demultiplexed runs where the PCR primers have already been removed*
 
-See rainbow README for details but briefly here are the examples given:
+See orinigal [rainbow README](https://github.com/mhoban/rainbow_bridge) for details but briefly, here are the examples given:
 
-* Non-demultiplexed runs: This format includes forward/reverse sample barcodes and forward/reverse PCR primers to separate sequences into the appropriate samples. Barcodes are separated with a colon and combined in a single column while primers are given in separate columns. For example:
+* **Non-demultiplexed runs:** This format includes forward/reverse sample barcodes and forward/reverse PCR primers to separate sequences into the appropriate samples and remove primer sequences. Barcodes are separated with a colon and combined in a single column while primers are given in separate columns. For example:
 
 unmuxed_barcode.tsv
 
@@ -312,7 +322,7 @@ unmuxed_barcode.tsv
 |16S-Fish | B001 | GTGTGACA:AGCTTGAC | CGCTGTTATCCCTADRGTAACT | GACCCTATGGAGCTTTAGAC | EFMSRun103_Elib90
 |16S-Fish | B002 | GTGTGACA:GACAACAC | CGCTGTTATCCCTADRGTAACT | GACCCTATGGAGCTTTAGAC | EFMSRun103_Elib90
 
-* Demultiplexed runs: Since sequences have already been separated into samples, this format omits the barcodes (using just a colon, ':' in their place) but includes the primers. For example:
+* **Demultiplexed runs:** Since sequences have already been separated into samples, this format omits the barcodes (using just a colon ':' in their place) but includes the primers. For example:
 
 demuxed_barcode.tsv
 
@@ -320,6 +330,61 @@ demuxed_barcode.tsv
 |---|---|---|---|---|---|
 |primer | V9_18S | : | GTACACACCGCCCGTC | TGATCCTTCTGCAGGTTCACCTAC | | 
 
+
+* Place your barcode file in your data subdirectory along with your sample.map and data files
+
+
+***[PIFSC_Metabarcoding_Primers]()**
+
+We have listed the current list of primers used in PIFSC in the file [PIFSC_Metabarcoding_Primers]() which lives inside
+```
+/home/egarcia/data
+```
+
+This files looks like this:
+```
+Primer Set	JonahVentures_name	Primer Name	Reference	Primer_seq_FWD	Primer_seq_REV	Target Taxa	Amplicon size	Confirmation_notes
+COI	UniCOI	mlCOIintF; jgHCO2198	Leray et al. 2013	GGWACWGGWTGAACWGTWTAYCCYCC	TAIACYTCIGGRTGICCRAARAAYCA	Metazoans	304-313	confimed in JVB1836-UniCOI-testmethods.txt, which has a different reverse than what we originally requested
+16S-Fish	16SDegenerate	16SF/D; 16S2R-degenerate	Deagle et al. 2007; Berry et al. 2017	GACCCTATGGAGCTTTAGAC	CGCTGTTATCCCTADRGTAACT	Fish	178-228	confirmed in JVB1836-16SDegenerate-testmethods.txt
+12S-MiFish	MiFishU	MiFish-U-F; MiFish-U-R	Miya et al. 2015	GTCGGTAAAACTCGTGCCAGC	CATAGTGGGGTATCTAATCCCAGTTTG	Fish	163-185	confirmed in JVB1836-MiFishU-testmethods.txt
+18S V1-3	18S_400	18S_1F; 18S_400R	Pochon et al. 2013	GCCAGTAGTCATATGCTTGTCT	GCCTGCTGCCTTCCTT	Eukaryotes	336-423	confirmed in JVB1836-18S_400-testmethods.txt![image](https://github.com/user-attachments/assets/ecaa7953-f78d-462b-b931-3b417915f90b)
+```
+For PIFSC projects, use the above info to make your ***barcode.tsv*** file. 
+
+Example:
+
+To populate a barcode file for the MiFishU project :
+
+1. ***#assay*** = 12S
+2. ***sample*** = I will copy the base name of files from my previous *sample.map* file
+3. ***barcodes*** = it will simply be ":" since these files are demultiplexed already
+4. ***forward_primer***= GTCGGTAAAACTCGTGCCAGC
+5. ***reverse_primer***= CATAGTGGGGTATCTAATCCCAGTTTG
+6. ***extra_info***= MiFishU 163-185bp. Confirmed in JVB1836-MiFishU-testmethods.txt (this column is arbitrary)
+
+Thus, this file can be created with:
+```
+cd /home/egarcia/projects/MiFishU-test/data		#navigate to my project's data subdir 
+cut -f1 sample.map > sample	# get your sample basenames
+wc -l sample			# count your samples for the next commands. In my case, I have 52 samples
+yes 12S | head -n52 > assay	# prints 12S 52 times
+yes : | head -n52 > barcodes	# prints : 52 times
+yes GTCGGTAAAACTCGTGCCAGC | head -n52 > fp		# prints the fprimer 52 time
+yes CATAGTGGGGTATCTAATCCCAGTTTG | head -n52 > rp	# prints the rprimer 52 time
+yes MiFishU 163-185bp. Confirmed in JVB1836-MiFishU-testmethods.txt | head -n52		# prints extra info 52 times
+paste assay sample barcodes fp rp xinfo > body		# creates the body of the file
+echo -e "#assay\tsample\tbarcodes\tforward_primer\treverse_primer\textra_information" > header		# creates the header
+cat header body > demuxed_barcodes.tsv		# puts the last two together
+rm assay sample barcodes fp rp xinfo body header		# clean up
+```
+
+My file then looks like:
+```
+#assay  sample  barcodes        forward_primer  reverse_primer  extra_information
+12S     JV183.1_MiFishU_WhitneyJonathan_S040845.1       :       GTCGGTAAAACTCGTGCCAGC   CATAGTGGGGTATCTAATCCCAGTTTG     MiFishU 163-185bp. Confirmed in>
+12S     JV183.1_MiFishU_WhitneyJonathan_S040846.1       :       GTCGGTAAAACTCGTGCCAGC   CATAGTGGGGTATCTAATCCCAGTTTG     MiFishU 163-185bp. Confirmed in>
+12S     JV183.1_MiFishU_WhitneyJonathan_S040853.1       :       GTCGGTAAAACTCGTGCCAGC   CATAGTGGGGTATCTAATCCCAGTTTG     MiFishU 163-185bp. Confirmed in>
+```
 
 &nbsp;
 
