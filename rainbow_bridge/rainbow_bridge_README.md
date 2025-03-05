@@ -267,12 +267,16 @@ cd ~		# this always takes you home regardless of your current location
 mkdir projects
  ```
 
-Here, you can then place projects as a GitHub repositories (You can create repos straight from the command line or at GitHub and then clone it). Currently:
+Here, you can then place/create projects as a GitHub repositories (You can create repos straight from the command line or at GitHub and then clone it). Currently:
 ```
 mkdir projects/MiFishU-test
 ```
 
-In here, make the following subdirectories: data, scripts and analyses
+In your new GitHub repo for your project, make the following subdirectories: 
+
+* data
+* scripts
+* analyses
 ```
 mkdir projects/MiFishU-test/data		# this is where you'll place your datafiles
 mkdir projects/MiFishU-test/scripts		# place your scripts here
@@ -385,7 +389,7 @@ demuxed_barcode.tsv
 * Place your barcode file in your data subdirectory along with your sample.map and data files
 
 
-***[PIFSC_Metabarcoding_Primers]()**
+**[PIFSC_Metabarcoding_Primers]()**
 
 We have listed the current list of primers used in PIFSC in the file [PIFSC_Metabarcoding_Primers]() which lives inside
 ```
