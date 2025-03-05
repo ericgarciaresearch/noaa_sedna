@@ -27,6 +27,7 @@ Many of the steps and info in this README were copied from the above document.
 	* Default partition; 8hr default time for jobs
 * **SLURM PARTITION: medmem** 
 	* node29-36: 192 GB of memory, 12x 16GB
+ 	* 20 cores/node 
 
 4 high memory nodes
 
