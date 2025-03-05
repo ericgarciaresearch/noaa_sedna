@@ -77,7 +77,7 @@ This subdir contains this README itself as well as several scripts and resources
 
 rainbow_bridge uses two main dependencies `Nextflow` and `Singularity`. Both of these have been installed in SEDNA in a single environment but this needs to be activated
 
-**DO NOT** sun `rainbow_bridge` straight in the login node, ssh into a compute node if you are not using sbatch scripts.
+**DO NOT** run `rainbow_bridge` straight in the login node, ssh into a compute node if you are not using sbatch scripts.
 
 **Activating rainbow_bridge**
 
