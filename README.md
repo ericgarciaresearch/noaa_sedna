@@ -23,6 +23,7 @@ Many of the steps and info in this README were copied from the above document.
 
 * **SLURM PARTITION: standard**
 	* node01-28:  96 GB of memory, 12x 8GB
+ 	* 20 cores/node
 	* Default partition; 8hr default time for jobs
 * **SLURM PARTITION: medmem** 
 	* node29-36: 192 GB of memory, 12x 16GB
@@ -31,6 +32,7 @@ Many of the steps and info in this README were copied from the above document.
 
 * **SLURM PARTITION: himem**
 	* himeme01-04: 1.5 TB of memory, 24x 64GB
+ 	* 24 cores/node	
 	* have their own scratch (/data) space
 
 Is possible to run jobs in multiple partitions with”
