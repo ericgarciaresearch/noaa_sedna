@@ -4,6 +4,8 @@ This guide will help you use [rainbow_bridge](https://github.com/mhoban/rainbow_
 
 Please take a few hours (not kidding :slightly_smiling_face:) to get familiar with the rainbow_bridge README (previous link), there is a lot of relevent information that is too long to explain the details in here.
 
+Contact: Dr. Eric Garcia, eric.e.garcia@noaa.edu
+
 ---
 
 ### Need SEDNA help?
