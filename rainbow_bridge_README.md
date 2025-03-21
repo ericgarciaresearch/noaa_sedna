@@ -2,6 +2,15 @@
 
 This guide will help you use [rainbow_bridge](https://github.com/mhoban/rainbow_bridge) in SEDNA. 
 
+The pipeline was been cloned in the share directory:
+```
+/share/all/rainbow_bridge
+```
+Additionally,  in-house scripts for pre-processing, running rainbow and post-processing have also available in:
+```
+/share/all/rainbow_bridge_in-house-scripts
+```
+
 Please take a few hours to get familiar witht the rainbow_bridge README (previous link), there is a lot of relevent information that is too long to explain the details in here.
 
 `rainbow_bridge` is a flexible pipeline for eDNA and metabarcoding analyses. It can process raw or already filtered sequences
