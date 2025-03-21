@@ -47,11 +47,11 @@ if you are new to SEDNA, have not configured modules and mamba in your SEDNA .ba
 
 ### Project Organization and Management
 
-Organization of projects is not a trivial thing. It can be the differnce between failure or increasingly efficient progress. A very popular tool to help organize and manage projects is [GitHub](https://github.com/). If you don't have a github account, I would you highly recommend [openning one ](https://github.com/signup)
+Organization of projects is not a trivial thing. It can be the difference between failure or increasingly efficient progress. A very popular tool to help organize and manage projects is [GitHub](https://github.com/). If you don't have a github account, I would you highly recommend [openning one ](https://github.com/signup)
 
 **GitHub** is the web interface for ***Git***, which is a version control software that allow multiple people to share and work simultaneously in the same code/document. 
 
-In GitHub you can then have repositories for each of your project. **You should strongly consider having a repo for each of your projects, including rainbow_bridge metabarcoding analyses**. Check with your organization,lab or PI, they might already have a github policy, in which case you can follow that. I personally keep copies of repos in my personal account when the original repo exist under an organization.
+In GitHub you can then have repositories for each of your projects. **You should strongly consider having a repo for each of your projects, including rainbow_bridge metabarcoding analyses**. Check with your organization,lab or PI, they might already have a github policy, in which case you can follow that. I personally keep copies of repos in my personal account when the original repo exist under an organization.
 
 ***Git*** is automatically available in SEDNA. No need to load it.
 
@@ -63,15 +63,16 @@ Log into SEDNA. First we will do a test run and then we will run rainbow_bridge 
 
 There are two ways that you are able to run `rainbow_bridge`:
 
-1. Locally, by downloading the main [rainbow_bridge GitHub repo](https://github.com/mhoban/rainbow_bridge):
+1. Locally, by using the copy already downloaded in the share dir or downloading the main [rainbow_bridge GitHub repo](https://github.com/mhoban/rainbow_bridge) in your home dir as needed:
 ```
+# if you need to download again
 git clone https://github.com/mhoban/rainbow_bridge
 ```
-then using the *rainbow_bridge.nf* in this repo (like the test run below).
+then grabbing a compute node and using the *rainbow_bridge.nf* script (like the test run below).
 
 or
 
-2. Remotely, by executing `rainbow_bridge` directly from the main Git repo, i.e., using the internet.
+2. Remotely (recommended), by executing `rainbow_bridge` directly from the main Git repo, i.e., using the in-house script for running rainbow
 * see below
 
 **Note: I would recommend running remotely given that if there are recent updates to the pipeline, which do happen, your local copy of the code might not have these updates which will likely break something down the road**
@@ -203,6 +204,11 @@ If you got these results, you are ready to try running rainbow_bridge in a scrip
 ---
 
 ### Running `rainbow_bridge` using sbatch scripts
+
+I have created the sbatch script `run_rainbow_b `  available in:
+```
+/share/all/rainbow_bridge_in-house-scripts
+```
 
 &nbsp;
 &nbsp;
