@@ -205,10 +205,7 @@ If you got these results, you are ready to try running rainbow_bridge in a scrip
 
 ### Running `rainbow_bridge` using sbatch scripts
 
-I have created the sbatch script `run_rainbow_b `  available in:
-```
-/share/all/rainbow_bridge_in-house-scripts
-```
+When running rainbow using a sbatch script it is not necessary to grab a computing node as this will be automatically deployed by the script. Furthermore, rainbow can still be executed locally (see above) or remotely. We will focus in the last as this warranties we will always be running the lastest version of the pipeline.
 
 &nbsp;
 &nbsp;
@@ -223,25 +220,39 @@ cd ~		# this always takes you home regardless of your current location
 mkdir projects
  ```
 
-Here, you can then place project as a GitHub repository (You can create repos straight from the command line or at GitHub and then clone it). Currently:
+Here, you can then place projects as a GitHub repositories (You can create repos straight from the command line or at GitHub and then clone it). We are making a separete repo for what can be treated a stand alone product. For example, for multi-marker projects, we are setting up a separate repo for each marker and then an additional one for the analyses that will combine them.
+
+**Create a Git Repo for your project**
+1. Go to your persoal or organization's Git. Click "Repositories", and click in the green "New" bottom
+2. Give a descriptive name (example:"pelagic-cruise_fish_MiFishU_2022") and click "Add a README file", then "Create repository"
+* This will take you to the webpage of your new repo.
+3. Now, click in the green "Code" bottom and copy the displayed HTTPS link
+4. Navigate to your projects dir and `git clone <your new repo's HTTPS link>`
+* This will make a copy in SEDNA where you can start working
+  
+Current Projects:
 ```
-mkdir projects/MiFishU-test
+/home/egarcia/projects/coral-reef_fish_MiFishU_2022
+/home/egarcia/projects/pelagic-cruise_fish_MiFishU_2022
 ```
 
-In here, make the following subdirectories: data, scripts and analyses
+cd into your cloned repo and make the following subdirectories: data, scripts and analyses
 ```
-mkdir projects/MiFishU-test/data		# this is where you'll place your datafiles
-mkdir projects/MiFishU-test/scripts		# place your scripts here
-mkdir projects/MiFishU-test/analyses		# create subdirectories here for each rainbow run (w/diff. parameters etc)
+cd pelagic-cruise_fish_MiFishU_2022
+mkdir data		# this is where you'll place your datafiles
+mkdir scripts		# place your scripts here
+mkdir analyses		# create subdirectories here for each rainbow run (w/diff. parameters etc)
 ```
 
-If you have not made a README, make one:
+If you did not make a README, make one:
 ```
 nano projects/MiFishU-test/README.md
 ```
 where:
 * **nano** is the text editor I like but you can use whatever other one (vim for example). Here is one [nano tutorial](https://www.geeksforgeeks.org/nano-text-editor-in-linux/) of many in the web
 * "**md**" stands for markdown, which is the language you will be writing your READMEs on. Here is an online course in [md for GitHub](https://github.com/skills/communicate-using-markdown)
+
+You can use **nano** to modify files as needed.
 
 Document all your moves in your README. This is very important because:
 * Documents that work you have done
