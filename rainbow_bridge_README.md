@@ -255,10 +255,11 @@ where:
 You can use **nano** to modify files as needed.
 
 Document all your moves in your README. This is very important because:
-* Documents that work you have done
+* Documents the work you have done
 * Allows other to replicate your work
 * Allows your future self to understand what you did now
-* Might be useful to copy the format from a repo that is fully or semi-complete so you get some structure or you can build upon that format
+
+***Might be useful to copy the format from a repo that is fully or semi-complete so you get some structure or you can build upon that format***
 
 &nbsp;
 &nbsp;
