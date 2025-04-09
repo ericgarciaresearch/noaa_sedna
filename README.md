@@ -78,6 +78,50 @@ ssh nfs quota -s
 
 ---
 
+## Login vs Compute Nodes
+
+When you first login into SEDNA you will be in the login node. You know you are in the login now when your prompt line reads something like:
+```
+(base) [userID@sedna currentDIR]$
+```
+
+It is ok to do some light processes like navigation, listing, file organization, etc. However, you should NOT do any mid to heavy computations in the login node. You should instead either run a scricp, which will automatically grab and specified computing node, or you can login manually to a computing node (i.e. sdandard, medmem or himem nodes).
+
+The first thing is to see what interactive/computing nodes are available (idle):
+
+```
+sinfo
+```
+at the momment I tried this, I got:
+```
+sinfo
+PARTITION AVAIL  TIMELIMIT  NODES  STATE NODELIST 
+standard*    up   infinite     17    mix node[10-22,24,26-28] 
+standard*    up   infinite      9  alloc node[01-09] 
+standard*    up   infinite      2   idle node[23,25] 
+himem        up   infinite      4    mix himem[01-04] 
+medmem       up   infinite      5    mix node[29-30,32-34] 
+medmem       up   infinite      2  alloc node[31,35] 
+medmem       up   infinite      1   idle node36 
+```
+There are a few standdard and medmem nodes idle. Thus, if I pretend I want to run rainbow_bridge which is not a light process I would need a medmem or himem node. I see node36 is available so I snatched it!
+```
+ssh node36
+```
+
+Now my prompt looks like:
+```
+(base) [egarcia@node36 currentDIR]$
+```
+
+You can go back to the login node as needed with
+```
+exit
+```
+and another `exit` will kick out of SEDNA completely.
+
+---
+
 ## Modules
 
 Most software is stored in modules. To use modules ***do this once*** (only need to do it one time but you will need to log out and back in for the changes to take effect the first time):
@@ -198,38 +242,19 @@ Ok, now you should be able to use module and environment with mamba, etc.
 
 ### rainbow_bridge dependency installation
 
-You will need to activate various dependencies to use rainbow_bridge and other tools.
+To activate the various dependencies and rainbow_bridge you need to run two steps:
 
-
-
-***(DEPRECATED Feb 6, 2025)***
-
-Activate Singularity and NexFlow which are the two main dependencies of rainbow_bridge.
-
+1. Load the rainbow_bridge module
 ```
-mamba activate singularity-3.8.6
-mamba activate nextflow-24.04.4
+module load bio/rainbow_bridge/202502
 ```
+Unlike with the manually activation of `Nextflow` and `Singularity`, this module already contains  both simultaneously. For instance, if you try to load the last two manually, the second load will replace the first one, and rainbow_bridge will fail because it will be missing one of these dependencies.
 
-You can check if these worked with:
+2. then activate the mamba environment with
 ```
-which singularity
-which nextflow
+mamba activate rainbow_bridge
 ```
-which will give you the version
-
-
-Great! You are ready to use Singularity.
-
-`rainbow_bridge` and other tools rely on *singularity* and *nexflow*.
-
-**PROBLEM (FEB 3 2025):**
-
-When I activate nextflow, this deactivates singularity, and 
-
-viceversa. I need to know how to activates both simultaneously.
-
-Maybe I can activate one of the above using conda ???
+This activates `rainbow_bridge` in your current session. 
 
 ---
 
