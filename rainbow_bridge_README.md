@@ -271,6 +271,8 @@ Transfer your data files inside your data subdir:
 mv or cp <files> projects/MiFishU-test/data
 ```
 
+**Sequence File Check**
+
 Take a momment to review your files:
 * is your data demultiplexed?
 * are the data single- or paired-end?
@@ -279,6 +281,73 @@ Take a momment to review your files:
  * Check the sizes
  	* do you have consistent number of reads across samples? or a biased distribution?
 
+For convinience, I have created the script `check_fastq_awk.sh` which checks the:
+
+A) FASTQ format
+	* Checks that line 1 of each record starts with @
+        * Checks that line 3 starts with +
+        * Verifies that the sequence (line 2) and quality (line 4) have equal length.
+        * Confirms the total number of lines is a multiple of 4 and that the file is not empty
+
+B) GZ format
+        * Checks that compression (gz) is correct. Problems with this could indicate faulty file downloads or transfers
+
+C) Paired-End (PE) format
+        * Checks that every sample has the set forward and reverse files, and these have the same number of reads.
+
+This scripts lives at
+```
+/share/all/scripts/egarcia/check_fastq_awk.sh
+```
+
+to execute with
+```
+bash /share/all/scripts/egarcia/check_fastq_awk.sh "<path_to_seq_files>"
+```
+
+You will see a summary of the results printed straight in the standard output, stdout, that looks like this (example using 4 files):
+
+🧪 FASTQ Validation Summary
+----------------------------
+✅ Passed: 4
+❌ Failed: 0
+📊 Total:  4
+🎉 All files passed FASTQ validation.
+
+🧪 GZIP Compression Check
+----------------------------
+✅ GZIP OK: 4
+❌ GZIP Fail: 0
+📦 Total Checked: 4
+🎉 All files are valid GZIP compressed files.
+
+🧪 Paired-End FASTQ Validation (awk-only)
+------------------------------------------
+
+✅ Pairs OK: 2
+❌ Pairs Fail: 0
+🔢 Total Pairs Checked: 2
+🎉 All paired FASTQ files look properly matched and formatted.
+
+The script also generates an outdir called `fq_format_check_logs`  with list of "good" and "bad" files, logs of file properties, and a read count of both paired-end files in `paired_end_check.log`
+
+In addition, if any file is found to have issues in the format, the script will generated a detailed log for that file as well.
+
+Note: this script should work with *[R1|r1].[fastq|fq].gz and *[R2|r2].[fastq|fq].gz file extensions. Other extensions will need modification. Should you need to modify it, make a copy in your home dir and modify as needed.
+
+**Potentially Fixing Format Issuess**
+
+I have also generated the script `fix_bad_fastq.sh` which attempts to faulty files by:
+1. Removing empty lines
+2. Removing partial/incomplete records
+3. Truncating excess lines so the total is divisible by 4
+4. Ensuring @ and + headers exist where expected
+
+Yet, I have not have the chance to test the script to use with caution. 
+
+```
+/share/all/scripts/egarcia/fix_bad_fastq.sh
+```
 
 &nbsp;
 
