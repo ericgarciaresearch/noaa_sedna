@@ -284,16 +284,16 @@ Take a momment to review your files:
 For convinience, I have created the script `check_fastq_awk.sh` which checks the:
 
 A) FASTQ format
-	* Checks that line 1 of each record starts with @
-        * Checks that line 3 starts with +
-        * Verifies that the sequence (line 2) and quality (line 4) have equal length.
-        * Confirms the total number of lines is a multiple of 4 and that the file is not empty
+* Checks that line 1 of each record starts with @
+* Checks that line 3 starts with +
+* Verifies that the sequence (line 2) and quality (line 4) have equal length.
+* Confirms the total number of lines is a multiple of 4 and that the file is not empty
 
 B) GZ format
-        * Checks that compression (gz) is correct. Problems with this could indicate faulty file downloads or transfers
+* Checks that compression (gz) is correct. Problems with this could indicate faulty file downloads or transfers
 
 C) Paired-End (PE) format
-        * Checks that every sample has the set forward and reverse files, and these have the same number of reads.
+* Checks that every sample has the set forward and reverse files, and these have the same number of reads.
 
 This scripts lives at
 ```
