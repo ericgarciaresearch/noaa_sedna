@@ -35,6 +35,7 @@ See [Midori2's README](https://www.reference-midori.info/download.php) in their 
 
 # sub-databases
 /share/all/midori2_database/2024-10-13_customblast_sp_uniq_COI
+/share/all/midori2_database/2024-12-14_customblast_sp_uniq_COI
 /share/all/midori2_database/2024-12-14_customblast_sp_uniq_12S
 ```
 *if you add addintional databases please add them to the list above*
