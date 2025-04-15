@@ -38,7 +38,7 @@ See [Midori2's README](https://www.reference-midori.info/download.php) in their 
 /share/all/midori2_database/2024-12-14_customblast_sp_uniq_COI
 /share/all/midori2_database/2024-12-14_customblast_sp_uniq_12S
 ```
-*if you add addintional databases please add them to the list above*
+**if you add addintional databases please add them to the list above**
 
 ---
 
@@ -46,7 +46,7 @@ See [Midori2's README](https://www.reference-midori.info/download.php) in their 
 
 **SEDNA SETUP** 
 
-I went ahead and downloaded and setup the [Midori2 database](https://www.reference-midori.info/) in SEDNA for rainbow_bridge.
+I went ahead and downloaded and setup the [Midori2 database](https://www.reference-midori.info/) for few markers in SEDNA since I'll be using these with `rainbow_bridge`.
 
 Parent directory for midori2 databases:
 ```
@@ -55,13 +55,14 @@ Parent directory for midori2 databases:
 
 
 ***NOTE:*** `rainbow_bridge` is not one of the already available formats.
-	* Not a problme! We can download the RAW dataset and create a custom blast dataset :)
+
+* Not a problme! We can download the RAW dataset and create a custom blast dataset :)
 
 I decided to start by setting up the COI species "sp" , "uniq" which retains all haplotypes from all taxonomic labels. For instance, this will include all sequences that have been matched to only a genus or a family. 
 
 ### Download Database
 
-I downloaded the SP Uniq COI to begin with (after creating a dir for the corresponding version of the midori2 database):
+I created a dir for the corresponding version of the midori2 database and I downloaded the SP Uniq COI to begin with (you can follow these steps to create new databases with other markers, etc.):
 ```
 cd /share/all/midori2_database
 mkdir 2024-10-13_customblast_sp_uniq_COI
