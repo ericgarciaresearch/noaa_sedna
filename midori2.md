@@ -5,7 +5,7 @@ This README documents general information about Midori2 Databases and provides a
 Note: if you are new to SEDNA or still need general help to work in SEDNA, please start by reading the [SEDNA information and best practices](https://docs.google.com/document/d/1nn0T0OWEsQCBoCdaH6DSY69lQSbK3XnPlseyyQuU2Lc/edit?tab=t.0) and/or the
  [Working on SEDNA README](https://github.com/ericgarciaresearch/noaa_sedna)
 
-NCBI GenBank databases are known to have various problems such as erroneous identification of organisms, potential lack of sequence curation, ets. This is where Midori2 can help. 
+NCBI GenBank databases are known to have various problems such as erroneous identification of organisms, potential lack of sequence curation, etc. This is where Midori2 can help. 
 
 [**Midori2**](https://www.reference-midori.info/) is a set of publicly accessable, already curated mitochondrial marker or amino acid databases (from NCBI GenBank) that get updated every few months and are useful for metabarcoding analyses. In addition, these databases have also been pre-formatted to fit many common metabarcoding pipelines,
  and raw sequences are also available if your desired format is not included.
