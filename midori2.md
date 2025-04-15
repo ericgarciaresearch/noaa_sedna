@@ -72,18 +72,17 @@ wget -c https://www.reference-midori.info/download/Databases/GenBank261_2024-10-
 
 Now umcompress the file for the next step:
 ```
-cd 2024-10-13_customblast_sp_uniq_COI
 gunzip MIDORI2_UNIQ_SP_NUC_GB263_CO1_RAW.fasta.gz
 ```
 
-***NOTE:*** The Midori2 database get updated every 2 months. Make sure you download the latest and note which version you are using.
+***NOTE:*** The Midori2 database gets updated every few months. Make sure you download the latest and note which version you are using in your metadata and READMEs, etc.
 
 ### Prep Fasta for makeblastdb
 
 Next problems:
 
-* Midori2 raw fasta files have sequence names with the entire taxonomic information making these super long and makeblastdb has a limit of 50 characters.
-* makeblastdb requires a taxid_map file where the read names and NCBI taxonomic id are provided in the column1 and column2, respectively (tab separated)
+* Midori2 raw fasta files have sequence names with the entire taxonomic information making these super long and `makeblastdb` has a limit of 50 characters.
+* `makeblastdb` requires a `taxid_map` file where the read names and NCBI taxonomic ids are provided in the column1 and column2, respectively (tab separated).
 
 To solve this, I created the script `clean_midori2fasta_for_makeblastdb.sh` that cleans the midori2 raw fasta. This script lives in 
 ```
@@ -91,12 +90,11 @@ To solve this, I created the script `clean_midori2fasta_for_makeblastdb.sh` that
 ```
 
 Cleanning includes:
-1. Keeping only the accession number and species (and sub-species of hybrid) info (removes extra taxonomic info such as higher taxo-levels)
+1. Keeping only the accession number and species (and sub-species of hybrid) info but it removes extra taxonomic info such as higher taxo-levels.
 2. Truncates names to 50 characters
-3. Makes the taxid_map file. Luckily the ncbi taxid of each species is given by midori2 already. This script harvest this info.
+3. Makes the `taxid_map` file. Luckily the ncbi taxid of each species is given by midori2 already. This script harvest this info.
 
-***NOTE:*** This process might take a while so might be a good idea to use a screen
-
+***NOTE:*** This process might take a while so might be a good idea to run this using (screen)[https://linuxize.com/post/how-to-use-linux-screen/] which is already installed in SEDNA.
 
 Move to the working dir (one level about the downloaded database)
 ``` 
