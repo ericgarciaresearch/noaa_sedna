@@ -39,7 +39,7 @@ Many of the steps and info in this README were summarised from the above documen
 
 Is possible to run jobs in multiple partitions with”
 ```
-#SBATCH -p standard, medme
+#SBATCH -p standard, medmem
 ```
 
 ---
