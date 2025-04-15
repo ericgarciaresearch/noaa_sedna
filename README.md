@@ -4,7 +4,7 @@ This README documents general information and provides a loose guide to help you
 
 Please read the [SEDNA information and best practices](https://docs.google.com/document/d/1nn0T0OWEsQCBoCdaH6DSY69lQSbK3XnPlseyyQuU2Lc/edit?tab=t.0)
 
-Many of the steps and info in this README were copied from the above document.
+Many of the steps and info in this README were summarised from the above document.
 
 ---
 
