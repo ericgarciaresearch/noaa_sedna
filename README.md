@@ -406,7 +406,7 @@ More examples available in the [SEDNA info & best practices doc](https://docs.go
 
 ## rainbow_bridge at SEDNA
 
-This is an example of one of the pipelines that Eric has installed in SEDNA. Many other pipelines/modules/software are available.
+This is an example of one of the pipelines that Eric Garcia has installed in SEDNA. Many other pipelines/modules/software are available.
 
 [rainbow_bridge](https://github.com/mhoban/rainbow_bridge) is a flexible pipeline for eDNA and metabarcoding analyses. It can process raw or already filtered sequences
  from single- or paired-end datasets. This pipeline can be used to create zero-radius operational taxonomic units (zOTUs),
