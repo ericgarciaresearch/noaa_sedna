@@ -21,7 +21,7 @@ Many of the steps and info in this README were summarised from the above documen
 
 36 standard compute nodes across
 
-* **SLURM PARTITION: standard**
+* **SLURM PARTITION: standard** 
 	* node01-28:  96 GB of memory, 12x 8GB
  	* 20 cores/node
 	* Default partition; 8hr default time for jobs
@@ -33,11 +33,24 @@ Many of the steps and info in this README were summarised from the above documen
 4 high memory nodes
 
 * **SLURM PARTITION: himem**
-	* himeme01-04: 1.5 TB of memory, 24x 64GB
+	* himem01-04: 1.5 TB of memory, 24x 64GB
  	* 24 cores/node	
 	* have their own scratch (/data) space
 
-Is possible to run jobs in multiple partitions with”
+Use by specifying your desired partition in sbatch scripts
+```
+#SBATCH -p medmem
+```
+(`standard` is the default if not specified)
+
+or by log into an specific node
+```
+ssh node30
+ssh himem02
+etc
+```
+
+It is possible to run jobs in multiple partitions with:
 ```
 #SBATCH -p standard, medmem
 ```
@@ -48,14 +61,13 @@ Is possible to run jobs in multiple partitions with”
 
 **SEDNA Account**
 
-First of all, you need to get an account setup. Talk to your supervisor for this. 
+First of all, you need to get an account setup. Talk to your supervisor for this or if you work at PIFSC you can submit a [Jira ticket](https://apps-st.fisheries.noaa.gov/jirasm/servicedesk/customer/portal/4.) 
 
 You will need to create an new password:
 * 14 characters long
 * cannot have the same character twice in a row , for example “aa” , “55”
 * both upper and lower case characters
 * contain digits and symbols
-
 
 **Connecting to SEDNA:**
 
