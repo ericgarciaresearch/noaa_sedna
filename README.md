@@ -37,13 +37,15 @@ Many of the steps and info in this README were summarised from the above documen
  	* 24 cores/node	
 	* have their own scratch (/data) space
 
-Use by specifying your desired partition in sbatch scripts
+**Nodes Usage:**
+
+Use nodes by specifying your desired partition in sbatch scripts
 ```
 #SBATCH -p medmem
 ```
-(`standard` is the default if not specified)
+(`standard` is the default if not specified). The system will automatically designate a node withing the specified partition for your job.
 
-or by log into an specific node
+Or by logging into a specific node
 ```
 ssh node30
 ssh himem02
@@ -61,7 +63,7 @@ It is possible to run jobs in multiple partitions with:
 
 **SEDNA Account**
 
-First of all, you need to get an account setup. Talk to your supervisor for this or if you work at PIFSC you can submit a [Jira ticket](https://apps-st.fisheries.noaa.gov/jirasm/servicedesk/customer/portal/4.) 
+First of all, you need to get an account setup. Talk to your supervisor for this or if you work at PIFSC you can submit a [Jira ticket](https://apps-st.fisheries.noaa.gov/jirasm/servicedesk/customer/portal/4) 
 
 You will need to create an new password:
 * 14 characters long
@@ -71,7 +73,7 @@ You will need to create an new password:
 
 **Connecting to SEDNA:**
 
-You need to be in the VPN. Ask IT to help you set up the VPN in your computer.
+You need to be in the VPN. Ask IT to help you set up the VPN in your computer (PIFSC you can submit a [Jira ticket](https://apps-st.fisheries.noaa.gov/jirasm/servicedesk/customer/portal/4)).
 
 Address:  ***sedna.nwfsc2.noaa.gov*** (IP: 161.55.52.157)
 
@@ -97,9 +99,9 @@ When you first login into SEDNA you will be in the login node. You know you are 
 (base) [userID@sedna currentDIR]$
 ```
 
-It is ok to do some light processes like navigation, listing, file organization, etc. However, you should NOT do any mid to heavy computations in the login node. You should instead either run a scricp, which will automatically grab and specified computing node, or you can login manually to a computing node (i.e. sdandard, medmem or himem nodes).
+It is ok to do some light processes like navigation, listing, file organization, etc. However, you should NOT do any mid to heavy computations in the login node. You should instead either run a script, which will automatically grab a computing node, or you can login manually into a computing node (i.e. sdandard, medmem or himem nodes).
 
-The first thing is to see what interactive/computing nodes are available (idle):
+For manual login, the first thing is to see what interactive/computing nodes are available (idle):
 
 ```
 sinfo
@@ -173,12 +175,12 @@ To load modules:
 module load <program>
 ```
 
-To see a list of loaded modules you would type the following:
+To see a list of already loaded modules you would type the following:
 ```
 module list
 ```
 
-Loading different versions of the same program might cause issues. If needed, unload the version not going to use first then load the correct one.
+Loading different versions of the same program might cause issues. If needed, unload the version you are not going to use first then load the correct one.
 ```
 module unload <program>
 ```
@@ -191,7 +193,7 @@ module unload <program>
 
 Different pipelines and programs will need diffferent dependencies. Some might be installed already, others you can install yourself, and others you will need to request intallation.
 
-Install requests and general help is available via the [SEDNA helpdesk google form](https://docs.google.com/forms/d/e/1FAIpQLSf2tDl9nJjihmHX9hM6ytMI3ToldqERVem1ge25-kp3JHw3tQ/viewform)
+Install requests and general SEDNA help is available via the [SEDNA helpdesk google form](https://docs.google.com/forms/d/e/1FAIpQLSf2tDl9nJjihmHX9hM6ytMI3ToldqERVem1ge25-kp3JHw3tQ/viewform)
 
 
 Start with activating 'mamba' with:
@@ -260,7 +262,7 @@ To activate the various dependencies and rainbow_bridge you need to run two step
 ```
 module load bio/rainbow_bridge/202502
 ```
-Unlike with the manually activation of `Nextflow` and `Singularity`, this module already contains  both simultaneously. For instance, if you try to load the last two manually, the second load will replace the first one, and rainbow_bridge will fail because it will be missing one of these dependencies.
+`rainbow_bridge` uses both `Singularity` and `Nexflow`. The above module already contains both simultaneously. If you try to load these two manually, the second load will replace the first one, and rainbow_bridge will fail because it will be missing one of these dependencies.
 
 2. then activate the mamba environment with
 ```
@@ -272,13 +274,41 @@ This activates `rainbow_bridge` in your current session.
 
 ## SEDNA Usage 
 
-* It is recommended that you run programs/pipelines using a SLURM script.
+**Running processes using SBATCH Scripts (recommended)**
+* It is recommended that you run programs/pipelines using a sbatch/bash/SLURM script.
 	* This will help you keep track of your work and help with reproducibility
+	* Your job will run safely in the background
+ 	* You can work on something else while your job is running
+  	* The SLURM output can be saved in a log file for troubleshooting, etc 	  
 	* See SLURM script examples at the end of this README
 
-* If you are going to be throubleshooting, doing analyses, using singularity or nextflow straight from the terminal, etc., you need to log into a computing node (i.e. do not do work/analyses in the login node).
+Script Components:
+1. SLURM request block. This is where you specified the resources you want suchas memory, number of cores, and several other option
+2. You do need to include the activation of modules, dependencies, software, etc in your script.
+3. Your actual code, program execution, etc.
+   
+Note: you don’t need to grab a node when running a script, the SLURM will automatically place your job in the specified node(s).
 
-Grab a node (see the beginning of this document to learn about the available nodes):
+**Running processes straight in terminal**
+
+You are absolutely able to activate modules, dependencies, software and run code straight in the terminal but be aware of the advantages and disadvantages:
+
+Some Pros:
+* Is very quick! No need to write a script for small computations like listing files, counting files, counting lines in files, searching or modifying files, and many more.
+* It is specially useful when you're troubleshooting specific code from a script. For instance, running step by step to find where an error if the offending code is not obvious from the output
+* Likewise if you just want to run some code that doesn't take much time, etc.
+
+Some Cons:
+* Makes it harder to keep track of your work making reproducibility less efficient.
+* Generally when running stratight in terminal, your output will be printed directly in the screen without being saved into a logfile.
+* You won't be able to work on something else.
+* Your job will be terminated if there are connectivity or other issues with the system.
+
+That being said, there are many ways to avoid all the above cons like using [screens](https://jianjye.medium.com/how-to-use-linux-screen-commands-and-shortcuts-quick-guide-f1a2207d15d3)ample, send jobs to the background, manually generate logs, etc. [see this as example](https://www.scaler.com/topics/how-to-run-process-in-background-linux/). Feel free to explore these options
+
+***IMPORTANT*** Do not run med to heavy processes in the login node. Use a compute node.
+
+To grab a node (see the beginning of this document to learn about the available nodes):
 
 Fisrt see the current node usage with:
 ```
@@ -303,11 +333,41 @@ ssh into an idle node with:
 ssh node33
 ```
 
-* If you are going to execute bash script (recommended), you don’t need to grab a node, the SLURM will automatically place your job in the specified node(s). Just include the activation of singularity and nextflow in your script.
-* You can activate straight in terminal singularity or nextflow as shown above. However, these two are not available simultaneously which is what `rainbow_bridge` needs
-* You will  need a SLURM script to run `rainbow_bridge`
+* Now load and/or activate of modules, dependencies, software, etc.
+* Run your code
 
 ---
+
+## Sequence Databases
+
+I have installed and created few sequence databases that are available to all SEDNA users. 
+
+### NCBI nt Database
+
+I have installed the lastest NCBI nucleotype database (Version 5) in SEDNA's shared directory:
+```
+/share/all/ncbi_database/2025-04-01_ncbi
+```
+where the date is the day I installed it.
+
+Here some info:
+```
+blastdbcmd -db nt -info
+
+Database: Nucleotide collection (nt)
+        113,641,112 sequences; 2,853,029,940,118 total bases
+
+Date: Mar 22, 2025  5:12 PM     Longest sequence: 99,994,136 bases
+
+BLASTDB Version: 5
+```
+
+**NCBI taxids**
+
+I have also placed the `new_taxdump.zip` file which contains the NCBI taxids in the same directory. This is used by rainbow_bridge and other analyses.
+```
+/share/all/ncbi_database/new_taxdump.zip
+```
 
 ### [Midori2 Databases](https://www.reference-midori.info/) for metabarcoding analyses on SEDNA 
 
@@ -318,12 +378,14 @@ If you are going to be doing any metabarcoding analyses, you might be interested
 # parent dir
 /share/all/midori2_database
 
-# sub-databases
+# current sub-databases
 /share/all/midori2_database/2024-10-13_customblast_sp_uniq_COI/
+/share/all/midori2_database/2024-12-14_customblast_sp_uniq_12S/
+/share/all/midori2_database/2024-12-14_customblast_sp_uniq_COI
 ```
-*if you add addintional databases please add them to the list above*
+where the date is the release date or when the specific database was curated/uploaded/available.
 
-### Setting up the [MIDORI2 database](https://www.reference-midori.info/)
+*if you add addintional databases please add them to the list above*
 
 NCBI GenBank databases are known to have various problems such as erroneous identification of organisms, potential lack of sequence curation, ets.
 This is where Midori2 can help. 
@@ -348,7 +410,8 @@ Key features:
 
 See Midori2's README in their website for more info. 
 
-**SEDNA SETUP** 
+
+**SEDNA MIDORI2 SETUP** 
 
 I went ahead and setup the [Midori2 database](https://www.reference-midori.info/) in SEDNA for rainbow_bridge.
 
@@ -360,14 +423,15 @@ I decided to start by setting up the COI species "sp", uniq  "uniq", which retai
 ```
 /share/all/midori2_database/2024-10-13_customblast_sp_uniq_COI/midori2_customblast_sp_uniq
 ```
-
+	* **UPDATE:** as in April 16, 2025, the 2024-12-14 is latest release.
+ 
 ***NOTES:***
 * The Midori2 database gets updated every 2 months. Make sure you are using the latest version available and note which version you are using.
 * If you want to learn how I made the custom database, update an existing or create a new database see my [midori2 page](https://github.com/ericgarciaresearch/noaa_sedna/blob/main/midori2.md)
 
 ---
 
-## SLURM script examples
+## SEDNA SLURM script examples
 
 Regular Job Script:
 ```
@@ -443,3 +507,4 @@ Key Features:
 To learn how to use this pipeline in SEDAN go to [rainbow_bridge README for SEDNA](https://github.com/ericgarciaresearch/noaa_sedna/blob/main/rainbow_bridge_README.md) or to go the [rainbow_bridge SEDNA subdir](https://github.com/ericgarciaresearch/noaa_sedna/tree/main/rainbow_bridge)
 
 ---
+dddfsds
