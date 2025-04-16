@@ -416,6 +416,7 @@ Key features:
 
 See Midori2's README in their website for more info. 
 
+&nbsp;
 
 **SEDNA MIDORI2 SETUP** 
 
@@ -435,7 +436,7 @@ When you use this, make sure to specify the full path and the basename but do no
 * The Midori2 database gets updated every 2 months. Make sure you are using the latest version available and note which version you are using.
 * If you want to learn how I made the custom database, update an existing or create a new database see my [midori2 page](https://github.com/ericgarciaresearch/noaa_sedna/blob/main/midori2.md)
 
-* **UPDATE:** as in April 16, 2025, the 2024-12-14 is latest release.
+* ***UPDATE: as in April 16, 2025, the 2024-12-14 is latest release.***
 
 ---
 
