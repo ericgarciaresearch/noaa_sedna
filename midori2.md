@@ -100,7 +100,26 @@ Cleanning includes:
 2. Truncates names to 50 characters
 3. Makes the `taxid_map` file. Luckily the ncbi taxid of each species is given by midori2 already. This script harvest this info.
 
-***NOTE:*** This process might take a while so might be a good idea to run this using [screen](https://linuxize.com/post/how-to-use-linux-screen/) which is already installed in SEDNA.
+***NOTE:*** This process might take a while so might be a good idea to run this using [screen](https://www.gnu.org/software/screen/manual/screen.html) which is already installed in SEDNA.
+
+To start a screen you can use:
+```
+#screen -S <screen_name>
+screen -S midori2_COI
+```
+where the `-S` allows you to provide a name to the screen.
+
+a few useful `screen` commands:
+```
+screen -L  		# will create a log
+screen -L -S <name>	# log and screen name
+Ctrl-a d		# detach from screen. If you want to leave that running and work outside the screen
+screen -ls		# lists all available screens
+screen -r <name>	# re-attaches to the specific screen 
+screen -S <name> -X quit  # to kill screen from outside the screen (detached)
+exit			# kills the screens
+```
+for a more details here is a [screen tutorial](https://linuxize.com/post/how-to-use-linux-screen/) 
 
 Move to the working dir (one level about the downloaded database)
 ``` 
