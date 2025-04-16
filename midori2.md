@@ -100,7 +100,7 @@ Cleanning includes:
 2. Truncates names to 50 characters
 3. Makes the `taxid_map` file. Luckily the ncbi taxid of each species is given by midori2 already. This script harvest this info.
 
-***NOTE:*** This process might take a while so might be a good idea to run this using (screen)[https://linuxize.com/post/how-to-use-linux-screen/] which is already installed in SEDNA.
+***NOTE:*** This process might take a while so might be a good idea to run this using [screen](https://linuxize.com/post/how-to-use-linux-screen/) which is already installed in SEDNA.
 
 Move to the working dir (one level about the downloaded database)
 ``` 
@@ -119,26 +119,44 @@ Then, I downloaded the singularity image of the latest version of blastn (.sif e
 ```
 cd /share/all/midori2_database
 
-# grab a computing node and activate singularity
-ssh node39
+# activate singularity
 mamba activate singularity-3.8.6
 
-# download .sif
-singularity pull blast_latest.sif docker://ncbi/blast:latest
+# download and overwrite the existing .sif
+singularity pull --force blast_latest.sif docker://ncbi/blast:latest
+```
 
-# check that the download worked and check the version
+Check that the download worked and check the version
+```
 singularity exec blast_latest.sif blastn -version
 ```
+You should see an output similar to:
+```
+blastn: 2.16.0+
+ Package: blast 2.16.0, build Jul 12 2024 20:19:54
+```
+Make a note of the version in your metadata and/or readmes
 
 Now, use the .sif to make the database:
 ```
 cd 2024-10-13_customblast_sp_uniq_COI
 
 # make database
-singularity exec ../blast_latest.sif makeblastdb -in MIDORI2_UNIQ_SP_NUC_GB263_CO1_RAW_cleanedformakeblastdb.fasta -parse_seqids -dbtype nucl -taxid_map taxid_map -out midori2_customblast_sp_uniq
+singularity exec -B "$PWD" ../blast_latest.sif makeblastdb -in MIDORI2_UNIQ_SP_NUC_GB263_CO1_RAW_cleanedformakeblastdb.fasta -parse_seqids -dbtype nucl -taxid_map taxid_map -out midori2_customblast_sp_uniq
 ```
 
-If this worked ok, the output should include files like these:
+If this worked ok, you should see a message like:
+```
+Building a new DB, current time: 04/15/2025 17:09:42
+New DB name:   /share/all/midori2_database/2024-10-13_customblast_sp_uniq_COI/midori2_customblast_sp_uniq
+New DB title:  MIDORI2_UNIQ_SP_NUC_GB263_CO1_RAW_cleanedformakeblastdb.fasta
+Sequence type: Nucleotide
+Keep MBits: T
+Maximum file size: 3000000000B
+Adding sequences from FASTA; added 3003352 sequences in 71.132 seconds.
+```
+
+and you should now have files like these:
 ```
 midori2_customblast_sp_uniq.ndb
 midori2_customblast_sp_uniq.nhr
@@ -153,19 +171,11 @@ midori2_customblast_sp_uniq.nto
 ```
 where `midori2_customblast_sp_uniq` is just the name I chose for the output in the previous command.
 
-If you got an singularity error about not finding the `taxid_map`, similar to:
-```
-Command line argument error: Argument "taxid_map". File is not accessible:  `taxid_map'
-```
-
-then try:
-```
-singularity exec --bind "$(pwd)":/mnt ../blast_latest.sif makeblastdb -in /mnt/MIDORI2_UNIQ_SP_NUC_GB263_CO1_RAW_cleanedformakeblastdb.fasta -parse_seqids -dbtype nucl -taxid_map /mnt/taxid_map -out /mnt/midori2_customblast_sp_uniq
-```
+If you got errors try rerunning it or further troubleshoot with ChatGPT, etc.
 
 Now, check that the database was created correctly:
 ```
-singularity exec ../blast_latest.sif blastdbcmd -info -db midori2_customblast_sp_uniq
+singularity exec -B "$PWD" ../blast_latest.sif blastdbcmd -info -db midori2_customblast_sp_uniq
 ```
 
 This should give you an output like:
@@ -178,13 +188,6 @@ Date: Jan 30, 2025  8:23 PM	Longest sequence: 2,298 bases
 BLASTDB Version: 5 
 ```
 
-Note that if you had the singularity error in the previous step, you're likely will have to use the same trick (bind directly the files for singluarity), with:
-```
-singularity exec --bind "$(pwd)":/mnt ../blast_latest.sif blastdbcmd -info -db /mnt/midori2_customblast_sp_uniq
-```
-
-***If you see other errors or messages about mapping, there might be issues and you might have to remake the database.***
-
 Now, open permissions to avoid potential problems accessing the database:
 ```
 chmod 775 *
@@ -195,6 +198,6 @@ When you use this, make sure to specify the full path and the basename but do no
 /share/all/midori2_database/2024-10-13_customblast_sp_uniq_COI/midori2_customblast_sp_uniq
 ```
 
-**Perfect!!!** Now you have a custom BLAST database ready for `rainbow_bridge`
+**Perfect!!!** Now you have a custom BLAST database ready for your analyses.
 
 ---
