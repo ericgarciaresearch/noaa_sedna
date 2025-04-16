@@ -207,9 +207,10 @@ Date: Jan 30, 2025  8:23 PM	Longest sequence: 2,298 bases
 BLASTDB Version: 5 
 ```
 
-Now, open permissions to avoid potential problems accessing the database:
+Now, open permissions to avoid potential problems accessing the database and kill your screen as needed:
 ```
 chmod 775 *
+exit
 ```
 
 When you use this, make sure to specify the full path and the basename but do not include the extensions (.ndb|.nhr|.nos etc). For example:
