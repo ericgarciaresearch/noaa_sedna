@@ -340,7 +340,9 @@ ssh node33
 
 ## Sequence Databases
 
-I have installed and created few sequence databases that are available to all SEDNA users. 
+I have installed and created few sequence databases (NCBI and MIDORI2) that are available to all SEDNA users. 
+
+&nbsp;
 
 ### NCBI nt Database
 
@@ -369,11 +371,15 @@ I have also placed the `new_taxdump.zip` file which contains the NCBI taxids in 
 /share/all/ncbi_database/new_taxdump.zip
 ```
 
-### [Midori2 Databases](https://www.reference-midori.info/) for metabarcoding analyses on SEDNA 
+&nbsp;
+
+### Midori2 Databases for metabarcoding analyses on SEDNA 
 
 If you are going to be doing any metabarcoding analyses, you might be interested in using the [Midori2 Databse](https://www.reference-midori.info/)
 
-## Midori2 Databases SEDNA locations
+&nbsp;
+
+**Midori2 Databases SEDNA locations**
 ```
 # parent dir
 /share/all/midori2_database
@@ -413,21 +419,23 @@ See Midori2's README in their website for more info.
 
 **SEDNA MIDORI2 SETUP** 
 
-I went ahead and setup the [Midori2 database](https://www.reference-midori.info/) in SEDNA for rainbow_bridge.
+I went ahead and setup the Midori2 in SEDNA for rainbow_bridge.
 
 I decided to start by setting up the COI species "sp", uniq  "uniq", which retains all haplotypes from all taxonomic labels. For instance, this will include
  all sequences that have been matched to only a genus or a family (see Key features above and Midori2 README)
 
-	* Lastest version as in Feb 6, 2025 `2024-10-13`
-	* When you use this, make sure to specify the full path and the basename but do not include the extensions (.ndb|.nhr|.nos etc). For example:
+* Lastest version as in Feb 6, 2025 `2024-10-13`
+
+When you use this, make sure to specify the full path and the basename but do not include the extensions (.ndb|.nhr|.nos etc). For example:
 ```
 /share/all/midori2_database/2024-10-13_customblast_sp_uniq_COI/midori2_customblast_sp_uniq
 ```
-	* **UPDATE:** as in April 16, 2025, the 2024-12-14 is latest release.
  
 ***NOTES:***
 * The Midori2 database gets updated every 2 months. Make sure you are using the latest version available and note which version you are using.
 * If you want to learn how I made the custom database, update an existing or create a new database see my [midori2 page](https://github.com/ericgarciaresearch/noaa_sedna/blob/main/midori2.md)
+
+* **UPDATE:** as in April 16, 2025, the 2024-12-14 is latest release.
 
 ---
 
@@ -507,4 +515,3 @@ Key Features:
 To learn how to use this pipeline in SEDAN go to [rainbow_bridge README for SEDNA](https://github.com/ericgarciaresearch/noaa_sedna/blob/main/rainbow_bridge_README.md) or to go the [rainbow_bridge SEDNA subdir](https://github.com/ericgarciaresearch/noaa_sedna/tree/main/rainbow_bridge)
 
 ---
-dddfsds
