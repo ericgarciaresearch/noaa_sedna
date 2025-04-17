@@ -7,8 +7,7 @@ Note: if you are new to SEDNA or still need general help to work in SEDNA, pleas
 
 NCBI GenBank databases are known to have various problems such as erroneous identification of organisms, potential lack of sequence curation, etc. This is where Midori2 can be useful for metabarcoding analyses. 
 
-[**Midori2**](https://www.reference-midori.info/) is a set of publicly accessable, mitochondrial marker or amino acid databases (from NCBI GenBank), that have already been curated and get updated every few months. In addition, these databases have also been pre-formatted to fit many common metabarcoding pipelines,
- and raw sequences are also available if your desired format is not included.
+[**Midori2**](https://www.reference-midori.info/) is a set of publicly accessable, mitochondrial marker or amino acid databases (from NCBI GenBank), that have already been curated and gets updated every few months. In addition, these databases have also been pre-formatted to fit many common metabarcoding pipelines, and raw sequences are also available if your desired format is not included.
 
 **Key features:**
 	
@@ -42,27 +41,26 @@ See [Midori2's README](https://www.reference-midori.info/download.php) in their 
 
 ---
 
-## Setting up the [MIDORI2 database](https://www.reference-midori.info/)
+## Setting up the MIDORI2 database
 
 **SEDNA SETUP** 
 
-I went ahead and downloaded and setup the [Midori2 database](https://www.reference-midori.info/) for few markers in SEDNA since I'll be using these with `rainbow_bridge`.
+I have downloaded and setup the [Midori2 database](https://www.reference-midori.info/) for few markers in SEDNA since I'll be using these with `rainbow_bridge`.
 
 Parent directory for midori2 databases:
 ```
 /share/all/midori2_database
 ```
 
+***NOTE:*** `rainbow_bridge` is not one of the formats already available.
 
-***NOTE:*** `rainbow_bridge` is not one of the already available formats.
-
-* Not a problme! We can download the RAW dataset and create a custom blast dataset :)
+* No problemo! We can download the RAW dataset and create a custom blast dataset :)
 
 I decided to start by setting up the COI species "sp" , "uniq" which retains all haplotypes from all taxonomic labels. For instance, this will include all sequences that have been matched to only a genus or a family. 
 
-### Download Database
+### Downloading the a database
 
-First of all, I'll grab an interactive node since it is a good idea not to run some of these steps in the login node:
+First of all, I'll grab an interactive node since it might not a good idea not to run some of these steps in the login node:
 ```
 sinfo			# This show the status of all nodes 
 ssh node10		# I grabbed a standard now. That should be enough
@@ -90,7 +88,7 @@ Next problems:
 * Midori2 raw fasta files have sequence names with the entire taxonomic information making these super long and `makeblastdb` has a limit of 50 characters.
 * `makeblastdb` requires a `taxid_map` file where the read names and NCBI taxonomic ids are provided in the column1 and column2, respectively (tab separated).
 
-To solve this, I created the script `clean_midori2fasta_for_makeblastdb.sh` that cleans the midori2 raw fasta. This script lives in 
+To solve this, I created the script `clean_midori2fasta_for_makeblastdb.sh` that cleans the midori2 raw fasta and generates a taxid_map. This script lives in 
 ```
 /share/all/midori2_database/
 ```
@@ -144,6 +142,7 @@ mamba activate singularity-3.8.6
 # download and overwrite the existing .sif
 singularity pull --force blast_latest.sif docker://ncbi/blast:latest
 ```
+*overwritting ensures you are running the lastest version should a new version be available*
 
 Check that the download worked and check the version
 ```
