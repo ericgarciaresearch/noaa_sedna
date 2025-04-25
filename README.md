@@ -101,7 +101,7 @@ Now my prompt looks like:
 ```
 (base) [egarcia@node36 currentDIR]$
 ```
-In this case, we asked for 16 gb of memory for 2 hours on the standard partition. We ask for a bash job (i.e., just your normal command line). 
+In this case, we asked for 4 gb of memory for 2 hours on the standard partition. We ask for a bash job (i.e., just your normal command line). 
 
 ### batch jobs
 
@@ -127,6 +127,8 @@ where `test.sbatch` might look like this:
 echo "Hello!"
 ```
 
+Notice that we requested the same resources as our `srun` job, above.
+
 This will write the output to our std out file: `slurm-2060966.out`
 
 which looks like this:
@@ -135,11 +137,11 @@ $cat slurm-2060966.out
 Hello!
 ```
 
-Note that there are many, many slurms options to put in the file and the example above is very minimal. Most of the parameters have a default, but you should specify these yourself so you're efficiently using resources. 
+There are many, many slurms options to put in the file and the example above is very minimal. Most of the parameters have a default, but you should specify these yourself so you're efficiently using resources. 
 
 Also, for your own jobs, you would replace `echo "Hello!"` with something actually useful. 
 
-**Nodes Usage:**
+**Node Usage:**
 
 For most jobs, you will use `standard`. Generally, you only request the higher memory nodes when your job requires this higher memory. 
 
