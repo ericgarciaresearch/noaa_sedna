@@ -141,6 +141,10 @@ There are many, many slurms options to put in the file and the example above is 
 
 Also, for your own jobs, you would replace `echo "Hello!"` with something actually useful. 
 
+To see currently runnings jobs enter: `squeue`
+
+To see just your jobs: `squeue -u [user ID]`
+
 **Node Usage:**
 
 For most jobs, you will use `standard`. Generally, you only request the higher memory nodes when your job requires this higher memory. 
@@ -153,7 +157,11 @@ Use nodes by specifying your desired partition in sbatch scripts
 
 ---
 
-## Modules
+## Loading software
+
+Many common packages and software are already installed on SEDNA. For those that aren't (or if you need a specific version), you can put in a request to install or do it yourself for your own use. Pre-installed software are either in `modules` or `mamba`, which will be discussed below. 
+
+### Modules
 
 Most software is stored in modules. To use modules ***do this once*** (only need to do it one time but you will need to log out and back in for the changes to take effect the first time):
 
@@ -206,12 +214,7 @@ module unload <program>
 
 ---
 
-## Dependencies activation and other installation
-
-Different pipelines and programs will need diffferent dependencies. Some might be installed already, others you can install yourself, and others you will need to request intallation.
-
-Install requests and general SEDNA help is available via the [SEDNA helpdesk google form](https://docs.google.com/forms/d/e/1FAIpQLSf2tDl9nJjihmHX9hM6ytMI3ToldqERVem1ge25-kp3JHw3tQ/viewform)
-
+### Mamba
 
 Start with activating 'mamba' with:
 ```
@@ -269,9 +272,14 @@ Ok, now you should be able to use module and environment with mamba, etc.
 
 ---
 
-**Example:**
+### Installing other software
 
-### rainbow_bridge dependency installation
+Different pipelines and programs will need diffferent dependencies. Some might be installed already, others you can install yourself, and others you will need to request intallation.
+
+Install requests and general SEDNA help is available via the [SEDNA helpdesk google form](https://docs.google.com/forms/d/e/1FAIpQLSf2tDl9nJjihmHX9hM6ytMI3ToldqERVem1ge25-kp3JHw3tQ/viewform)
+
+
+### **Example:** rainbow_bridge dependency installation
 
 To activate the various dependencies and rainbow_bridge you need to run two steps:
 
