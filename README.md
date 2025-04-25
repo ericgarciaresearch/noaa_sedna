@@ -1,14 +1,20 @@
 # Working on SEDNA
 
-This README documents general information and provides a loose guide to help you work on NOAA’s supercomputer **SEDNA**
+This README documents general information and provides a loose guide to help you work on NOAA’s supercomputer **SEDNA**. 
 
 Please read the [SEDNA information and best practices](https://docs.google.com/document/d/1nn0T0OWEsQCBoCdaH6DSY69lQSbK3XnPlseyyQuU2Lc/edit?tab=t.0)
 
 Many of the steps and info in this README were summarised from the above document.
 
+## What is SEDNA?
+
+You're presumably working with genomic data, and your tiny laptop doesn't have enough memory, cpus, or storage to analyze these data. This is why we need SEDNA. Basically,  SEDNA is a bunch of computers that live at NWFSC (FYI- this is all "the cloud" is too). These computers have more memory and storage than your computer and don't need to turn off at the end of the day, so we can run large, memory intensive, and long jobs on SEDNA. To do this, we have to access SEDNA via the command line and submit "jobs", which is just a set of commands we're telling SEDNA to run. This is how you will do your analyses.
+
+When you submit a job, SEDNA distributes it to the compute nodes. You have to tell SEDNA exactly how many resources you want it to use. For example, how much memory, time, cores, etc. We will talk about this more later in this document.
+
 ---
 
-## SEDNA info
+## SEDNA hardware info
 
 **SEDNA General Specs:**
 
@@ -19,7 +25,7 @@ Many of the steps and info in this README were summarised from the above documen
 
 **Nodes and Partitions:**
 
-36 standard compute nodes across
+40 compute nodes across:
 
 * **SLURM PARTITION: standard** 
 	* node01-28:  96 GB of memory, 12x 8GB
@@ -27,35 +33,13 @@ Many of the steps and info in this README were summarised from the above documen
 	* Default partition; 8hr default time for jobs
 * **SLURM PARTITION: medmem** 
 	* node29-36: 192 GB of memory, 12x 16GB
- 		* SLURM only allows setting --mem to 185G 
+ 		* SLURM only allows setting `--mem` to 185G at most 
  	* 20 cores/node 
-
-4 high memory nodes
 
 * **SLURM PARTITION: himem**
 	* himem01-04: 1.5 TB of memory, 24x 64GB
  	* 24 cores/node	
 	* have their own scratch (/data) space
-
-**Nodes Usage:**
-
-Use nodes by specifying your desired partition in sbatch scripts
-```
-#SBATCH -p medmem
-```
-(`standard` is the default if not specified). The system will automatically designate a node withing the specified partition for your job.
-
-Or by logging into a specific node
-```
-ssh node30
-ssh himem02
-etc
-```
-
-It is possible to run jobs in multiple partitions with:
-```
-#SBATCH -p standard, medmem
-```
 
 ---
 
@@ -73,7 +57,7 @@ You will need to create an new password:
 
 **Connecting to SEDNA:**
 
-You need to be in the VPN. Ask IT to help you set up the VPN in your computer (PIFSC you can submit a [Jira ticket](https://apps-st.fisheries.noaa.gov/jirasm/servicedesk/customer/portal/4)).
+You need to be on the VPN. Ask IT to help you set up the VPN in your computer (PIFSC you can submit a [Jira ticket](https://apps-st.fisheries.noaa.gov/jirasm/servicedesk/customer/portal/4)).
 
 Address:  ***sedna.nwfsc2.noaa.gov*** (IP: 161.55.52.157)
 
@@ -99,40 +83,71 @@ When you first login into SEDNA you will be in the login node. You know you are 
 (base) [userID@sedna currentDIR]$
 ```
 
-It is ok to do some light processes like navigation, listing, file organization, etc. However, you should NOT do any mid to heavy computations in the login node. You should instead either run a script, which will automatically grab a computing node, or you can login manually into a computing node (i.e. sdandard, medmem or himem nodes).
+It is ok to do some light processes like navigation, listing, file organization, etc. However, you should NOT do any mid to heavy computations in the login node. You should instead either run a script, which will automatically grab a computing node, or you can use `srun` to start an interactive job on a computing node (i.e. sdandard, medmem or himem nodes).
 
-For manual login, the first thing is to see what interactive/computing nodes are available (idle):
+All jobs on SEDNA are managed by [SLURM](https://slurm.schedmd.com/documentation.html). What this means is that you will submit a job via slurm where you request some set of resources (memory, cpus, time). Slurm will put you in the queue to get those resources. Once the resources are available, your job will start. 
 
-```
-sinfo
-```
-at the momment I tried this, I got:
-```
-sinfo
-PARTITION AVAIL  TIMELIMIT  NODES  STATE NODELIST 
-standard*    up   infinite     17    mix node[10-22,24,26-28] 
-standard*    up   infinite      9  alloc node[01-09] 
-standard*    up   infinite      2   idle node[23,25] 
-himem        up   infinite      4    mix himem[01-04] 
-medmem       up   infinite      5    mix node[29-30,32-34] 
-medmem       up   infinite      2  alloc node[31,35] 
-medmem       up   infinite      1   idle node36 
-```
-There are a few standdard and medmem nodes idle. Thus, if I pretend I want to run rainbow_bridge which is not a light process I would need a medmem or himem node. I see node36 is available so I snatched it!
-```
-ssh node36
+There are two types of jobs: interactive and batch
+
+### interactive jobs
+
+You can run interactive jobs where sedna will allocate resource and you can run your code one line at at time. Here is an example:
+
+```bash
+srun --partition=standard --mem=4g --time=02:00:00 --pty bash
 ```
 
 Now my prompt looks like:
 ```
 (base) [egarcia@node36 currentDIR]$
 ```
+In this case, we asked for 16 gb of memory for 2 hours on the standard partition. We ask for a bash job (i.e., just your normal command line). 
 
-You can go back to the login node as needed with
+### batch jobs
+
+Most jobs and the true power of a SEDNA is via batch jobs. These are jobs that we submit to run non-interactively. 
+
+
+```bash
+sbatch test.sbatch
 ```
-exit
+and after we submit will say:
 ```
-and another `exit` will kick out of SEDNA completely.
+Submitted batch job 2060966
+```
+
+where `test.sbatch` might look like this:
+
+```bash
+#!/bin/bash
+#SBATCH --partition=standard
+#SBATCH --time=02:00:00
+#SBATCH --mem=4G
+
+echo "Hello!"
+```
+
+This will write the output to our std out file: `slurm-2060966.out`
+
+which looks like this:
+```
+$cat slurm-2060966.out
+Hello!
+```
+
+Note that there are many, many slurms options to put in the file and the example above is very minimal. Most of the parameters have a default, but you should specify these yourself so you're efficiently using resources. 
+
+Also, for your own jobs, you would replace `echo "Hello!"` with something actually useful. 
+
+**Nodes Usage:**
+
+For most jobs, you will use `standard`. Generally, you only request the higher memory nodes when your job requires this higher memory. 
+
+Use nodes by specifying your desired partition in sbatch scripts
+```
+#SBATCH -p medmem
+```
+(`standard` is the default if not specified). The system will automatically designate a node withing the specified partition for your job.
 
 ---
 
