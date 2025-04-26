@@ -8,7 +8,7 @@ Many of the steps and info in this README were summarised from the above documen
 
 ## What is SEDNA?
 
-You're presumably working with genomic data, and your tiny laptop doesn't have enough memory, cpus, or storage to analyze these data. This is why we need SEDNA. Basically,  SEDNA is a bunch of computers that live at NWFSC (FYI- this is all "the cloud" is too). These computers have more memory and storage than your computer and don't need to turn off at the end of the day, so we can run large, memory intensive, and long jobs on SEDNA. To do this, we have to access SEDNA via the command line and submit "jobs", which is just a set of commands we're telling SEDNA to run. This is how you will do your analyses.
+You're presumably working with genomic data, and your tiny laptop doesn't have enough memory, cpus, or storage to analyze these data. This is why we need SEDNA. Basically,  SEDNA is a bunch of computers that live at NWFSC (FYI- this is where all "the cloud" is too). These computers have more memory and storage than your computer and don't need to turn off at the end of the day, so we can run large, memory intensive, and long jobs on SEDNA. To do this, we have to access SEDNA via the command line and submit "jobs", which is just a set of commands we're telling SEDNA to run. This is how you will do your analyses.
 
 When you submit a job, SEDNA distributes it to the compute nodes. You have to tell SEDNA exactly how many resources you want it to use. For example, how much memory, time, cores, etc. We will talk about this more later in this document.
 
@@ -491,7 +491,7 @@ More examples available in the [SEDNA info & best practices doc](https://docs.go
 
 ## rainbow_bridge at SEDNA
 
-This is an example of one of the pipelines that Eric Garcia has installed in SEDNA. Many other pipelines/modules/software are available.
+This is an example of one of the pipelines that I have installed in SEDNA. Many other pipelines/modules/software are available.
 
 [rainbow_bridge](https://github.com/mhoban/rainbow_bridge) is a flexible pipeline for eDNA and metabarcoding analyses. It can process raw or already filtered sequences
  from single- or paired-end datasets. This pipeline can be used to create zero-radius operational taxonomic units (zOTUs),
@@ -513,6 +513,6 @@ Key Features:
 * Multiple types of taxonomic classification
 * Produces phyloseq object for downstream analyses
 
-To learn how to use this pipeline in SEDAN go to [rainbow_bridge README for SEDNA](https://github.com/ericgarciaresearch/noaa_sedna/blob/main/rainbow_bridge_README.md) or to go the [rainbow_bridge SEDNA subdir](https://github.com/ericgarciaresearch/noaa_sedna/tree/main/rainbow_bridge)
+To learn how to use this pipeline in SEDNA go to [rainbow_bridge README for SEDNA](https://github.com/ericgarciaresearch/noaa_sedna/blob/main/rainbow_bridge_README.md) or to go the [rainbow_bridge SEDNA subdir](https://github.com/ericgarciaresearch/noaa_sedna/tree/main/rainbow_bridge)
 
 ---
