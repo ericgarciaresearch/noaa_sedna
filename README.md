@@ -1,14 +1,20 @@
 # Working on SEDNA
 
-This README documents general information and provides a loose guide to help you work on NOAA’s supercomputer **SEDNA**
+This README documents general information and provides a loose guide to help you work on NOAA’s supercomputer **SEDNA**. 
 
 Please read the [SEDNA information and best practices](https://docs.google.com/document/d/1nn0T0OWEsQCBoCdaH6DSY69lQSbK3XnPlseyyQuU2Lc/edit?tab=t.0)
 
 Many of the steps and info in this README were summarised from the above document.
 
+## What is SEDNA?
+
+You're presumably working with genomic data, and your tiny laptop doesn't have enough memory, cpus, or storage to analyze these data. This is why we need SEDNA. Basically,  SEDNA is a bunch of computers that live at NWFSC (FYI- this is all "the cloud" is too). These computers have more memory and storage than your computer and don't need to turn off at the end of the day, so we can run large, memory intensive, and long jobs on SEDNA. To do this, we have to access SEDNA via the command line and submit "jobs", which is just a set of commands we're telling SEDNA to run. This is how you will do your analyses.
+
+When you submit a job, SEDNA distributes it to the compute nodes. You have to tell SEDNA exactly how many resources you want it to use. For example, how much memory, time, cores, etc. We will talk about this more later in this document.
+
 ---
 
-## SEDNA info
+## SEDNA hardware info
 
 **SEDNA General Specs:**
 
@@ -19,7 +25,7 @@ Many of the steps and info in this README were summarised from the above documen
 
 **Nodes and Partitions:**
 
-36 standard compute nodes across
+40 compute nodes across:
 
 * **SLURM PARTITION: standard** 
 	* node01-28:  96 GB of memory, 12x 8GB
@@ -27,35 +33,13 @@ Many of the steps and info in this README were summarised from the above documen
 	* Default partition; 8hr default time for jobs
 * **SLURM PARTITION: medmem** 
 	* node29-36: 192 GB of memory, 12x 16GB
- 		* SLURM only allows setting --mem to 185G 
+ 		* SLURM only allows setting `--mem` to 185G at most 
  	* 20 cores/node 
-
-4 high memory nodes
 
 * **SLURM PARTITION: himem**
 	* himem01-04: 1.5 TB of memory, 24x 64GB
  	* 24 cores/node	
 	* have their own scratch (/data) space
-
-**Nodes Usage:**
-
-Use nodes by specifying your desired partition in sbatch scripts
-```
-#SBATCH -p medmem
-```
-(`standard` is the default if not specified). The system will automatically designate a node withing the specified partition for your job.
-
-Or by logging into a specific node
-```
-ssh node30
-ssh himem02
-etc
-```
-
-It is possible to run jobs in multiple partitions with:
-```
-#SBATCH -p standard, medmem
-```
 
 ---
 
@@ -73,7 +57,7 @@ You will need to create an new password:
 
 **Connecting to SEDNA:**
 
-You need to be in the VPN. Ask IT to help you set up the VPN in your computer (PIFSC you can submit a [Jira ticket](https://apps-st.fisheries.noaa.gov/jirasm/servicedesk/customer/portal/4)).
+You need to be on the VPN. Ask IT to help you set up the VPN in your computer (PIFSC you can submit a [Jira ticket](https://apps-st.fisheries.noaa.gov/jirasm/servicedesk/customer/portal/4)).
 
 Address:  ***sedna.nwfsc2.noaa.gov*** (IP: 161.55.52.157)
 
@@ -99,44 +83,85 @@ When you first login into SEDNA you will be in the login node. You know you are 
 (base) [userID@sedna currentDIR]$
 ```
 
-It is ok to do some light processes like navigation, listing, file organization, etc. However, you should NOT do any mid to heavy computations in the login node. You should instead either run a script, which will automatically grab a computing node, or you can login manually into a computing node (i.e. sdandard, medmem or himem nodes).
+It is ok to do some light processes like navigation, listing, file organization, etc. However, you should NOT do any mid to heavy computations in the login node. You should instead either run a script, which will automatically grab a computing node, or you can use `srun` to start an interactive job on a computing node (i.e. sdandard, medmem or himem nodes).
 
-For manual login, the first thing is to see what interactive/computing nodes are available (idle):
+All jobs on SEDNA are managed by [SLURM](https://slurm.schedmd.com/documentation.html). What this means is that you will submit a job via slurm where you request some set of resources (memory, cpus, time). Slurm will put you in the queue to get those resources. Once the resources are available, your job will start. 
 
-```
-sinfo
-```
-at the momment I tried this, I got:
-```
-sinfo
-PARTITION AVAIL  TIMELIMIT  NODES  STATE NODELIST 
-standard*    up   infinite     17    mix node[10-22,24,26-28] 
-standard*    up   infinite      9  alloc node[01-09] 
-standard*    up   infinite      2   idle node[23,25] 
-himem        up   infinite      4    mix himem[01-04] 
-medmem       up   infinite      5    mix node[29-30,32-34] 
-medmem       up   infinite      2  alloc node[31,35] 
-medmem       up   infinite      1   idle node36 
-```
-There are a few standdard and medmem nodes idle. Thus, if I pretend I want to run rainbow_bridge which is not a light process I would need a medmem or himem node. I see node36 is available so I snatched it!
-```
-ssh node36
+There are two types of jobs: interactive and batch
+
+### interactive jobs
+
+You can run interactive jobs where sedna will allocate resource and you can run your code one line at at time. Here is an example:
+
+```bash
+srun --partition=standard --mem=4g --time=02:00:00 --pty bash
 ```
 
 Now my prompt looks like:
 ```
 (base) [egarcia@node36 currentDIR]$
 ```
+In this case, we asked for 4 gb of memory for 2 hours on the standard partition. We ask for a bash job (i.e., just your normal command line). 
 
-You can go back to the login node as needed with
+### batch jobs
+
+Most jobs and the true power of a SEDNA is via batch jobs. These are jobs that we submit to run non-interactively. 
+
+
+```bash
+sbatch test.sbatch
 ```
-exit
+and after we submit will say:
 ```
-and another `exit` will kick out of SEDNA completely.
+Submitted batch job 2060966
+```
+
+where `test.sbatch` might look like this:
+
+```bash
+#!/bin/bash
+#SBATCH --partition=standard
+#SBATCH --time=02:00:00
+#SBATCH --mem=4G
+
+echo "Hello!"
+```
+
+Notice that we requested the same resources as our `srun` job, above.
+
+This will write the output to our std out file: `slurm-2060966.out`
+
+which looks like this:
+```
+$cat slurm-2060966.out
+Hello!
+```
+
+There are many, many slurms options to put in the file and the example above is very minimal. Most of the parameters have a default, but you should specify these yourself so you're efficiently using resources. 
+
+Also, for your own jobs, you would replace `echo "Hello!"` with something actually useful. 
+
+To see currently runnings jobs enter: `squeue`
+
+To see just your jobs: `squeue -u [user ID]`
+
+**Node Usage:**
+
+For most jobs, you will use `standard`. Generally, you only request the higher memory nodes when your job requires this higher memory. 
+
+Use nodes by specifying your desired partition in sbatch scripts
+```
+#SBATCH -p medmem
+```
+(`standard` is the default if not specified). The system will automatically designate a node withing the specified partition for your job.
 
 ---
 
-## Modules
+## Loading software
+
+Many common packages and software are already installed on SEDNA. For those that aren't (or if you need a specific version), you can put in a request to install or do it yourself for your own use. Pre-installed software are either in `modules` or `mamba`, which will be discussed below. 
+
+### Modules
 
 Most software is stored in modules. To use modules ***do this once*** (only need to do it one time but you will need to log out and back in for the changes to take effect the first time):
 
@@ -189,12 +214,7 @@ module unload <program>
 
 ---
 
-## Dependencies activation and other installation
-
-Different pipelines and programs will need diffferent dependencies. Some might be installed already, others you can install yourself, and others you will need to request intallation.
-
-Install requests and general SEDNA help is available via the [SEDNA helpdesk google form](https://docs.google.com/forms/d/e/1FAIpQLSf2tDl9nJjihmHX9hM6ytMI3ToldqERVem1ge25-kp3JHw3tQ/viewform)
-
+### Mamba
 
 Start with activating 'mamba' with:
 ```
@@ -252,11 +272,18 @@ Ok, now you should be able to use module and environment with mamba, etc.
 
 ---
 
-**Example:**
+### Installing other software
 
-### rainbow_bridge dependency installation
+Different pipelines and programs will need diffferent dependencies. Some might be installed already, others you can install yourself, and others you will need to request intallation.
 
-To activate the various dependencies and rainbow_bridge you need to run two steps:
+Install requests and general SEDNA help is available via the [SEDNA helpdesk google form](https://docs.google.com/forms/d/e/1FAIpQLSf2tDl9nJjihmHX9hM6ytMI3ToldqERVem1ge25-kp3JHw3tQ/viewform)
+
+
+### **Example:** dependencies and the order of loading modules
+
+Some software depends on other software and therefore the order of loading things matters. Generally, load a mamba environment before a module. However, there are exceptions to this, for example with `rainbow_bridge`, which is the opposite.
+
+To activate `rainbow_bridge` you need to run two steps:
 
 1. Load the rainbow_bridge module
 ```
@@ -287,11 +314,11 @@ Script Components:
 2. You do need to include the activation of modules, dependencies, software, etc in your script.
 3. Your actual code, program execution, etc.
    
-Note: you don’t need to grab a node when running a script, the SLURM will automatically place your job in the specified node(s).
-
 **Running processes straight in terminal**
 
-You are absolutely able to activate modules, dependencies, software and run code straight in the terminal but be aware of the advantages and disadvantages:
+You are absolutely able to activate modules, dependencies, software and run code straight in the terminal, but **always use srun for anything memory intensive!**. 
+
+More generally, be aware of the advantages and disadvantages:
 
 Some Pros:
 * Is very quick! No need to write a script for small computations like listing files, counting files, counting lines in files, searching or modifying files, and many more.
@@ -304,43 +331,16 @@ Some Cons:
 * You won't be able to work on something else.
 * Your job will be terminated if there are connectivity or other issues with the system.
 
-That being said, there are many ways to avoid all the above cons like using [screens](https://jianjye.medium.com/how-to-use-linux-screen-commands-and-shortcuts-quick-guide-f1a2207d15d3)ample, send jobs to the background, manually generate logs, etc. [see this as example](https://www.scaler.com/topics/how-to-run-process-in-background-linux/). Feel free to explore these options
+That being said, there are many ways to avoid all the above cons like using [screens](https://jianjye.medium.com/how-to-use-linux-screen-commands-and-shortcuts-quick-guide-f1a2207d15d3), send jobs to the background, manually generate logs, etc. [see this as example](https://www.scaler.com/topics/how-to-run-process-in-background-linux/). Feel free to explore these options
 
-***IMPORTANT*** Do not run med to heavy processes in the login node. Use a compute node.
+***IMPORTANT*** Do not run med to heavy processes in the login node. Use a compute node via `srun`.
 
-To grab a node (see the beginning of this document to learn about the available nodes):
-
-Fisrt see the current node usage with:
-```
-sinfo
-```
-
-This will show you something like:
-```
-PARTITION AVAIL  TIMELIMIT  NODES  STATE NODELIST 
-standard*    up   infinite      7    mix node[10-13,25-26,28] 
-standard*    up   infinite     10  alloc node[01-09,27] 
-standard*    up   infinite     11   idle node[14-24] 
-himem        up   infinite      2    mix himem[01-02] 
-himem        up   infinite      2   idle himem[03-04] 
-medmem       up   infinite      1    mix node29 
-medmem       up   infinite      7   idle node[30-36] 
-```
-In this case, there are 11 standard nodes (node14-24) and 7 medmem nodes (node30-36) that are "idle" meaning that they are available.
-
-ssh into an idle node with:
-```
-ssh node33
-```
-
-* Now load and/or activate of modules, dependencies, software, etc.
-* Run your code
 
 ---
 
 ## Sequence Databases
 
-I have installed and created few sequence databases (NCBI and MIDORI2) that are available to all SEDNA users. 
+There are a few sequence databases (NCBI and MIDORI2) that are available to all SEDNA users. 
 
 &nbsp;
 
