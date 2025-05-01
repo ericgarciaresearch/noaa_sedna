@@ -60,18 +60,12 @@ I decided to start by setting up the COI species "sp" , "uniq" which retains all
 
 ### Downloading the a database
 
-First of all, I'll grab an interactive node since it might not a good idea not to run some of these steps in the login node:
-```
-sinfo			# This show the status of all nodes 
-ssh node10		# I grabbed a standard now. That should be enough
-```
-
-Then, I created a dir for the corresponding version of the midori2 database and I downloaded the SP Uniq COI to begin with (you can follow these steps to create new databases with other markers, etc.):
+I created a dir for the corresponding version of the midori2 database and I downloaded the SP Uniq COI to begin with using srun (you can follow these steps to create new databases with other markers, etc.):
 ```
 cd /share/all/midori2_database
 mkdir 2024-10-13_customblast_sp_uniq_COI
 cd 2024-10-13_customblast_sp_uniq_COI
-wget -c https://www.reference-midori.info/download/Databases/GenBank261_2024-10-13/RAW_sp/uniq/MIDORI2_UNIQ_SP_NUC_GB263_CO1_RAW.fasta.gz
+srun wget -c https://www.reference-midori.info/download/Databases/GenBank261_2024-10-13/RAW_sp/uniq/MIDORI2_UNIQ_SP_NUC_GB263_CO1_RAW.fasta.gz
 ```
 
 Now umcompress the file for the next step:
