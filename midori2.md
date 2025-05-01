@@ -36,8 +36,11 @@ See [Midori2's README](https://www.reference-midori.info/download.php) in their 
 /share/all/midori2_database/2024-10-13_customblast_sp_uniq_COI
 /share/all/midori2_database/2024-12-14_customblast_sp_uniq_COI
 /share/all/midori2_database/2024-12-14_customblast_sp_uniq_12S
+/share/all/midori2_database/2025-03-08_customblast_sp_uniq_16S
 ```
 **if you add addintional databases please add them to the list above**
+
+***As in April 30th, 2025, the 2025-03-08 is the latest release***
 
 ---
 
@@ -58,6 +61,39 @@ Parent directory for midori2 databases:
 
 I decided to start by setting up the COI species "sp" , "uniq" which retains all haplotypes from all taxonomic labels. For instance, this will include all sequences that have been matched to only a genus or a family. 
 
+**Screen and Interactive Node** 
+Some ofe these processes might take a while so it might be a good idea to run this using [screen](https://www.gnu.org/software/screen/manual/screen.html) which is already installed in SEDNA and use srun to allocate resources.
+
+To start a screen you can use:
+```
+#screen -S <screen_name>
+screen -S midori2_COI
+```
+where the `-S` allows you to provide a name to the screen.
+
+a few useful `screen` commands:
+```
+screen -L  		# will create a log
+screen -L -S <name>	# log and screen name
+Ctrl-a d		# detach from screen. If you want to leave that running and work outside the screen
+screen -ls		# lists all available screens
+screen -r <name>	# re-attaches to the specific screen 
+screen -S <name> -X quit  # to kill screen from outside the screen (detached)
+exit			# kills the screens
+```
+for a more details here is a [screen tutorial](https://linuxize.com/post/how-to-use-linux-screen/) 
+
+Then, request an interactive node:
+```
+srun --partition=standard --mem=4g --time=00:30:00 --pty bash
+``
+30 min and 4Gb of memory should be enough. You might have to wait a bit to get the resquested resources, 1-2 min is normal. If this is taking much longer or gets stuck, cancell it then view what's available, you might have to request a `medmem` node. For example:
+```
+control + c             # this cancels your command
+sinfo			# will list all nodes. Look for "idle" nodes in a particular partition"
+srun --partition=medmem --mem=4g --time=00:30:00 --pty bash	# will request now a medmem node 
+```
+
 ### Downloading the a database
 
 I created a dir for the corresponding version of the midori2 database and I downloaded the SP Uniq COI to begin with using srun (you can follow these steps to create new databases with other markers, etc.):
@@ -67,6 +103,7 @@ mkdir 2024-10-13_customblast_sp_uniq_COI
 cd 2024-10-13_customblast_sp_uniq_COI
 srun wget -c https://www.reference-midori.info/download/Databases/GenBank261_2024-10-13/RAW_sp/uniq/MIDORI2_UNIQ_SP_NUC_GB263_CO1_RAW.fasta.gz
 ```
+*modify the link according to the database you are downloading*
 
 Now umcompress the file for the next step:
 ```
@@ -92,26 +129,6 @@ Cleanning includes:
 2. Truncates names to 50 characters
 3. Makes the `taxid_map` file. Luckily the ncbi taxid of each species is given by midori2 already. This script harvest this info.
 
-***NOTE:*** This process might take a while so might be a good idea to run this using [screen](https://www.gnu.org/software/screen/manual/screen.html) which is already installed in SEDNA.
-
-To start a screen you can use:
-```
-#screen -S <screen_name>
-screen -S midori2_COI
-```
-where the `-S` allows you to provide a name to the screen.
-
-a few useful `screen` commands:
-```
-screen -L  		# will create a log
-screen -L -S <name>	# log and screen name
-Ctrl-a d		# detach from screen. If you want to leave that running and work outside the screen
-screen -ls		# lists all available screens
-screen -r <name>	# re-attaches to the specific screen 
-screen -S <name> -X quit  # to kill screen from outside the screen (detached)
-exit			# kills the screens
-```
-for a more details here is a [screen tutorial](https://linuxize.com/post/how-to-use-linux-screen/) 
 
 Move to the working dir (one level about the downloaded database)
 ``` 
@@ -125,8 +142,26 @@ bash clean_midori2fasta_for_makeblastdb.sh 2024-10-13_customblast_sp_uniq_COI MI
 ```
 where `input_dir` is the directory with the midori2 file you downloaded, `input_fasta` is the input file name, and `output_fasta` is the "cleaned" output file name, which will be used to make the database
 
+* Inspect the resulting fasta file: see that names are correctly truncated and have the taxid at the end, etc. For example:
+```
+>MH910097.1.Paravannella_minima_1443144
+ATGGATACCTTGGCATTAAATAAAGAGGACGTAAGTATGCGAAAAGTTACAGGGAGTTTA
+ATACTGTGATCTGTAAATTTCCTTGAGTAAACTCATTTAATTTTTTTTCTATTTAATGAA
+TTGAAACATCTTAGTAATTAAAAGTAAAATAAATCAAACGAGATTTCATTAGTAGCGGTG
+AGCGAATGTGAATTAGGCCTTTTATTTGTATTAATCAGTAGAAAATTTTCGAATAAATTA
+...
+```
 
-Then, I downloaded the singularity image of the latest version of blastn (.sif executable file):
+* Inspect the taxid_map: see that it contains the same sequence names and taxids separated by a tab. For example:
+```
+MH910097.1.Paravannella_minima_1443144  1443144
+MH535961.1.Vannella_sp._1973054 1973054
+MH535965.1.Vannella_sp._1973054 1973054
+MH535960.1.Vannella_sp._1973054 1973054
+...
+```
+
+Then, download the singularity image of the latest version of blastn (.sif executable file):
 ```
 cd /share/all/midori2_database
 
@@ -156,6 +191,7 @@ cd 2024-10-13_customblast_sp_uniq_COI
 # make database
 singularity exec -B "$PWD" ../blast_latest.sif makeblastdb -in MIDORI2_UNIQ_SP_NUC_GB263_CO1_RAW_cleanedformakeblastdb.fasta -parse_seqids -dbtype nucl -taxid_map taxid_map -out midori2_customblast_sp_uniq
 ```
+**modify the input file as needed**
 
 If this worked ok, you should see a message like:
 ```
@@ -203,7 +239,8 @@ BLASTDB Version: 5
 Now, open permissions to avoid potential problems accessing the database and kill your screen as needed:
 ```
 chmod 775 *
-exit
+exit			# kicks you out of the interactive node allocated by srun
+exit			# kicks you out of screen and puts you back in the login node
 ```
 
 When you use this, make sure to specify the full path and the basename but do not include the extensions (.ndb|.nhr|.nos etc). For example:
