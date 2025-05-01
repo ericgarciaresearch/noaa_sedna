@@ -86,7 +86,7 @@ for a more details here is a [screen tutorial](https://linuxize.com/post/how-to-
 Then, request an interactive node:
 ```
 srun --partition=standard --mem=4g --time=00:30:00 --pty bash
-``
+```
 30 min and 4Gb of memory should be enough. You might have to wait a bit to get the resquested resources, 1-2 min is normal. If this is taking much longer or gets stuck, cancell it then view what's available, you might have to request a `medmem` node. For example:
 ```
 control + c             # this cancels your command
