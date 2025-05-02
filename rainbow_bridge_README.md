@@ -302,7 +302,7 @@ This scripts lives at
 
 to execute with
 ```
-bash /share/all/scripts/egarcia/check_fastq_awk.sh "<path_to_seq_files>"
+srun bash /share/all/scripts/egarcia/check_fastq_awk.sh "<path_to_seq_files>"
 ```
 
 You will see a summary of the results printed straight in the standard output, stdout, that looks like this (example using 4 files):
