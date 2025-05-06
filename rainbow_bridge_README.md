@@ -4,14 +4,16 @@ This guide will help you use [rainbow_bridge](https://github.com/mhoban/rainbow_
 
 The pipeline was been cloned in the share directory:
 ```
-/share/all/rainbow_bridge
+/share/all/rainbow_bridge_unzipfix
 ```
+*Note (May, 2025): currently running a modified script in "rainbow_bridge_unzipfix" as there was a problem with singularity container that was updated and did not contain unzip. The online version has yet been updated*
+
 Additionally,  in-house scripts for pre-processing, running rainbow and post-processing have also available in:
 ```
 /share/all/rainbow_bridge_in-house-scripts
 ```
 
-Please take a few hours to get familiar witht the rainbow_bridge README (previous link), there is a lot of relevent information that is too long to explain the details in here.
+Please take a few hours to get familiar with the rainbow_bridge README (previous link), there is a lot of relevent information that is too long to explain here.
 
 `rainbow_bridge` is a flexible pipeline for eDNA and metabarcoding analyses. It can process raw or already filtered sequences
  from single- or paired-end datasets. This pipeline can be used to create zero-radius operational taxonomic units (zOTUs),
@@ -49,9 +51,9 @@ if you are new to SEDNA, have not configured modules and mamba in your SEDNA .ba
 
 Organization of projects is not a trivial thing. It can be the difference between failure or increasingly efficient progress. A very popular tool to help organize and manage projects is [GitHub](https://github.com/). If you don't have a github account, I would you highly recommend [openning one ](https://github.com/signup)
 
-**GitHub** is the web interface for ***Git***, which is a version control software that allow multiple people to share and work simultaneously in the same code/document. 
+**GitHub** is the web interface for ***Git***, which is a version control software that allow multiple people to share and work simultaneously in the same code/document/projects. 
 
-In GitHub you can then have repositories for each of your projects. **You should strongly consider having a repo for each of your projects, including rainbow_bridge metabarcoding analyses**. Check with your organization,lab or PI, they might already have a github policy, in which case you can follow that. I personally keep copies of repos in my personal account when the original repo exist under an organization.
+In GitHub you can then have repositories for each of your projects. **You should strongly consider having a repo for each of your projects, including rainbow_bridge metabarcoding analyses**. This will aloow you to save and share your work everything you do any analyses. Check with your organization,lab or PI, they might already have a github policy, in which case you can follow that. I personally keep copies of repos in my personal account when the original repo exist under an organization.
 
 ***Git*** is automatically available in SEDNA. No need to load it.
 
@@ -68,47 +70,30 @@ There are two ways that you are able to run `rainbow_bridge`:
 # if you need to download again
 git clone https://github.com/mhoban/rainbow_bridge
 ```
-then grabbing a compute node and using the *rainbow_bridge.nf* script (like the test run below).
+then using the *rainbow_bridge.nf* script with an `srun` or a sbatch script (like the test run below).
 
 or
 
-2. Remotely (recommended), by executing `rainbow_bridge` directly from the main Git repo, i.e., using the in-house script for running rainbow
+2. Remotely, by executing `rainbow_bridge` directly from the main Git repo, i.e., using the in-house script for running rainbow
 * see below
 
-**Note: I would recommend running remotely given that if there are recent updates to the pipeline, which do happen, your local copy of the code might not have these updates which will likely break something down the road**
+**Note: I would normally recommend running remotely given that if there are recent updates to the pipeline, which do happen, your local copy of the code might not have these updates which will likely break something down the road. HOWEVER, as in May 2025, some needed adjustments have not been implemented online so the only version currently working is /share/all/rainbow_bridge_unzipfix**
 
-That being said, I have used the local execution when I had issues running it remotely but I needed to run the data. Yet, this did force me to doublecheck for any potential errors.
+Use local execution when there are issues running it remotely but ultimately you should be able to run remotely.
 
 ---
 
 ### TEST-RUN: Checking if rainbow_bridge is working fine and local execution
 
-*You probably only need to do this test the very first time you're trying to use `rainbow_bridge`*
+**Note (May 2025): I had done the test already and rainbow is currently working correctly (using the rainbow_bridge_unzipfix version). Feel free to skip the test if you know rainbow is working. If it is not, this is a good test to see if your set up or rainbow itself is causing the issue**
+
+*You only need to do this test the very first time you're trying to use `rainbow_bridge` or if you suspect the pipeline is not working at all*
 
 We can easily do this test using the [rainbow_bridge test data](https://github.com/mhoban/rainbow_bridge-test).
 
-The first thing is to see what interactive medmem node is idle (avoid doing any work in the login node):
-```
-sinfo
-```
-at the momment I tried this, I got:
-```
-sinfo
-PARTITION AVAIL  TIMELIMIT  NODES  STATE NODELIST 
-standard*    up   infinite     17    mix node[10-22,24,26-28] 
-standard*    up   infinite      9  alloc node[01-09] 
-standard*    up   infinite      2   idle node[23,25] 
-himem        up   infinite      4    mix himem[01-04] 
-medmem       up   infinite      5    mix node[29-30,32-34] 
-medmem       up   infinite      2  alloc node[31,35] 
-medmem       up   infinite      1   idle node36 
-```
-So I see node36 is available. Snatched it!
-```
-ssh node36
-```
+We'll do the test using `srun` so we avoid doing any medium or heavy work in the login node:
 
-Now, download the rainbow_bridge test repo
+First, download the rainbow_bridge test repo
 ```
 cd <where you want to test this>
 git clone https://github.com/mhoban/rainbow_bridge-test.git
