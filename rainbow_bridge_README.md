@@ -119,7 +119,7 @@ Use local execution when there are issues running it remotely but ultimately you
 </p>
 </details>
 
-<details><summary> Local Execution & TEST-RUN: Checking if rainbow_bridge is working fine</summary>
+<details><summary>TEST-RUN: Checking if rainbow_bridge is working fine</summary>
 <p>
 
 **Note (May 2025): I had done the test already and rainbow is currently working correctly (using the rainbow_bridge_unzipfix version). Feel free to skip the test. Yet if rainbow is not working for you, this is a good test to see if your set up or rainbow itself is causing the issue(s)**
