@@ -61,7 +61,6 @@ if you are new to SEDNA, have not configured modules and mamba in your SEDNA .ba
 </p>
 </details>
 
----
 
 <details><summary>Project Organization and Management (Git)</summary>
 <p>
@@ -78,8 +77,6 @@ In GitHub you can then have repositories for each of your projects. **You should
 
 </p>
 </details>
-
----
 
 <details><summary>rainbow_bridge Running Modes</summary>
 <p>
@@ -107,9 +104,7 @@ Use local execution when there are issues running it remotely but ultimately you
 </p>
 </details>
 
----
-
-<details><summary>### Local Execution & TEST-RUN: Checking if rainbow_bridge is working fine</summary>
+<details><summary> Local Execution & TEST-RUN: Checking if rainbow_bridge is working fine</summary>
 <p>
 
 **Note (May 2025): I had done the test already and rainbow is currently working correctly (using the rainbow_bridge_unzipfix version). Feel free to skip the test. Yet if rainbow is not working for you, this is a good test to see if your set up or rainbow itself is causing the issue(s)**
