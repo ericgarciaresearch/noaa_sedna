@@ -233,7 +233,7 @@ If you got these results, you are ready to try running rainbow_bridge in a scrip
 ## Running `rainbow_bridge` 
 
 
-We will be running rainbow using sbatch scripts. In this case, it is not necessary to use `srun` as a node will be automatically deployed by the script. Furthermore, rainbow can still be executed locally (see above) or remotely using a batch script. We will runnig /share/all/rainbow_bridge_unzipfix as this is the version that is currently working in SEDNA (May 2025), but eventually we will be running remotely to ensure we are using the lastest version of the pipeline.
+We will be running rainbow using sbatch scripts. In this case, it is not necessary to use `srun` as a node will be automatically deployed by the script. Furthermore, rainbow can still be executed locally (see above) or remotely using a batch script. We will be runnig /share/all/rainbow_bridge_unzipfix locally as this is the version that is currently working in SEDNA (May 2025), but eventually we will be running remotely to ensure we are using the lastest version of the pipeline.
 
 <details><summary>Organization and Directories</summary>
 <p>
