@@ -643,7 +643,7 @@ sbatch run_rainbow_bridge_locally_sedna.sh
 ```
 *Can take multiple hours depending on your datase*
 
-Use `less` to open your slurm out file. Rainbow will report work done step by step. Thus I would recommend going straigth to the bottom (shirt + G) which will have the report for all the steps. If the run was successfull, you should see a checkmark in every step. Similar to:
+Once the run is done, use `less` to open your slurm out file. Rainbow will report work done step by step. Thus I would recommend going straigth to the bottom (shirt + G) which will have the report for all the steps. If the run was successfull, you should see a checkmark in every step. Similar to:
 ```
 executor >  local (4081)
 [d7/f7024d] unzip (1011)          | 1016 of 1016 ✔
