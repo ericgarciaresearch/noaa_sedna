@@ -15,9 +15,6 @@ Additionally,  in-house scripts for pre-processing, running rainbow and post-pro
 
 Please take a few hours to get familiar with the rainbow_bridge README (previous link), there is a lot of relevent information that is too long to explain here.
 
----
-
-### rainbow_bridge info
 
 <details><summary>rainbow_bridge info</summary>
 <p>
