@@ -15,7 +15,9 @@ Additionally,  in-house scripts for pre-processing, running rainbow and post-pro
 
 Please take a few hours to get familiar with the rainbow_bridge README (previous link), there is a lot of relevent information that is too long to explain here.
 
-## More Info
+---
+
+## Start Here
 
 <details><summary>rainbow_bridge General Info</summary>
 <p>
@@ -43,11 +45,10 @@ Key Features:
 Note that `rainbow_bridge` is a fork of [eDNAFlow](https://github.com/mahsa-mousavi/eDNAFlow) with added flexibility, capability,
  and compatibility. Refer to the original documentation and description of eDNAFlow as needed.
 
+---
 
 </p>
 </details>
-
----
 
 <details><summary>Need Help with SEDNA?</summary>
 <p>
