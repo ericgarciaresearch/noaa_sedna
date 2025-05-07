@@ -476,11 +476,16 @@ I have also generated the script `fix_bad_fastq.sh` which attempts to fix faulty
 
 See the [rainbow documentation](https://github.com/mhoban/rainbow_bridge) for details
 
+&nbsp;
+&nbsp;
+
 ***Making a Barcode file***
 
-*A barcode file is necessary except for demultiplexed runs where the PCR primers have already been removed*
+The barcode file is used by rainbow to strip barcodes and primer sequences form reads.
 
-See rainbow README for details but briefly here are the examples given:
+*A barcode file is always necessary except for demultiplexed runs where both barcodes and PCR primers have already been removed*
+
+Non- and demultiplexed brief examples:
 
 * Non-demultiplexed runs: This format includes forward/reverse sample barcodes and forward/reverse PCR primers to separate sequences into the appropriate samples. Barcodes are separated with a colon and combined in a single column while primers are given in separate columns. For example:
 
@@ -500,7 +505,10 @@ demuxed_barcode.tsv
 | 16S_fish | S040713_1 | : | GACCCTATGGAGCTTTAGAC | CGCTGTTATCCCTADRGTAACT |  confirmed in JVB1836-16SDegenerate-testmethods.txt|
 
 
-***PIFSC Primers***
+&nbsp;
+&nbsp;
+
+### PIFSC Primers
 
 To make this file I need the forward and reverse sequences of the primer that was used. For PIFSC data, we stored this information in the file:
 ```
@@ -523,6 +531,9 @@ You can copy the block below and just change the content for future runs/primers
 #assay	sample	barcodes	forward_primer	 reverse_primer	extra_information
 16S_fish	S040713_1	:	GACCCTATGGAGCTTTAGAC	CGCTGTTATCCCTADRGTAACT	confirmed in JVB1836-16SDegenerate-testmethods.txt
 ```
+
+&nbsp;
+&nbsp;
 
 ***Make a sample.map file***
 
@@ -569,12 +580,12 @@ rm basenames R1names R2names
 
 ***Making a Parameter yml file***
 
-When running rainbow with a sbatch script, you can either include the complete command in the script using flags such as 
+When running rainbow, you can either include the complete command using flags such as 
 ```
 --paired --reads ../data/ --barcode '../data/*.tsv'
 ```
 
-Or you can make a yml parameter file where you specified all the setting used by each run. For example:
+Or you can make a yml parameter file where you specified all the setting used by each run. In this file, each flag is place in a new line, removing the initial "--" and placing a column after the name of the flag. Additionally, for flags that do not have an additional argument such as "--paired", you should use "True" or "False". For example:
 ```
 nano data/pared_demuxed.yml
 ```
@@ -608,7 +619,7 @@ cp /share/all/rainbow_bridge_in-house-scripts/run_rainbow_bridge_locally_sedna.s
 Now make a subdirectory inside analyses for each run you do. That is, you might have 
 multiple run with different parameters
 
-I am giving my subdir the name of a few paramaters which I might modify in the future. 
+I am naming my subdirs with a few paramaters which I know I might modify in the future. 
 This way I can recognize individual runs immediately.
 
 Make a subdir for my run and copy the run script there:
@@ -617,7 +628,7 @@ mkdir analyses/blast_0_0_lca_70_70_1000hits_midori2
 cp scripts/run_rainbow_bridge_locally_sedna.sh analyses/blast_0_0_lca_70_70_1000hits_midori2
 ```
 
-Normally I would make a config file and run rainbow_bridge by passing this config. 
+Normally I would make a config file (params file) and run rainbow_bridge by passing this config. 
 Yet, currently NEXTFLOW in SEDNA is not parsing config files. Thus, we have to modify the script directly
 
 Now modify the script directly with the desired parameters. Base script has:
@@ -649,7 +660,7 @@ nextflow run /home/egarcia/pipelines/rainbow_bridge_unzipfix/rainbow_bridge.nf \
 ```
 modify these as needed.
 
-To document the settings used in a `params.txt` file:
+I like to document the settings used in a `params.txt` file:
 ```
 grep -E '^nextflow run | ^  --' run_rainbow_bridge_locally_sedna.sh > params.txt
 ```
