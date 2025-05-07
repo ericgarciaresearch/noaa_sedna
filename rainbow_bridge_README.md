@@ -345,7 +345,7 @@ srun bash /share/all/scripts/egarcia/check_fastq_awk.sh "<path_to_seq_files>"
 ```
 
 You will see a summary of the results printed straight in the standard output, stdout, that looks like this (example using 4 files):
-
+```
 🧪 FASTQ Validation Summary
 ----------------------------
 ✅ Passed: 4
@@ -373,7 +373,7 @@ You will see a summary of the results printed straight in the standard output, s
 📄 Read counts written to: fq_format_check_logs/raw_read_count.tsv
 
 📄 Read length summary written to: fq_format_check_logs/raw_read_length_summary.tsv
-
+```
 
 All the output of the check script is saved into the subdir `fq_format_check_logs`, including lists of "good" and "bad" files, logs of file properties, a read count of both paired-end files in `paired_end_check.log`, and a summary of the counts as well as read lenghts.
 
