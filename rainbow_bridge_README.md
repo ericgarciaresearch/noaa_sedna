@@ -454,13 +454,13 @@ Note: this script should work with *[R1|r1].[fastq|fq].gz and *[R2|r2].[fastq|fq
 
 **Potentially Fixing Format Issuess**
 
-I have also generated the script `fix_bad_fastq.sh` which attempts to faulty files by:
+I have also generated the script `fix_bad_fastq.sh` which attempts to fix faulty files by:
 1. Removing empty lines
 2. Removing partial/incomplete records
 3. Truncating excess lines so the total is divisible by 4
 4. Ensuring @ and + headers exist where expected
 
-Yet, I have not have the chance to test the script to use with caution. 
+***Yet, I have not have the chance to test the script to use with caution.***
 
 ```
 /share/all/scripts/egarcia/fix_bad_fastq.sh
