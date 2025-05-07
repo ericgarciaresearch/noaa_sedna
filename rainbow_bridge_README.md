@@ -43,7 +43,6 @@ Key Features:
 Note that `rainbow_bridge` is a fork of [eDNAFlow](https://github.com/mahsa-mousavi/eDNAFlow) with added flexibility, capability,
  and compatibility. Refer to the original documentation and description of eDNAFlow as needed.
 
----
 
 </p>
 </details>
