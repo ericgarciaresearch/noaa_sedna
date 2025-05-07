@@ -19,6 +19,9 @@ Please take a few hours to get familiar with the rainbow_bridge README (previous
 
 ### rainbow_bridge info
 
+<details><summary>rainbow_bridge info</summary>
+<p>
+
 `rainbow_bridge` is a flexible pipeline for eDNA and metabarcoding analyses. It can process raw or already filtered sequences
  from single- or paired-end datasets. This pipeline can be used to create zero-radius operational taxonomic units (zOTUs),
 abundance tables, and assign taxonomy (via [BLAST](https://blast.ncbi.nlm.nih.gov/Blast.cgi) and/or [insect](https://github.com/shaunpwilkinson/insect))
@@ -44,14 +47,27 @@ Note that `rainbow_bridge` is a fork of [eDNAFlow](https://github.com/mahsa-mous
 
 ---
 
+</p>
+</details>
+
+---
+
 ### Need SEDNA help?
+
+<details><summary>If you need help with SEDNA</summary>
+<p>
 
 if you are new to SEDNA, have not configured modules and mamba in your SEDNA .bashrc, or still need more info about working on SEDNA, etc., please start by reading the [SEDNA information and best practices](https://docs.google.com/document/d/1nn0T0OWEsQCBoCdaH6DSY69lQSbK3XnPlseyyQuU2Lc/edit?tab=t.0) and/or the 
 [Working on SEDNA README](https://github.com/ericgarciaresearch/noaa_sedna)
 
 ---
 
-## Project Organization and Management
+</p>
+</details>
+
+---
+
+## Project Organization and Management (Git)
 
 Organization of projects is not a trivial thing. It can be the difference between failure or increasingly efficient progress. A very popular tool to help organize and manage projects is [GitHub](https://github.com/). If you don't have a github account, I would you highly recommend [openning one ](https://github.com/signup)
 
@@ -60,6 +76,11 @@ Organization of projects is not a trivial thing. It can be the difference betwee
 In GitHub you can then have repositories for each of your projects. **You should strongly consider having a repo for each of your projects, including rainbow_bridge metabarcoding analyses**. This will aloow you to save and share your work everything you do any analyses. Check with your organization,lab or PI, they might already have a github policy, in which case you can follow that. I personally keep copies of repos in my personal account when the original repo exist under an organization.
 
 ***Git*** is automatically available in SEDNA. No need to load it.
+
+---
+
+</p>
+</details>
 
 ---
 
@@ -84,6 +105,11 @@ or
 **Note: I would normally recommend running remotely given that if there are recent updates to the pipeline, which do happen, your local copy of the code might not have these updates which will likely break something down the road. HOWEVER, as in May 2025, some needed adjustments have not been implemented online so the only version currently working is /share/all/rainbow_bridge_unzipfix**
 
 Use local execution when there are issues running it remotely but ultimately you should be able to run remotely.
+
+---
+
+</p>
+</details>
 
 ---
 
@@ -189,6 +215,11 @@ Additionally, you should now see 3 dirs that are the ouput of a rainbow run:
   	  
 
 If you got these results, you are ready to try running rainbow_bridge in a script.
+
+---
+
+</p>
+</details>
 
 ---
 
@@ -390,6 +421,7 @@ Check all the output for read flags.
 Note: this script should work with *[R1|r1].[fastq|fq].gz and *[R2|r2].[fastq|fq].gz file extensions. Other extensions will need modification. Should you need to modify it, make a copy in your home dir and modify as needed.
 
 ---
+
 **Potentially Fixing Format Issuess**
 
 I have also generated the script `fix_bad_fastq.sh` which attempts to faulty files by:
@@ -527,7 +559,7 @@ There are several parameters sets available. See rainbow README for all of these
 Normally, I would recommend using a params yml file but currently `NEXTFLOW` in SEDNA is not parsing params files so we have to directly modify the flags in the script running `rainbow` for now.
 
 
-## Script Setup and Running rainbow_bridge
+### Script Setup and Running rainbow_bridge
 
 First copy the base script 
 ```
@@ -629,3 +661,7 @@ If you see an error at the bottom, there is likely another error before this (On
 
 ---
 
+</p>
+</details>
+
+---
