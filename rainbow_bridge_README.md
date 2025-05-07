@@ -265,6 +265,7 @@ git clone https://github.com/ericgarciaresearch/pifsc_p224_16S_fish.git
 * This will make a copy in SEDNA where you can start working
 
 **Copy the gitignore specific for rainbow_bridge.**
+
 This hidden file tell git what large files to ignore so you don't have issues pushing to git
 ```
 cp /share/all/rainbow_bridge_in-house-scripts/.gitignore pifsc_p224_16S_fish
@@ -278,7 +279,7 @@ mkdir scripts		# place your scripts here
 mkdir analyses		# create subdirectories here for each rainbow run (w/diff. parameters etc)
 ```
 
-If you did not make a README, make one:
+If you did not make a README, make one now:
 ```
 nano projects/pifsc_p224_16S_fish/README.md
 ```
