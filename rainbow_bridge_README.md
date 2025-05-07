@@ -85,7 +85,7 @@ Use local execution when there are issues running it remotely but ultimately you
 
 ### TEST-RUN: Checking if rainbow_bridge is working fine and local execution
 
-**Note (May 2025): I had done the test already and rainbow is currently working correctly (using the rainbow_bridge_unzipfix version). Feel free to skip the test if you know rainbow is working. If it is not, this is a good test to see if your set up or rainbow itself is causing the issue**
+**Note (May 2025): I had done the test already and rainbow is currently working correctly (using the rainbow_bridge_unzipfix version). Feel free to skip the test. Yet if rainbow is not working for you, this is a good test to see if your set up or rainbow itself is causing the issue(s)**
 
 *You only need to do this test the very first time you're trying to use `rainbow_bridge` or if you suspect the pipeline is not working at all*
 
@@ -135,7 +135,7 @@ The above is needed because SEDNA does not automatically sources your bash confi
 
 **Running `rainbow_bridge`**
 ```
-rainbow_bridge.nf -params-file single_demuxed.yml --blast-db ./blastdb/single_demuxed
+srun rainbow_bridge.nf -params-file single_demuxed.yml --blast-db ./blastdb/single_demuxed
 ```
 You should see something like:
 ```
@@ -190,7 +190,7 @@ If you got these results, you are ready to try running rainbow_bridge in a scrip
 
 ### Running `rainbow_bridge` using sbatch scripts
 
-When running rainbow using a sbatch script it is not necessary to grab a computing node as this will be automatically deployed by the script. Furthermore, rainbow can still be executed locally (see above) or remotely. We will focus in the last as this warranties we will always be running the lastest version of the pipeline.
+When running rainbow using a sbatch script it is not necessary to use `srun` as this will be automatically deployed by the script. Furthermore, rainbow can still be executed locally (see above) or remotely. We will runnig /share/all/rainbow_bridge_unzipfix as this is the version currently (May 2025) working in SEDNA but eventually we will be running remotely to ensure we are using the lastest version of the pipeline.
 
 &nbsp;
 &nbsp;
@@ -217,13 +217,12 @@ Here, you can then place projects as a GitHub repositories (You can create repos
   
 Current Projects:
 ```
-/home/egarcia/projects/coral-reef_fish_MiFishU_2022
-/home/egarcia/projects/pelagic-cruise_fish_MiFishU_2022
+/home/egarcia/projects/pifsc_p224_16S_fish
 ```
 
 cd into your cloned repo and make the following subdirectories: data, scripts and analyses
 ```
-cd pelagic-cruise_fish_MiFishU_2022
+cd /home/egarcia/projects/pifsc_p224_16S_fish
 mkdir data		# this is where you'll place your datafiles
 mkdir scripts		# place your scripts here
 mkdir analyses		# create subdirectories here for each rainbow run (w/diff. parameters etc)
@@ -231,7 +230,7 @@ mkdir analyses		# create subdirectories here for each rainbow run (w/diff. param
 
 If you did not make a README, make one:
 ```
-nano projects/MiFishU-test/README.md
+nano projects/pifsc_p224_16S_fish/README.md
 ```
 where:
 * **nano** is the text editor I like but you can use whatever other one (vim for example). Here is one [nano tutorial](https://www.geeksforgeeks.org/nano-text-editor-in-linux/) of many in the web
@@ -253,8 +252,58 @@ Document all your moves in your README. This is very important because:
 
 Transfer your data files inside your data subdir:
 ```
-mv or cp <files> projects/MiFishU-test/data
+mv or cp <files> projects/pifsc_p224_16S_fish/data
 ```
+
+**Rename Files**
+
+Renaming files to something manageable
+
+Script
+
+* rename_fastqs.sh < --dry-run | --rename >
+
+All the PIFSC eDNA data I have seen comes from the same sequencing facility [Jonah Ventures](https://jonahventures.com/), 
+which has a common naming scheme for data files that looks like:
+```
+JV190_16SDegenerate_WhitneyJonathan_S045173.1.R1.fastq.gz
+```
+Where the `S045173` is the actual sample name, the `.1` after that represent a duplicate of the same file, the `R1` represent foward reads, and the rest is repeated information. 
+
+Thus, I created the script `rename_fastqs.sh` to truncate files to just the sample name by recognizing files matching the regex 
+`*_S0*.fastq.gz` and using `sed` to modify the name to something like `S045173_1.R1.fastq.gz`. That is, it  keeps only the sample name and changes the "." to a "_" before the duplicate information because the extra point can cause issues later on.
+
+* Importantly, this script can give you a preview of the resulting names (`--dry-run`) before actually renamning files (`--rename`).
+
+If your data files look similar to the described above, try the dry run below. Otherwise, to use this script you will need to:
+* find a regex that recognizes all the files to rename and use that to replace `*_S0*.fastq.gz` in Line 9
+* and find a sed command that makes the necessary changes and use that to replace `sed -e 's/.*_S0/S0/' -e 's/\./_/'` in Line 10
+* Alternatively, change the files names manually, using a loop or another script
+
+
+Renaming my files now. Lets do a dry run first
+```
+cd /home/egarcia/projects/pifsc_p224_16S_fish/data
+srun /share/all/scripts/egarcia/rename_fastqs.sh --dry-run
+```
+The printed output looks like this:
+```
+[DRY RUN] JV190_16SDegenerate_WhitneyJonathan_S045173.1.R1.fastq.gz  ->  S045173_1.R1.fastq.gz
+[DRY RUN] JV190_16SDegenerate_WhitneyJonathan_S045173.1.R2.fastq.gz  ->  S045173_1.R2.fastq.gz
+[DRY RUN] JV190_16SDegenerate_WhitneyJonathan_S045223.1.R1.fastq.gz  ->  S045223_1.R1.fastq.gz
+[DRY RUN] JV190_16SDegenerate_WhitneyJonathan_S045223.1.R2.fastq.gz  ->  S045223_1.R2.fastq.gz
+[DRY RUN] JV190_16SDegenerate_WhitneyJonathan_S045236.1.R1.fastq.gz  ->  S045236_1.R1.fastq.gz
+[DRY RUN] JV190_16SDegenerate_WhitneyJonathan_S045236.1.R2.fastq.gz  ->  S045236_1.R2.fastq.gz
+[DRY RUN] JV190_16SDegenerate_WhitneyJonathan_S045294.1.R1.fastq.gz  ->  S045294_1.R1.fastq.gz
+[DRY RUN] JV190_16SDegenerate_WhitneyJonathan_S045294.1.R2.fastq.gz  ->  S045294_1.R2.fastq.gz
+```
+That looks good!
+
+Ok, going for it:
+```
+srun /share/all/scripts/egarcia/rename_fastqs.sh --rename
+```
+This worked as expected, moving on.
 
 **Sequence File Check**
 
@@ -279,6 +328,11 @@ B) GZ format
 
 C) Paired-End (PE) format
 * Checks that every sample has the set forward and reverse files, and these have the same number of reads.
+
+D) Creates Read summaries
+* Report with read numbers per file
+* Summary with read numbers
+* Summary with read lengths.
 
 This scripts lives at
 ```
@@ -314,9 +368,18 @@ You will see a summary of the results printed straight in the standard output, s
 🔢 Total Pairs Checked: 2
 🎉 All paired FASTQ files look properly matched and formatted.
 
-The script also generates an outdir called `fq_format_check_logs`  with list of "good" and "bad" files, logs of file properties, and a read count of both paired-end files in `paired_end_check.log`
+🧪 Generating raw read counts (file, read_count)
+-----------------------------------------------
+📄 Read counts written to: fq_format_check_logs/raw_read_count.tsv
+
+📄 Read length summary written to: fq_format_check_logs/raw_read_length_summary.tsv
+
+
+All the output of the check script is saved into the subdir `fq_format_check_logs`, including lists of "good" and "bad" files, logs of file properties, a read count of both paired-end files in `paired_end_check.log`, and a summary of the counts as well as read lenghts.
 
 In addition, if any file is found to have issues in the format, the script will generated a detailed log for that file as well.
+
+Check all the output for read flags.
 
 Note: this script should work with *[R1|r1].[fastq|fq].gz and *[R2|r2].[fastq|fq].gz file extensions. Other extensions will need modification. Should you need to modify it, make a copy in your home dir and modify as needed.
 
@@ -336,9 +399,63 @@ Yet, I have not have the chance to test the script to use with caution.
 
 &nbsp;
 
+***Create Supporting Files (barcode, sample_map, and params.yml files)***
+
+See the [rainbow documentation](https://github.com/mhoban/rainbow_bridge) for details
+
+***Making a Barcode file***
+
+*A barcode file is necessary except for demultiplexed runs where the PCR primers have already been removed*
+
+See rainbow README for details but briefly here are the examples given:
+
+* Non-demultiplexed runs: This format includes forward/reverse sample barcodes and forward/reverse PCR primers to separate sequences into the appropriate samples. Barcodes are separated with a colon and combined in a single column while primers are given in separate columns. For example:
+
+unmuxed_barcode.tsv
+
+| #assay | sample | barcodes | forward_primer | reverse_primer | extra_information |
+|---|---|---|---|---|---|
+|16S-Fish | B001 | GTGTGACA:AGCTTGAC | CGCTGTTATCCCTADRGTAACT | GACCCTATGGAGCTTTAGAC | EFMSRun103_Elib90
+|16S-Fish | B002 | GTGTGACA:GACAACAC | CGCTGTTATCCCTADRGTAACT | GACCCTATGGAGCTTTAGAC | EFMSRun103_Elib90
+
+* Demultiplexed runs: Since sequences have already been separated into samples, this format omits the barcodes (using just a colon, ':' in their place) but includes the primers. For example:
+
+demuxed_barcode.tsv
+
+| #assay |  sample |  barcodes | forward_primer |  reverse_primer | extra_information |
+| --- | --- | --- | --- | --- | --- |
+| 16S_fish | S040713_1 | : | GACCCTATGGAGCTTTAGAC | CGCTGTTATCCCTADRGTAACT |  confirmed in JVB1836-16SDegenerate-testmethods.txt|
+
+
+***PIFSC Primers***
+
+To make this file I need the forward and reverse sequences of the primer that was used. For PIFSC data, we stored this information in the file:
+```
+/home/egarcia/data/PIFSC_Metabarcoding_Primers.tsv
+```
+
+In this case, I am calling my barcode file `demuxed_barcodes.tsv` because my samples are already demultiplexed. This file then looks like this:
+
+| #assay |  sample |  barcodes | forward_primer |  reverse_primer | extra_information |
+| --- | --- | --- | --- | --- | --- |
+| 16S_fish | S040713_1 | : | GACCCTATGGAGCTTTAGAC | CGCTGTTATCCCTADRGTAACT |  confirmed in JVB1836-16SDegenerate-testmethods.txt|
+
+Where the header line has to start with #, "S040713_1" is the name of a random sample, and ":" is the 
+character that must separate the barcodes use to idenfity samples. Since my samples are already 
+demultiplex I need only ":". If you don't have demultiplexed samples, your barcode file needs 
+one line per sample with unique combinations of barcodes. See rainbow documentation for more details.
+
+You can copy the block belowe and just change the content for future runs/primers (but make sure you maintain a tsv format).
+ You can also copy the file in SEDNA
+```
+#assay	sample	barcodes	forward_primer	 reverse_primer	extra_information
+16S_fish	S040713_1	:	GACCCTATGGAGCTTTAGAC	CGCTGTTATCCCTADRGTAACT	confirmed in JVB1836-16SDegenerate-testmethods.txt
+```
+
+
 ***Make a sample.map file***
 
-See the rainbow_bridge README for all the different scenarios. In my case, I currently have demultiplexed paired-end files. To run `rainbow_bridge` in this dataset I will need to make a `sample.map` which is a simple text file with the 3 columns: the base name, name of the forward, and reverse files.
+A `sample.map` file is only needed if you want `rainbow_bridge` to midify the file names. In this case I am using an in-house script to rename files so I don't need a sample map. If you do need to make one then a `sample.map` is a simple text file with the 3 columns: the base name, name of the forward, and reverse files.
 
 Thus, for file names such as:
 ```
@@ -377,31 +494,6 @@ rm basenames R1names R2names
 ```
 
 &nbsp;
-
-***Making a Barcode file***
-
-*A barcode file is necessary except for demultiplexed runs where the PCR primers have already been removed*
-
-See rainbow README for details but briefly here are the examples given:
-
-* Non-demultiplexed runs: This format includes forward/reverse sample barcodes and forward/reverse PCR primers to separate sequences into the appropriate samples. Barcodes are separated with a colon and combined in a single column while primers are given in separate columns. For example:
-
-unmuxed_barcode.tsv
-
-| #assay | sample | barcodes | forward_primer | reverse_primer | extra_information |
-|---|---|---|---|---|---|
-|16S-Fish | B001 | GTGTGACA:AGCTTGAC | CGCTGTTATCCCTADRGTAACT | GACCCTATGGAGCTTTAGAC | EFMSRun103_Elib90
-|16S-Fish | B002 | GTGTGACA:GACAACAC | CGCTGTTATCCCTADRGTAACT | GACCCTATGGAGCTTTAGAC | EFMSRun103_Elib90
-
-* Demultiplexed runs: Since sequences have already been separated into samples, this format omits the barcodes (using just a colon, ':' in their place) but includes the primers. For example:
-
-demuxed_barcode.tsv
-
-| #assay | sample | barcodes | forward_primer | reverse_primer | extra_information |
-|---|---|---|---|---|---|
-|primer | V9_18S | : | GTACACACCGCCCGTC | TGATCCTTCTGCAGGTTCACCTAC | | 
-
-
 &nbsp;
 
 ***Making a Parameter yml file***
@@ -425,4 +517,109 @@ fastqc: true
 ...
 ```
 There are several parameters sets available. See rainbow README for all of these.
+
+Normally, I would recommend using a params yml file but currently `NEXTFLOW` in SEDNA is not parsing params files so we have to directly modify the flags in the script running `rainbow` for now.
+
+
+## Script Setup and Running rainbow_bridge
+
+First copy the base script 
+```
+cd /home/egarcia/projects/pifsc_p224_16S_fish/
+cp /share/all/rainbow_bridge_in-house-scripts/run_rainbow_bridge_locally_sedna.sh scripts
+```
+
+Now make a subdirectory inside analyses for each run you do. That is, you might have 
+multiple run with different parameters
+
+I am giving my subdir the name of a few paramaters which I might modify in the future. 
+This way I can recognize individual runs immediately.
+
+Make a subdir for my run and copy the run script there:
+```
+mkdir analyses/blast_0_0_lca_70_70_1000hits_midori2
+cp scripts/run_rainbow_bridge_locally_sedna.sh analyses/blast_0_0_lca_70_70_1000hits_midori2
+```
+
+Normally I would make a config file and run rainbow_bridge by passing this config. 
+Yet, currently NEXTFLOW in SEDNA is not parsing config files. Thus, we have to modify the script directly
+
+Now modify the script directly with the desired parameters. Base script has:
+```
+nextflow run /home/egarcia/pipelines/rainbow_bridge_unzipfix/rainbow_bridge.nf \
+  --maxMemory '185 GB' \
+  --paired \
+  --demultiplexed-by index \
+  --reads ../../data/ \
+  --barcode ../../data/demuxed_barcodes.tsv \
+  --blast \
+  --blast-db '/share/all/midori2_database/2025-03-08_customblast_sp_uniq_16S/midori2_customblast_sp_uniq' \
+  --publish-mode copy \
+  --alpha 2 \
+  --zotu-identity 1 \
+  --max-query-results 1000 \
+  --primer-mismatch 2 \
+  --qcov 0 \
+  --percent-identity 0 \
+  --evalue 0.1 \
+  --lulu \
+  --fastqc \
+  --collapse-taxonomy \
+  --dropped "LCA_dropped" \
+  --lca-qcov 70 \
+  --lca-pid 70 \
+  --lca-diff 1 \
+  --taxdump /share/all/ncbi_database/new_taxdump.zip
+```
+modify these as needed.
+
+Document the settings used in `params.txt`:
+```
+grep -E '^nextflow run|^  --' run_rainbow_bridge_locally_sedna.sh > params.txt
+```
+
+Now, execute `rainbow_bridge`:
+```
+sbatch run_rainbow_bridge_locally_sedna.sh
+```
+
+If the run was successfull, you should see a checkmark in every step. Similar to:
+```
+executor >  local (4081)
+[d7/f7024d] unzip (1011)          | 1016 of 1016 ✔
+[78/a72092] fix_barcodes (1)      | 1 of 1 ✔
+[cf/83c064] first_fastqc (433)    | 508 of 508 ✔
+[71/56f697] first_multiqc (1)     | 1 of 1 ✔
+[62/eec206] filter_merge (501)    | 508 of 508 ✔
+[ac/bf1d37] second_fastqc (508)   | 508 of 508 ✔
+[53/4adf8a] second_multiqc (1)    | 1 of 1 ✔
+[cf/514d07] ngsfilter (499)       | 508 of 508 ✔
+[ea/13025b] filter_length (508)   | 508 of 508 ✔
+[c9/d20aeb] relabel (507)         | 508 of 508 ✔
+[b2/ce8fbd] merge_relabeled       | 1 of 1 ✔
+[26/63bbb8] dereplicate (1)       | 1 of 1 ✔
+[3d/2b966b] get_taxdb (1)         | 1 of 1 ✔
+[3c/3e86ab] extract_taxdb (2)     | 2 of 2 ✔
+[5f/94dd14] blast (1)             | 1 of 1 ✔
+[19/843fe8] lulu_blast (1)        | 1 of 1 ✔
+[48/a65f44] lulu (1)              | 1 of 1 ✔
+[82/f919ea] extract_lineage (1)   | 1 of 1 ✔
+[6c/0eaf02] extract_ncbi (3)      | 3 of 3 ✔
+[38/7badd5] collapse_taxonomy (1) | 1 of 1 ✔
+[54/b238b2] finalize (1)          | 1 of 1 ✔
+Completed at: 30-Apr-2025 20:56:03
+Duration    : 32m 50s
+CPU hours   : 9.4
+```
+
+**ERRORS**
+
+ `rainbow_bridge` will hault when encounter an error, so I usually go straight to the bottom of the 
+slurm out file and see if I got all checkmarks or there is some error(s).
+
+If you see an error at the bottom, there is likely another error before this (One error causes others downstream). 
+
+* Scroll up till you locate the first error and throubleshoot that one
+
+---
 
