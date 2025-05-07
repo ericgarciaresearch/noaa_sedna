@@ -17,7 +17,7 @@ Please take a few hours to get familiar with the rainbow_bridge README (previous
 
 ---
 
-## Start Here
+## Before Starting Read This
 
 <details><summary>rainbow_bridge General Info</summary>
 <p>
