@@ -16,7 +16,7 @@ Additionally,  in-house scripts for pre-processing, running rainbow and post-pro
 Please take a few hours to get familiar with the rainbow_bridge README (previous link), there is a lot of relevent information that is too long to explain here.
 
 
-<details><summary>rainbow_bridge info</summary>
+<details><summary>## rainbow_bridge info</summary>
 <p>
 
 `rainbow_bridge` is a flexible pipeline for eDNA and metabarcoding analyses. It can process raw or already filtered sequences
