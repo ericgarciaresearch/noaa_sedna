@@ -238,7 +238,7 @@ We will be running rainbow using sbatch scripts. In this case, it is not necessa
 <details><summary>Organization and Directories</summary>
 <p>
 
-
+### Organization
 This is the organization I am following at the momment. Feel free to follow this or modify.
 
 From you home directory, create a subdir called "projects"
@@ -247,22 +247,30 @@ cd ~		# this always takes you home regardless of your current location
 mkdir projects
  ```
 
-Here, you can then place projects as a GitHub repositories (You can create repos straight from the command line or at GitHub and then clone it). We are making a separete repo for what can be treated a stand alone product. For example, for multi-marker projects, we are setting up a separate repo for each marker and then an additional one for the analyses that will combine them.
+We give every project a separate GitHub repository that can be treated a stand alone product. For example, for multi-marker projects, we are setting up a separate repo for each marker and then an additional repo for the multi-marker analyses that will combine them.
 
-**Create a Git Repo for your project**
+### Initiate Git Repo
+
+Now create a git repo for your specific project. One way to do this is:
+
 1. Go to your persoal or organization's Git. Click "Repositories", and click in the green "New" bottom
-2. Give a descriptive name (example:"pelagic-cruise_fish_MiFishU_2022") and click "Add a README file", then "Create repository"
+2. Give a descriptive name without making it too long (example:"pifsc_p224_16S_fish"), click "Add a README file", then "Create repository"
 * This will take you to the webpage of your new repo.
 3. Now, click in the green "Code" bottom and copy the displayed HTTPS link
-4. Navigate to your projects dir and `git clone <your new repo's HTTPS link>`
-* This will make a copy in SEDNA where you can start working
-  
-Current Projects:
+4. In SEDNA, navigate to your projects dir and `git clone <your new repo's HTTPS link>`
 ```
-/home/egarcia/projects/pifsc_p224_16S_fish
+cd /home/egarcia/projects/
+git clone https://github.com/ericgarciaresearch/pifsc_p224_16S_fish.git
+```
+* This will make a copy in SEDNA where you can start working
+
+**Copy the gitignore specific for rainbow_bridge.**
+This hidden file tell git what large files to ignore so you don't have issues pushing to git
+```
+cp /share/all/rainbow_bridge_in-house-scripts/.gitignore pifsc_p224_16S_fish
 ```
 
-cd into your cloned repo and make the following subdirectories: data, scripts and analyses
+Next, cd into your cloned repo and make the following subdirectories: data, scripts and analyses
 ```
 cd /home/egarcia/projects/pifsc_p224_16S_fish
 mkdir data		# this is where you'll place your datafiles
@@ -285,7 +293,8 @@ Document all your moves in your README. This is very important because:
 * Allows other to replicate your work
 * Allows your future self to understand what you did now
 
-***Might be useful to copy the format from a repo that is fully or semi-complete so you get some structure or you can build upon that format***
+
+***You have created a new README but it might be useful to copy a README from another project is has been semi- or complete so you get some structure or you can build upon that format***
 
 ---
 
