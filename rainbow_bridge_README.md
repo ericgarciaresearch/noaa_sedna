@@ -15,8 +15,9 @@ Additionally,  in-house scripts for pre-processing, running rainbow and post-pro
 
 Please take a few hours to get familiar with the rainbow_bridge README (previous link), there is a lot of relevent information that is too long to explain here.
 
+## More Info
 
-<details><summary>rainbow_bridge info</summary>
+<details><summary>rainbow_bridge General Info</summary>
 <p>
 
 `rainbow_bridge` is a flexible pipeline for eDNA and metabarcoding analyses. It can process raw or already filtered sequences
@@ -49,9 +50,7 @@ Note that `rainbow_bridge` is a fork of [eDNAFlow](https://github.com/mahsa-mous
 
 ---
 
-### Need SEDNA help?
-
-<details><summary>If you need help with SEDNA</summary>
+<details><summary>Need Help with SEDNA?</summary>
 <p>
 
 if you are new to SEDNA, have not configured modules and mamba in your SEDNA .bashrc, or still need more info about working on SEDNA, etc., please start by reading the [SEDNA information and best practices](https://docs.google.com/document/d/1nn0T0OWEsQCBoCdaH6DSY69lQSbK3XnPlseyyQuU2Lc/edit?tab=t.0) and/or the 
@@ -64,9 +63,7 @@ if you are new to SEDNA, have not configured modules and mamba in your SEDNA .ba
 
 ---
 
-## Project Organization and Management (Git)
-
-<details><summary>Git Project Management</summary>
+<details><summary>Project Organization and Management (Git)</summary>
 <p>
 	
 Organization of projects is not a trivial thing. It can be the difference between failure or increasingly efficient progress. A very popular tool to help organize and manage projects is [GitHub](https://github.com/). If you don't have a github account, I would you highly recommend [openning one ](https://github.com/signup)
@@ -84,12 +81,8 @@ In GitHub you can then have repositories for each of your projects. **You should
 
 ---
 
-## Using rainbow_bridge in SEDNA
-
-<details><summary>rainbow_bridge in SEDNA</summary>
+<details><summary>rainbow_bridge Running Modes</summary>
 <p>
-
-Log into SEDNA. First we will do a test run and then we will run rainbow_bridge in real data using sbatch scripts
 
 There are two ways that you are able to run `rainbow_bridge`:
 
@@ -116,9 +109,7 @@ Use local execution when there are issues running it remotely but ultimately you
 
 ---
 
-### TEST-RUN: Checking if rainbow_bridge is working fine and local execution
-
-<details><summary>Test run & Local execution</summary>
+<details><summary>### Local Execution & TEST-RUN: Checking if rainbow_bridge is working fine</summary>
 <p>
 
 **Note (May 2025): I had done the test already and rainbow is currently working correctly (using the rainbow_bridge_unzipfix version). Feel free to skip the test. Yet if rainbow is not working for you, this is a good test to see if your set up or rainbow itself is causing the issue(s)**
