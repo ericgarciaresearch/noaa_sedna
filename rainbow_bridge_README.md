@@ -69,6 +69,9 @@ if you are new to SEDNA, have not configured modules and mamba in your SEDNA .ba
 
 ## Project Organization and Management (Git)
 
+<details><summary>Git Project Management</summary>
+<p>
+	
 Organization of projects is not a trivial thing. It can be the difference between failure or increasingly efficient progress. A very popular tool to help organize and manage projects is [GitHub](https://github.com/). If you don't have a github account, I would you highly recommend [openning one ](https://github.com/signup)
 
 **GitHub** is the web interface for ***Git***, which is a version control software that allow multiple people to share and work simultaneously in the same code/document/projects. 
@@ -85,6 +88,9 @@ In GitHub you can then have repositories for each of your projects. **You should
 ---
 
 ## Using rainbow_bridge in SEDNA
+
+<details><summary>rainbow_bridge in SEDNA</summary>
+<p>
 
 Log into SEDNA. First we will do a test run and then we will run rainbow_bridge in real data using sbatch scripts
 
@@ -114,6 +120,9 @@ Use local execution when there are issues running it remotely but ultimately you
 ---
 
 ### TEST-RUN: Checking if rainbow_bridge is working fine and local execution
+
+<details><summary>Test run & Local execution</summary>
+<p>
 
 **Note (May 2025): I had done the test already and rainbow is currently working correctly (using the rainbow_bridge_unzipfix version). Feel free to skip the test. Yet if rainbow is not working for you, this is a good test to see if your set up or rainbow itself is causing the issue(s)**
 
@@ -224,6 +233,7 @@ If you got these results, you are ready to try running rainbow_bridge in a scrip
 ---
 
 ## Running `rainbow_bridge` using sbatch scripts
+
 
 When running rainbow using a sbatch script it is not necessary to use `srun` as this will be automatically deployed by the script. Furthermore, rainbow can still be executed locally (see above) or remotely. We will runnig /share/all/rainbow_bridge_unzipfix as this is the version currently (May 2025) working in SEDNA but eventually we will be running remotely to ensure we are using the lastest version of the pipeline.
 
