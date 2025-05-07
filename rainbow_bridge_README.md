@@ -15,6 +15,10 @@ Additionally,  in-house scripts for pre-processing, running rainbow and post-pro
 
 Please take a few hours to get familiar with the rainbow_bridge README (previous link), there is a lot of relevent information that is too long to explain here.
 
+---
+
+### rainbow_bridge info
+
 `rainbow_bridge` is a flexible pipeline for eDNA and metabarcoding analyses. It can process raw or already filtered sequences
  from single- or paired-end datasets. This pipeline can be used to create zero-radius operational taxonomic units (zOTUs),
 abundance tables, and assign taxonomy (via [BLAST](https://blast.ncbi.nlm.nih.gov/Blast.cgi) and/or [insect](https://github.com/shaunpwilkinson/insect))
@@ -47,7 +51,7 @@ if you are new to SEDNA, have not configured modules and mamba in your SEDNA .ba
 
 ---
 
-### Project Organization and Management
+## Project Organization and Management
 
 Organization of projects is not a trivial thing. It can be the difference between failure or increasingly efficient progress. A very popular tool to help organize and manage projects is [GitHub](https://github.com/). If you don't have a github account, I would you highly recommend [openning one ](https://github.com/signup)
 
@@ -188,14 +192,14 @@ If you got these results, you are ready to try running rainbow_bridge in a scrip
 
 ---
 
-### Running `rainbow_bridge` using sbatch scripts
+## Running `rainbow_bridge` using sbatch scripts
 
 When running rainbow using a sbatch script it is not necessary to use `srun` as this will be automatically deployed by the script. Furthermore, rainbow can still be executed locally (see above) or remotely. We will runnig /share/all/rainbow_bridge_unzipfix as this is the version currently (May 2025) working in SEDNA but eventually we will be running remotely to ensure we are using the lastest version of the pipeline.
 
 &nbsp;
 &nbsp;
 
-**Organization:**
+### Organization: 
 
 This is the organization I am following at the momment. Feel free to follow this or modify.
 
@@ -248,7 +252,9 @@ Document all your moves in your README. This is very important because:
 &nbsp;
 &nbsp;
 
-**Setting up your DATA**
+### Setting up your DATA
+
+**Get your Data**
 
 Transfer your data files inside your data subdir:
 ```
@@ -383,6 +389,7 @@ Check all the output for read flags.
 
 Note: this script should work with *[R1|r1].[fastq|fq].gz and *[R2|r2].[fastq|fq].gz file extensions. Other extensions will need modification. Should you need to modify it, make a copy in your home dir and modify as needed.
 
+---
 **Potentially Fixing Format Issuess**
 
 I have also generated the script `fix_bad_fastq.sh` which attempts to faulty files by:
@@ -397,9 +404,9 @@ Yet, I have not have the chance to test the script to use with caution.
 /share/all/scripts/egarcia/fix_bad_fastq.sh
 ```
 
-&nbsp;
+---
 
-***Create Supporting Files (barcode, sample_map, and params.yml files)***
+### Create Supporting Files (barcode, sample_map, and params.yml files)
 
 See the [rainbow documentation](https://github.com/mhoban/rainbow_bridge) for details
 
@@ -451,7 +458,6 @@ You can copy the block belowe and just change the content for future runs/primer
 #assay	sample	barcodes	forward_primer	 reverse_primer	extra_information
 16S_fish	S040713_1	:	GACCCTATGGAGCTTTAGAC	CGCTGTTATCCCTADRGTAACT	confirmed in JVB1836-16SDegenerate-testmethods.txt
 ```
-
 
 ***Make a sample.map file***
 
@@ -573,9 +579,9 @@ nextflow run /home/egarcia/pipelines/rainbow_bridge_unzipfix/rainbow_bridge.nf \
 ```
 modify these as needed.
 
-Document the settings used in `params.txt`:
+To document the settings used in a `params.txt` file:
 ```
-grep -E '^nextflow run|^  --' run_rainbow_bridge_locally_sedna.sh > params.txt
+grep -E '^nextflow run | ^  --' run_rainbow_bridge_locally_sedna.sh > params.txt
 ```
 
 Now, execute `rainbow_bridge`:
