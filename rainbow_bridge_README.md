@@ -215,15 +215,14 @@ If you got these results, you are ready to try running rainbow_bridge in a scrip
 
 ---
 
-## Running `rainbow_bridge` using sbatch scripts
+## Running `rainbow_bridge` 
 
 
-When running rainbow using a sbatch script it is not necessary to use `srun` as this will be automatically deployed by the script. Furthermore, rainbow can still be executed locally (see above) or remotely. We will runnig /share/all/rainbow_bridge_unzipfix as this is the version currently (May 2025) working in SEDNA but eventually we will be running remotely to ensure we are using the lastest version of the pipeline.
+We will be running rainbow using sbatch scripts. In this case, it is not necessary to use `srun` as a node will be automatically deployed by the script. Furthermore, rainbow can still be executed locally (see above) or remotely using a batch script. We will runnig /share/all/rainbow_bridge_unzipfix as this is the version that is currently working in SEDNA (May 2025), but eventually we will be running remotely to ensure we are using the lastest version of the pipeline.
 
-&nbsp;
-&nbsp;
+<details><summary>Organization and Directories</summary>
+<p>
 
-### Organization: 
 
 This is the organization I am following at the momment. Feel free to follow this or modify.
 
@@ -273,19 +272,26 @@ Document all your moves in your README. This is very important because:
 
 ***Might be useful to copy the format from a repo that is fully or semi-complete so you get some structure or you can build upon that format***
 
-&nbsp;
-&nbsp;
+---
 
-### Setting up your DATA
+</p>
+</details>
 
-**Get your Data**
+<details><summary>Get your Data</summary>
+<p>
+
 
 Transfer your data files inside your data subdir:
 ```
 mv or cp <files> projects/pifsc_p224_16S_fish/data
 ```
+---
 
-**Rename Files**
+</p>
+</details>
+
+<details><summary>Rename Files</summary>
+<p>
 
 Renaming files to something manageable
 
@@ -335,7 +341,13 @@ srun /share/all/scripts/egarcia/rename_fastqs.sh --rename
 ```
 This worked as expected, moving on.
 
-**Sequence File Check**
+---
+
+</p>
+</details>
+
+<details><summary>Check your Sequence Files</summary>
+<p>
 
 Take a momment to review your files:
 * is your data demultiplexed?
@@ -431,7 +443,11 @@ Yet, I have not have the chance to test the script to use with caution.
 
 ---
 
-### Create Supporting Files (barcode, sample_map, and params.yml files)
+</p>
+</details>
+
+<details><summary>Create Supporting Files (barcode, sample_map, and params.yml files)</summary>
+<p>
 
 See the [rainbow documentation](https://github.com/mhoban/rainbow_bridge) for details
 
@@ -477,8 +493,7 @@ character that must separate the barcodes use to idenfity samples. Since my samp
 demultiplex I need only ":". If you don't have demultiplexed samples, your barcode file needs 
 one line per sample with unique combinations of barcodes. See rainbow documentation for more details.
 
-You can copy the block belowe and just change the content for future runs/primers (but make sure you maintain a tsv format).
- You can also copy the file in SEDNA
+You can copy the block below and just change the content for future runs/primers (but make sure you maintain a tsv format). You can also copy the file in SEDNA
 ```
 #assay	sample	barcodes	forward_primer	 reverse_primer	extra_information
 16S_fish	S040713_1	:	GACCCTATGGAGCTTTAGAC	CGCTGTTATCCCTADRGTAACT	confirmed in JVB1836-16SDegenerate-testmethods.txt
@@ -551,8 +566,13 @@ There are several parameters sets available. See rainbow README for all of these
 
 Normally, I would recommend using a params yml file but currently `NEXTFLOW` in SEDNA is not parsing params files so we have to directly modify the flags in the script running `rainbow` for now.
 
+---
 
-### Script Setup and Running rainbow_bridge
+</p>
+</details>
+
+<details><summary>Script Setup</summary>
+<p>
 
 First copy the base script 
 ```
@@ -609,12 +629,21 @@ To document the settings used in a `params.txt` file:
 grep -E '^nextflow run | ^  --' run_rainbow_bridge_locally_sedna.sh > params.txt
 ```
 
-Now, execute `rainbow_bridge`:
+---
+
+</p>
+</details>
+
+<details><summary>Execute rainbow_bridge</summary>
+<p>
+
+Now that you have everything ready you can execute  `rainbow_bridge` with:
 ```
 sbatch run_rainbow_bridge_locally_sedna.sh
 ```
+*Can take multiple hours depending on your datase*
 
-If the run was successfull, you should see a checkmark in every step. Similar to:
+Use `less` to open your slurm out file. Rainbow will report work done step by step. Thus I would recommend going straigth to the bottom (shirt + G) which will have the report for all the steps. If the run was successfull, you should see a checkmark in every step. Similar to:
 ```
 executor >  local (4081)
 [d7/f7024d] unzip (1011)          | 1016 of 1016 ✔
@@ -648,9 +677,9 @@ CPU hours   : 9.4
  `rainbow_bridge` will hault when encounter an error, so I usually go straight to the bottom of the 
 slurm out file and see if I got all checkmarks or there is some error(s).
 
-If you see an error at the bottom, there is likely another error before this (One error causes others downstream). 
+If you see an error at the bottom, there is likely another error before this (one error causes others downstream). 
 
-* Scroll up till you locate the first error and throubleshoot that one
+* Scroll up till you locate the first error and throubleshoot that one and rerun rainbow
 
 ---
 
