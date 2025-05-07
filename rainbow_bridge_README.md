@@ -1,4 +1,4 @@
-# rainbow_bridge README for SEDNA (NOAA's supercomputer)
+# rainbow_bridge for SEDNA (NOAA's supercomputer)
 
 This guide will help you use [rainbow_bridge](https://github.com/mhoban/rainbow_bridge) in SEDNA. 
 
@@ -83,19 +83,34 @@ In GitHub you can then have repositories for each of your projects. **You should
 
 There are two ways that you are able to run `rainbow_bridge`:
 
-1. Locally, by using the copy already downloaded in the share dir or downloading the main [rainbow_bridge GitHub repo](https://github.com/mhoban/rainbow_bridge) in your home dir as needed:
+**1. Locally**
+
+You can run rainbow locally by using the copy already downloaded in the share dir which already has the necesary adjustments to make it functional:
+```
+/share/all/rainbow_bridge_unzipfix
+```
+To use this, you would copy the following script in your project's dir
+```
+/share/all/rainbow_bridge_in-house-scripts/run_rainbow_bridge_locally_sedna.sh
+```
+*This script is already setup to run the version that is currently working*
+
+You can also download the main [rainbow_bridge GitHub repo](https://github.com/mhoban/rainbow_bridge) again but as in May 7th 20205, this won't work as needed adjustment have not been implemented online:
 ```
 # if you need to download again
 git clone https://github.com/mhoban/rainbow_bridge
 ```
 then using the *rainbow_bridge.nf* script with an `srun` or a sbatch script (like the test run below).
 
-or
 
-2. Remotely, by executing `rainbow_bridge` directly from the main Git repo, i.e., using the in-house script for running rainbow
-* see below
+**2. Remotely**
 
-**Note: I would normally recommend running remotely given that if there are recent updates to the pipeline, which do happen, your local copy of the code might not have these updates which will likely break something down the road. HOWEVER, as in May 2025, some needed adjustments have not been implemented online so the only version currently working is /share/all/rainbow_bridge_unzipfix**
+You also execute `rainbow_bridge` directly from the main Git repo, i.e., using the in-house script for running rainbow:
+```
+/share/all/rainbow_bridge_in-house-scripts/run_rainbow_bridge_remotely_sedna.sh
+```
+
+**Note: I would normally recommend running remotely given that if there are recent updates to the pipeline, which do happen, your local copy of the code might not have these updates which will likely break something down the road. HOWEVER, as in May 2025, some needed adjustments have not been implemented online so the only version currently working is running /share/all/rainbow_bridge_unzipfix locally**
 
 Use local execution when there are issues running it remotely but ultimately you should be able to run remotely.
 
