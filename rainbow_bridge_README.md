@@ -731,7 +731,6 @@ First thing to do would be to review the slurm out file and see if your run work
 
 Read the [rainbow_bridge](https://github.com/mhoban/rainbow_bridge) documentation for a full description of the ouput. 
 
----
 
 </p>
 </details>
