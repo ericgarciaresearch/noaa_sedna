@@ -756,15 +756,15 @@ Briefly, rainbow will create 3 main subdirectories:
     * creates zOTUs and reports abundances across samples in the file `zotu_table.tsv`
     * Provides zOTUs actual blasted sequences in the file `*_zotus.fasta`  
     * Provide a list of all unique sequences across samples in the file `*_unique.fasta`
- * lulu
-   * Filters dubious zOTUs and creates a new filtered abundance table in `lulu_zotu_table.tsv`
- * taxonomy
-   * Puts taxonomic labels to the previous zotu table
-   * Provides all the hits per zOTU that pass your setting in `lca_intermediate.tsv`
-   * Chooses the top hit for each zOTU base in a lowest common ancestor (**LCA**) or phylogenetic (**phyloseq**) algorithm
-   * If a single zOTU has multiple hits with equal blast results, LCA will collapse the label to the taxonomic level where the assignations are the same for all hits, reported in `lca_taxonomy.tsv` 
-  * final
-    * puts the various zotu tables and taxonomy together (and other reports if demanded)
-    * `zotu_table_raw.tsv` same as `zotu_table.tsv`
-    * `zotu_table_final.tsv` combines `zotu_table.tsv` and `lca_taxonomy.tsv`
-    * `zotu_table_final_curated.tsv` combines `lulu_zotu_table.tsv` and `lca_taxonomy.tsv`
+   * lulu
+     * Filters dubious zOTUs and creates a new filtered abundance table in `lulu_zotu_table.tsv`
+   * taxonomy
+     * Puts taxonomic labels to the previous zotu table
+     * Provides all the hits per zOTU that pass your setting in `lca_intermediate.tsv`
+     * Chooses the top hit for each zOTU base in a lowest common ancestor (**LCA**) or phylogenetic (**phyloseq**) algorithm
+     * If a single zOTU has multiple hits with equal blast results, LCA will collapse the label to the taxonomic level where the assignations are the same for all hits, reported in `lca_taxonomy.tsv` 
+    * final
+      * puts the various zotu tables and taxonomy together (and other reports if demanded)
+      * `zotu_table_raw.tsv` same as `zotu_table.tsv`
+      * `zotu_table_final.tsv` combines `zotu_table.tsv` and `lca_taxonomy.tsv`
+      * `zotu_table_final_curated.tsv` combines `lulu_zotu_table.tsv` and `lca_taxonomy.tsv`
