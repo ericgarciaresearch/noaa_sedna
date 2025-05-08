@@ -740,14 +740,14 @@ Read the [rainbow_bridge](https://github.com/mhoban/rainbow_bridge) documentatio
 <p>
 
 Briefly, rainbow will create 3 main subdirectories:
-* work
+* **work**
   * These are files created by NEXTFLOW (genrally, you don't need to look at these).
   * If you use symlinks, these will direct to one directory withing `work`
-* preprocess
+* **preprocess**
   * Various intermediate files as filters, trims, etc, are applied to sequence files
   * Here, you can analyze the quality of your dataset and see what filters remove more reads, etc.
   * We summarise these at a later step in this pipeline     
-* output (this is what you want)
+* **output (this is what you want)**
   * blast
     * reports all the hits per zotu (within given parameters) in the file `blast_result_merged.tsv`
   * fastqc
