@@ -804,6 +804,9 @@ Is time to analyze your results!!!
 
 First, we'll see how did your dataset fared in the filtering and preprocessing steps.
 
+&nbsp;
+&nbsp;
+
 **Make a Preprocess README**
 
 We will make a readme to document the preprocess results separately from the main readme for better organization.
@@ -819,6 +822,8 @@ or you can use the following README as a template and modify as needed.
 ```
 This readme can also be downloaded from git [here](https://github.com/ericgarciaresearch/pifsc_p224_16S_fish/blob/main/analyses/blast_0_0_lca_70_70_1000hits_midori2/preprocess/README_preprocess.md)
 
+&nbsp;
+&nbsp;
 
 **Generate Read Count Summary**
 
@@ -846,6 +851,9 @@ If your read calculator worked ok you should see a tsv file that looks like this
 
 Review your table and look for read flags or disernable patterns. 
 
+&nbsp;
+&nbsp;
+
 **Ploting Read Summary**
 
 Now that you have `read_count_preprocessing.tsv` you can use the following custom Rscript to make plots to visualize and easily identify patterns.
@@ -858,7 +866,10 @@ Either:
   * Upload plots into the `preprocess` dir
   * Push all files
   * Embed plot inside the README. 
-    * Example: ![anyname](actual name of file) = ![plot1](barplot_preprocess_read_summary.png)
+    * Example: ![anyname](actual name of file)
+      * ```
+        ![plot1](barplot_preprocess_read_summary.png)
+        ```
     * Full example [here](https://github.com/ericgarciaresearch/pifsc_p224_16S_fish/edit/main/analyses/blast_0_0_lca_70_70_1000hits_midori2/preprocess/README_preprocess.md)
 2. Run the Rscript in SEDNA
   * Coming soon
