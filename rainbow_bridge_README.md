@@ -802,17 +802,30 @@ If you got an error please document it here so that future users can get a head 
 
 Is time to analyze your results!!! 
 
-First, we'll see how did your dataset fare in the filtering and preprocessing steps.
+First, we'll see how did your dataset fared in the filtering and preprocessing steps.
+
+**Make a Preprocess README**
+
+We will make a readme to document the preprocess results separately from the main readme for better organization.
 
 Navigate to the preprocess directory:
 ```
 cd preprocess
+nano README_preprocess.md
 ```
+or you can use the following README as a template and modify as needed.
+```
+/home/egarcia/projects/pifsc_p224_16S_fish/analyses/blast_0_0_lca_70_70_1000hits_midori2/preprocess/README_preprocess.md
+```
+This readme can also be downloaded from git [here](https://github.com/ericgarciaresearch/pifsc_p224_16S_fish/blob/main/analyses/blast_0_0_lca_70_70_1000hits_midori2/preprocess/README_preprocess.md)
 
-Copy the scripts for analyzing and plotting the read number and loss during preprocessing:
+
+**Generate Read Count Summary**
+
+
+Copy the scripts for analyzing the read number and loss during preprocessing:
 ```
 cp /share/all/rainbow_bridge_in-house-scripts/read_calculator_rainbow_preprocess.sh ../../../scripts/
-cp /share/all/rainbow_bridge_in-house-scripts/plot_rainbow_preprocess.R ../../../scripts/
 ```
 
 Execute the `read_calculator_rainbow_preprocess.sh` script 
@@ -830,3 +843,23 @@ If your read calculator worked ok you should see a tsv file that looks like this
 |S040713_2  |   69722 | 69722 | 68909 | 68851 | 68851 | 68851 | 1.17 | 0.08 | 0.00 | 0.00| 
 |S040715_1  |   76527 | 76527 | 75781 | 75753 | 75753 | 75753 | 0.97 | 0.04 | 0.00 | 0.00| 
 |S040715_2  |   48762 | 48762 | 48407 | 48381 | 48381 | 48381 | 0.73 | 0.05 | 0.00 | 0.00|
+
+Review your table and look for read flags or disernable patterns. 
+
+**Ploting Read Summary**
+
+Now that you have `read_count_preprocessing.tsv` you can use the following custom Rscript to make plots to visualize and easily identify patterns.
+```
+/share/all/rainbow_bridge_in-house-scripts/plot_rainbow_preprocess.R
+```
+
+Either:
+1. Download both `plot_rainbow_preprocess.R` and `read_count_preprocessing.tsv`, and run in your local computer
+  * Upload plots into the `preprocess` dir
+  * Push all files
+  * Embed plot inside the README. 
+    * Example: ![anyname](actual name of file) = ![plot1](barplot_preprocess_read_summary.png)
+    * Full example [here](https://github.com/ericgarciaresearch/pifsc_p224_16S_fish/edit/main/analyses/blast_0_0_lca_70_70_1000hits_midori2/preprocess/README_preprocess.md)
+2. Run the Rscript in SEDNA
+  * Coming soon
+
