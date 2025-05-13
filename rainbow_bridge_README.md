@@ -819,12 +819,12 @@ Execute the `read_calculator_rainbow_preprocess.sh` script
 ```
 srun ../../../scripts/read_calculator_rainbow_preprocess.sh
 ```
-* This script creates`read_count_preprocessing.tsv` file that reports the number of reads remaning after each step is run as well as the percent of reads loss in each step relative to the previous
-* We will then visualize the read fate processing this tsv file with the R script `plot_rainbow_preprocess.R`
+* This script creates **read_count_preprocessing.tsv** file that reports the number of reads remaning after each step is run as well as the percent of reads loss in each step relative to the previous
+* We will then visualize the read fate processing this tsv file with the R script **plot_rainbow_preprocess.R**
 
 If your read calculator worked ok you should see a tsv file that looks like this:
 
-|sample | raw_F | raw_R | trim_merge  |  ngsfilter  |   l_filtered  |  relabeled  |   %_loss_trim_merge  |   %_loss_ngsfilter |  | %_loss_l_filtered  |   %_loss_relabeled| 
+|sample | raw_F | raw_R | trim_merge  |  ngsfilter  |   l_filtered  |  relabeled  |   %_loss_trim_merge  |  %_loss_ngsfilter | %_loss_l_filtered  |   %_loss_relabeled| 
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 |S040713_1  |   84476 | 84476 | 83435 | 83381 | 83381 | 83381 | 1.23 | 0.06 | 0.00 | 0.00| 
 |S040713_2  |   69722 | 69722 | 68909 | 68851 | 68851 | 68851 | 1.17 | 0.08 | 0.00 | 0.00| 
