@@ -678,9 +678,20 @@ Now that you have everything ready you can execute  `rainbow_bridge` with:
 cd analyses/blast_0_0_lca_70_70_1000hits_midori2
 sbatch run_rainbow_bridge_locally_sedna.sh
 ```
-*Can take multiple hours depending on your datase*
+*Can take multiple hours depending on the size of your dataset*
 
-Once the run is done, use `less` to open your slurm out file. Rainbow will report work done step by step. Thus I would recommend going straigth to the bottom (shirt + G) which will have the report for all the steps. If the run was successfull, you should see a checkmark in every step. Similar to:
+---
+
+</p>
+</details>
+
+---
+
+## Reviewing Results
+
+Once your job is done, the first thing to do is to review the slurm out file and see if your run worked or there were issues.
+
+Use `less` to open your slurm out file. Rainbow will report work done step by step. Thus I would recommend going straigth to the bottom (shirt + G) which will have the report for all the steps. If the run was successfull, you should see a checkmark in every step. Similar to:
 ```
 executor >  local (4081)
 [d7/f7024d] unzip (1011)          | 1016 of 1016 ✔
@@ -716,18 +727,11 @@ slurm out file and see if I got all checkmarks or there is some error(s).
 
 If you see an error at the bottom, there is likely another error before this (one error causes others downstream). 
 
-* Scroll up till you locate the first error and throubleshoot that one and rerun rainbow
+* Scroll up till you locate the first error and throubleshoot that one and then rerun rainbow
+	* rainbow does have the ability to run certain steps independently (like collapse_taxonomy).
+ 	* NEXFLOW also have the `-resume` flag/option which would pick up the processing where the previous run left. **YET, this has not been tested in SEDNA**
+* Document your error(s) in the next step in this guide
 
----
-
-</p>
-</details>
-
----
-
-## Reviewing Results
-
-First thing to do would be to review the slurm out file and see if your run worked or there were issues (see the previous step)
 
 Read the [rainbow_bridge](https://github.com/mhoban/rainbow_bridge) documentation for a full description of the ouput. 
 
@@ -767,3 +771,30 @@ Briefly, rainbow will create 3 main subdirectories:
       * `zotu_table_raw.tsv` same as `zotu_table.tsv`
       * `zotu_table_final.tsv` combines `zotu_table.tsv` and `lca_taxonomy.tsv`
       * `zotu_table_final_curated.tsv` combines `lulu_zotu_table.tsv` and `lca_taxonomy.tsv`
+     
+</p>
+</details>
+
+<details><summary>Error Logging</summary>
+<p>
+
+If you don't see errors in you
+
+</p>
+</details>
+
+<details><summary>Analyzing read fate in rainbow preprocessing</summary>
+<p>
+
+
+Navigate to the preprocess directory:
+```
+cd preprocess
+```
+
+Copy the scripts for analyzing and plotting the read number and loss during preprocessing:
+```
+cp /share/all/rainbow_bridge_in-house-scripts/read_calculator_rainbow_preprocess.sh ../../../scripts/
+cp /share/all/rainbow_bridge_in-house-scripts/plot_rainbow_preprocess.R ../../../scripts/
+```
+
