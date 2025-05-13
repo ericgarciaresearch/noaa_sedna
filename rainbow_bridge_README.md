@@ -689,6 +689,9 @@ sbatch run_rainbow_bridge_locally_sedna.sh
 
 ## Reviewing Results
 
+<details><summary>Check your Run</summary>
+<p>
+	
 Once your job is done, the first thing to do is to review the slurm out file and see if your run worked or there were issues.
 
 Use `less` to open your slurm out file. Rainbow will report work done step by step. Thus I would recommend going straigth to the bottom (shirt + G) which will have the report for all the steps. If the run was successfull, you should see a checkmark in every step. Similar to:
@@ -720,9 +723,19 @@ Duration    : 32m 50s
 CPU hours   : 9.4
 ```
 
+If your slurm looks like this and you can't find errors, then your run probably work fine!
+
+Thus, you should see the directories:
+* work
+* preprocess
+* output
+
+&nbsp;
+&nbsp;
+
 **ERRORS**
 
- `rainbow_bridge` will hault when encounter an error, so I usually go straight to the bottom of the 
+`rainbow_bridge` will hault when encounter an error, so I usually go straight to the bottom of the 
 slurm out file and see if I got all checkmarks or there is some error(s).
 
 If you see an error at the bottom, there is likely another error before this (one error causes others downstream). 
@@ -730,17 +743,15 @@ If you see an error at the bottom, there is likely another error before this (on
 * Scroll up till you locate the first error and throubleshoot that one and then rerun rainbow
 	* rainbow does have the ability to run certain steps independently (like collapse_taxonomy).
  	* NEXFLOW also have the `-resume` flag/option which would pick up the processing where the previous run left. **YET, this has not been tested in SEDNA**
-* Document your error(s) in the next step in this guide
-
-
-Read the [rainbow_bridge](https://github.com/mhoban/rainbow_bridge) documentation for a full description of the ouput. 
-
+* Document your error(s) in the "Error Logging" below
 
 </p>
 </details>
 
 <details><summary>rainbow_bridge Output</summary>
 <p>
+
+Read the [rainbow_bridge](https://github.com/mhoban/rainbow_bridge) documentation for a full description of the ouput.
 
 Briefly, rainbow will create 3 main subdirectories:
 * **work**
@@ -778,7 +789,10 @@ Briefly, rainbow will create 3 main subdirectories:
 <details><summary>Error Logging</summary>
 <p>
 
-If you don't see errors in you
+If you got an error please document it here so that future users can get a head start if they encounter the same or similar error.
+
+* Populate an row in the error_summary_table
+* Place a copy of your slurm out in
 
 </p>
 </details>
@@ -786,6 +800,9 @@ If you don't see errors in you
 <details><summary>Analyzing read fate in rainbow preprocessing</summary>
 <p>
 
+Is time to analyze your result!!! 
+
+First, we'll see how did your dataset fare in the filtering and preprocessing steps.
 
 Navigate to the preprocess directory:
 ```
@@ -798,3 +815,18 @@ cp /share/all/rainbow_bridge_in-house-scripts/read_calculator_rainbow_preprocess
 cp /share/all/rainbow_bridge_in-house-scripts/plot_rainbow_preprocess.R ../../../scripts/
 ```
 
+Execute the `read_calculator_rainbow_preprocess.sh` script 
+```
+srun ../../../scripts/read_calculator_rainbow_preprocess.sh
+```
+* This script creates`read_count_preprocessing.tsv` file that reports the number of reads remaning after each step is run as well as the percent of reads loss in each step relative to the previous
+* We will then visualize the read fate processing this tsv file with the R script `plot_rainbow_preprocess.R`
+
+If your read calculator worked ok you should see a tsv file that looks like this:
+
+|sample | raw_F | raw_R | trim_merge  |  ngsfilter  |   l_filtered  |  relabeled  |   %_loss_trim_merge  |   %_loss_ngsfilter |  | %_loss_l_filtered  |   %_loss_relabeled| 
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+|S040713_1  |   84476 | 84476 | 83435 | 83381 | 83381 | 83381 | 1.23 | 0.06 | 0.00 | 0.00| 
+|S040713_2  |   69722 | 69722 | 68909 | 68851 | 68851 | 68851 | 1.17 | 0.08 | 0.00 | 0.00| 
+|S040715_1  |   76527 | 76527 | 75781 | 75753 | 75753 | 75753 | 0.97 | 0.04 | 0.00 | 0.00| 
+|S040715_2  |   48762 | 48762 | 48407 | 48381 | 48381 | 48381 | 0.73 | 0.05 | 0.00 | 0.00|
