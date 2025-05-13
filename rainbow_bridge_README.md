@@ -800,7 +800,7 @@ If you got an error please document it here so that future users can get a head 
 <details><summary>Analyzing read fate in rainbow preprocessing</summary>
 <p>
 
-Is time to analyze your result!!! 
+Is time to analyze your results!!! 
 
 First, we'll see how did your dataset fare in the filtering and preprocessing steps.
 
