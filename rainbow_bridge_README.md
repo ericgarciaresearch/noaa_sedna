@@ -797,7 +797,7 @@ If you got an error please document it here so that future users can get a head 
 </p>
 </details>
 
-<details><summary>Analyzing read fate in rainbow preprocessing</summary>
+<details><summary>Read fate in preprocess</summary>
 <p>
 
 Is time to analyze your results!!! 
@@ -874,3 +874,14 @@ Either:
 2. Run the Rscript in SEDNA
   * Coming soon
 
+--- 
+
+</p>
+</details>
+
+<details><summary>Output (Main Metabarcoding Results)</summary>
+
+ Time to digest the main dish :)
+
+ Make a subdirectory to place
+<p>
