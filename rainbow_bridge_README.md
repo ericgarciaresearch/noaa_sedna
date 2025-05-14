@@ -880,8 +880,18 @@ Either:
 </details>
 
 <details><summary>Output (Main Metabarcoding Results)</summary>
-
- Time to digest the main dish :)
-
- Make a subdirectory to place
 <p>
+	
+Time to digest the main dish :)
+
+Make a subdirectory to place
+
+Download the following main files
+```
+output/zotus/zotu_table.tsv
+lulu/lulu_zotu_table.tsv 
+output/blast/*/blast_result_merged.tsv 
+output/taxonomy/lca/*/lca_intermediate.tsv
+output/taxonomy/lca/*/lca_taxonomy.tsv 
+output/final/zotu_table_final_curated.tsv
+```
