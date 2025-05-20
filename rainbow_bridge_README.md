@@ -1006,7 +1006,49 @@ This will generate the following plots:
 
 1.3.4 Upload all these plots and the "incomplete_taxonomies.tsv" into `output` and push them
 
-1.4 Embed the plots into your main README. See the [pifsc_p224_16S/README](https://github.com/ericgarciaresearch/pifsc_p224_16S_fish/edit/main/README.md) as an example
+1.4 Embed the plots into your main README. Below is the code from [pifsc_p224_16S/README](https://github.com/ericgarciaresearch/pifsc_p224_16S_fish/edit/main/README.md) as an example:
+```
+### Metabarcoding Results
+
+### READS & HITS
+
+| ![p1](analyses/blast_0_0_lca_70_70_1000hits_midori2/output/p1_reads_per_init-final_samples.png) | ![p2](analyses/blast_0_0_lca_70_70_1000hits_midori2/output/p2_number_of_hits.png) |
+| :--: | :--: |
+|Median and distribution of the number of reads (normal and log10 scales) before (Initial) and after preprocessing (Final). Final samples only consider indivials present at the final table: "zotu_table_final_curated.tsv" | Median and distribution of the number of hits per zOTU in the inital Blast and during the LCA process (LCA_intermediate) right before final selection of "best" hit |
+
+### Metrics
+
+| ![p3](analyses/blast_0_0_lca_70_70_1000hits_midori2/output/p3_eval_before_after_filters.png) | ![p4](analyses/blast_0_0_lca_70_70_1000hits_midori2/output/p4_pident_qcov.png) |
+| :--: | :--: |
+|Median and distribution of the Evalues of hits from inital Blast and during the LCA process (LCA_intermediate) right before final selection of "best" hit | Median and distribution of Percent Identity and Query Coverage of hits from inital Blast and during the LCA process (LCA_intermediate) right before final selection of "best" hit | 
+
+
+### zOTUs & Ambiguous Taxonomy
+
+| ![p5](analyses/blast_0_0_lca_70_70_1000hits_midori2/output/p5_number_of_zotus.png) |![p6](analyses/blast_0_0_lca_70_70_1000hits_midori2/output/p6_number_of_lca_drops.png) |
+| :--:|:--:|
+| Number of zOTUs per stage | Number hits that have two or more assigment labels with the same highest blast metrics, preventing the algorithm from picking the "best" label at a specific taxonomic level. This level gets an "LCA_dropped" classification and recieves a taxonomic label only at the Lowest Common Ancestor (LCA) or the level where all hits are in concordance | 
+
+### Diversity
+
+| ![p6](analyses/blast_0_0_lca_70_70_1000hits_midori2/output/p6_final_taxonomic_diversity.png) | ![p8](analyses/blast_0_0_lca_70_70_1000hits_midori2/output/p8_spread_taxonomic_diversity.png) |
+|:--:|:--:|
+| Number of unique species, genera, families, etc., across all samples and zOTUs. | Median and spread of invernal diversity within each taxonomic level |
+
+ ### Community
+ 
+|![p9](analyses/blast_0_0_lca_70_70_1000hits_midori2/output/p9_top10_species.png) |
+|:--:|
+|![p10](analyses/blast_0_0_lca_70_70_1000hits_midori2/output/p10_top10_genera.png) |
+|![p11](analyses/blast_0_0_lca_70_70_1000hits_midori2/output/p11_top10_families.png) |
+|![p12](analyses/blast_0_0_lca_70_70_1000hits_midori2/output/p12_top10_orders.png) |
+| Top 10 Most abundant species, genera, families and orders across samples and zOTUs |
+
+
+| ![p13](analyses/blast_0_0_lca_70_70_1000hits_midori2/output/p13_top10_classes.png) | ![p14](analyses/blast_0_0_lca_70_70_1000hits_midori2/output/p14_top10_phyla.png) |
+|:--:| :--:|
+| Most abundant classes across samples and zOTUs | Most abundant phyla across samples and zOTUs |
+```
 
 &nbsp;
 
