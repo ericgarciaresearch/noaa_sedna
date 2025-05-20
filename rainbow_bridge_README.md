@@ -933,7 +933,7 @@ Just as before, you can run this script locally or directly in SEDNA
 
 1. Locally
    
-1.1 Download the following main files
+1.1 Download the following main files into the same local directory
 ```
 ../../scripts/summarize_rainbow_output.R
 preprocess/read_count_loss_preprocess.tsv
@@ -944,9 +944,51 @@ output/taxonomy/lca/*/lca_intermediate.tsv
 output/taxonomy/lca/*/lca_taxonomy.tsv 
 output/final/zotu_table_final_curated.tsv
 ```
-1.2 Place all files in the same directory then open and run `summarize_rainbow_output.R`
+1.2 Open `summarize_rainbow_output.R` and run steps **"Packages and Libraries"** and **"Load Data"**
 
-This script will generate the following plots:
+1.3 Review Final Table
+
+Certain groups can be taxonomically controversial and/or lack taxanomic resolution resulting in missing labels in reference databases (NCBI/Midori2/others). As a results, these groups might not be represented in some of the downstrem analyses and plots, and the true diversity might be underestimated. **This can vary with each dataset and thus we should check this everytime**
+
+At least for fish, this could be fully or partially addressed with some assumptions. For example, for 16S fish the Order (column 8 in the final/zotu_table_final_curated.tsv) was missing in the records matching the families:
+* Polynemidae
+* Pomacanthidae
+* Pomacentridae
+* Sphyraenidae
+
+This is because NCBI Taxonomy does not list Order for these families. Why? I don't know. Is it because they placement of family is controversial? Missing info? or just a mistake?
+
+1.3.1 Check your final table (zotu_table_final_curated.tsv) for missing info by starting the section **"Review Final Table"**
+
+* view the generated table **"incomplete_taxonomies"**
+
+1.3.2 Manually, insert the correct label when available. For fish, use the [California Academy of Sciences Eschmeyer's Catalog of Fishes](https://researcharchive.calacademy.org/research/ichthyology/catalog/fishcatmain.asp?_gl=1*1gm0x00*_gcl_au*MTIzNjA2NDI2OS4xNzQ3MzY0MDQ3*_ga*NTcxMDM2NjkuMTc0NzM2NDA0Nw..*_ga_6Y72VP61VZ*czE3NDc3MTg0ODckbzIkZzAkdDE3NDc3MTg0ODgkajU5JGwwJGgxNDkxODAwMDAwJGRpSjJfOUdBTThBOHNJUXVlX01maldMeFJXUjZZVVVUUmR3) for this. Searching in the [Species by Family page](https://researcharchive.calacademy.org/research/ichthyology/catalog/SpeciesByFamily.asp) will give you family, order and class.
+
+For example, in the example above (16S fish), I could see many NAs in **"incomplete_taxonomies"** in the Order and one in the Kingdom columns.
+
+I noticed that the missing orders all were matching the families:
+* Polynemidae
+* Pomacanthidae
+* Pomacentridae
+* Sphyraenidae
+
+To populate the missing orders, I searched for each family in the [Species by Family page](https://researcharchive.calacademy.org/research/ichthyology/catalog/SpeciesByFamily.asp)
+
+Then, I entered the orders manually in my final table
+
+In R's console:
+```
+final$order[final$family == "Pomacentridae"] <- "Blenniiformes"
+final$order[final$family == "Polynemidae"] <- "Carangiformes"
+final$order[final$family == "Pomacanthidae"] <- "Acanthuriformes"
+final$order[final$family == "Sphyraenidae"] <- "Carangiformes"
+```
+
+Finally, I noticed that the missing kigdom belonged to the phylum "Rhodophyta" (red algae). Given that this marker is targeting fish, I did not change the NA I shouldn't be counting this record anyway.
+
+1.3.3 Run the rest of the script 
+
+This will generate the following plots:
 * p1_reads_per_init-final_samples.png
 * p2_number_of_hits.png
 * p3_eval_before_after_filters.png
@@ -962,7 +1004,7 @@ This script will generate the following plots:
 * p13_top10_classes.png
 * p14_top10_phyla.png
 
-1.3 Upload all these plots into `output` and push them
+1.3.4 Upload all these plots and the "incomplete_taxonomies.tsv" into `output` and push them
 
 1.4 Embed the plots into your main README. See the [pifsc_p224_16S/README](https://github.com/ericgarciaresearch/pifsc_p224_16S_fish/edit/main/README.md) as an example
 
