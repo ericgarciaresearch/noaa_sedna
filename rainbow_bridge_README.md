@@ -910,7 +910,9 @@ To view these files, you will have to download them and open them with a web bro
 
 * Provide a general description of the condition of your data and/or
 * Note any read flags
-  
+
+&nbsp;
+
 **Analyse Metabarcoding Results**
 
 I have created an R script that can read the main files from output and analyze the main metarbarcoding results:
@@ -927,7 +929,7 @@ First copy the R script that analyzes the rainbow output
 cp /share/all/rainbow_bridge_in-house-scripts/summarize_rainbow_output.R ../../scripts/
 ```
 
-Just as before, you can run this script locally or directly in SDENA
+Just as before, you can run this script locally or directly in SEDNA
 
 1. Locally
    
