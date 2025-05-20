@@ -966,5 +966,7 @@ This script will generate the following plots:
 
 1.4 Embed the plots into your main README. See the [pifsc_p224_16S/README](https://github.com/ericgarciaresearch/pifsc_p224_16S_fish/edit/main/README.md) as an example
 
+&nbsp;
+
 2. Run the Rscript in SEDNA
   * Coming soon
