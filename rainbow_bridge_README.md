@@ -882,12 +882,59 @@ Either:
 <details><summary>Output (Main Metabarcoding Results)</summary>
 <p>
 	
-Time to digest the main dish :)
+Time to digest the main dish, the metabarcoding results :)
 
-Make a subdirectory to place
-
-Download the following main files
+Navigate to your run directory:
 ```
+cd /home/egarcia/projects/pifsc_p224_16S_fish/analyses/blast_0_0_lca_70_70_1000hits_midori2
+```
+Again, the metabarcoding results will be in the `output` directory. 
+
+&nbsp;
+
+**FASTQC Quality Reports**
+
+Review and make the initial (before preprocessing) and filtered (after preprocessing) FASTQC reports available in your README. 
+```
+output/fastqc/initial/multiqc_report.html
+output/fastqc/filtered/multiqc_report.html
+```
+Push these files if you haven't done so already. Then provide the https link to them. You can use the following for reporting
+```
+* [Initial](linkt_to_inial_report)
+* [Filtered](linkt_to_filtered_report)
+```
+See the [pifsc_p224_16S/README](https://github.com/ericgarciaresearch/pifsc_p224_16S_fish/edit/main/README.md) as an example
+
+To view these files, you will have to download them and open them with a web browser.
+
+* Provide a general description of the condition of your data and/or
+* Note any read flags
+  
+**Analyse Metabarcoding Results**
+
+I have created an R script that can read the main files from output and analyze the main metarbarcoding results:
+
+* summarize_rainbow_output.R 
+
+This script lives in the shared rainbow_bridge_in-house-scripts dir:
+```
+share/all/rainbow_bridge_in-house-scripts/summarize_rainbow_output.R
+````
+
+First copy the R script that analyzes the rainbow output
+```
+cp /share/all/rainbow_bridge_in-house-scripts/summarize_rainbow_output.R ../../scripts/
+```
+
+Just as before, you can run this script locally or directly in SDENA
+
+1. Locally
+   
+1.1 Download the following main files
+```
+../../scripts/summarize_rainbow_output.R
+preprocess/read_count_loss_preprocess.tsv
 output/zotus/zotu_table.tsv
 lulu/lulu_zotu_table.tsv 
 output/blast/*/blast_result_merged.tsv 
@@ -895,3 +942,27 @@ output/taxonomy/lca/*/lca_intermediate.tsv
 output/taxonomy/lca/*/lca_taxonomy.tsv 
 output/final/zotu_table_final_curated.tsv
 ```
+1.2 Place all files in the same directory then open and run `summarize_rainbow_output.R`
+
+This script will generate the following plots:
+* p1_reads_per_init-final_samples.png
+* p2_number_of_hits.png
+* p3_eval_before_after_filters.png
+* p4_pident_qcov.png
+* p5_number_of_zotus.png
+* p6_final_taxonomic_diversity.png
+* p7_number_of_lca_drops.png
+* p8_spread_taxonomic_diversity.png
+* p9_top10_species.png
+* p10_top10_genera.png
+* p11_top10_families.png
+* p12_top10_orders.png
+* p13_top10_classes.png
+* p14_top10_phyla.png
+
+1.3 Upload all these plots into `output` and push them
+
+1.4 Embed the plots into your main README. See the [pifsc_p224_16S/README](https://github.com/ericgarciaresearch/pifsc_p224_16S_fish/edit/main/README.md) as an example
+
+2. Run the Rscript in SEDNA
+  * Coming soon
