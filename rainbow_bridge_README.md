@@ -814,11 +814,11 @@ We will make a readme to document the preprocess results separately from the mai
 Navigate to the preprocess directory:
 ```
 cd preprocess
-nano README_preprocess.md
 ```
-or you can use the following README as a template and modify as needed.
+
+You can either create a README from scratch `nano README_preprocess.md` or copy the following README as a template and modify as needed.
 ```
-/home/egarcia/projects/pifsc_p224_16S_fish/analyses/blast_0_0_lca_70_70_1000hits_midori2/preprocess/README_preprocess.md
+cp /home/egarcia/projects/pifsc_p224_16S_fish/analyses/blast_0_0_lca_70_70_1000hits_midori2/preprocess/README_preprocess.md .
 ```
 This readme can also be downloaded from git [here](https://github.com/ericgarciaresearch/pifsc_p224_16S_fish/blob/main/analyses/blast_0_0_lca_70_70_1000hits_midori2/preprocess/README_preprocess.md)
 
@@ -858,7 +858,7 @@ Review your table and look for read flags or disernable patterns.
 
 Now that you have `read_count_preprocessing.tsv` you can use the following custom Rscript to make plots to visualize and easily identify patterns.
 ```
-/share/all/rainbow_bridge_in-house-scripts/plot_rainbow_preprocess.R
+cp /share/all/rainbow_bridge_in-house-scripts/plot_rainbow_preprocess.R ../../../scripts
 ```
 
 Either:
@@ -871,7 +871,8 @@ Either:
         ![plot1](barplot_preprocess_read_summary.png)
         ```
     * Full example [here](https://github.com/ericgarciaresearch/pifsc_p224_16S_fish/edit/main/analyses/blast_0_0_lca_70_70_1000hits_midori2/preprocess/README_preprocess.md)
-2. Run the Rscript in SEDNA
+
+2. Run the `plot_rainbow_preprocess.R` in SEDNA
   * Coming soon
 
 --- 
