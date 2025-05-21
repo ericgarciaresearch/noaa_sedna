@@ -931,7 +931,7 @@ cp /share/all/rainbow_bridge_in-house-scripts/summarize_rainbow_output.R ../../s
 
 Just as before, you can run this script locally or directly in SEDNA
 
-1. Locally
+**1. Run summarize_rainbow_output.R Locally**
    
 1.1 Download the following main files into the same local directory
 ```
@@ -1052,5 +1052,5 @@ This will generate the following plots:
 
 &nbsp;
 
-2. Run the Rscript in SEDNA
+**2. Run summarize_rainbow_output.R in SEDNA**
   * Coming soon
