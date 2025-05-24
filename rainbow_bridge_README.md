@@ -939,6 +939,7 @@ Just as before, you can run this script locally or directly in SEDNA
 ../../scripts/summarize_rainbow_output.R
 preprocess/read_count_loss_preprocess.tsv
 output/zotus/zotu_table.tsv
+output/zotus/*zotus.fasta
 output/lulu/lulu_zotu_table.tsv 
 output/blast/*/blast_result_merged.tsv 
 output/taxonomy/lca/*/lca_intermediate.tsv
