@@ -38,7 +38,7 @@ When you submit a job, SEDNA distributes it to the compute nodes. You have to te
 
 * **SLURM PARTITION: himem**
 	* himem01-04: 1.5 TB of memory, 24x 64GB
- 	* 24 cores/node	
+ 	* 4 cores/node	
 	* have their own scratch (/data) space
 
 ---
