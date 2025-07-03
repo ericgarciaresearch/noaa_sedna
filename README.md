@@ -387,7 +387,9 @@ If you are going to be doing any metabarcoding analyses, you might be interested
 # current sub-databases
 /share/all/midori2_database/2024-10-13_customblast_sp_uniq_COI/
 /share/all/midori2_database/2024-12-14_customblast_sp_uniq_12S/
-/share/all/midori2_database/2024-12-14_customblast_sp_uniq_COI
+/share/all/midori2_database/2024-12-14_customblast_sp_uniq_COI/
+/share/all/midori2_database/2025-03-08_customblast_sp_uniq_16S/
+/share/all/midori2_database/2025-03-08_customblast_sp_uniq_12S/
 ```
 where the date is the release date or when the specific database was curated/uploaded/available.
 
