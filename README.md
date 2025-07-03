@@ -427,7 +427,7 @@ I went ahead and setup the Midori2 in SEDNA for rainbow_bridge.
 I decided to start by setting up the COI species "sp", uniq  "uniq", which retains all haplotypes from all taxonomic labels. For instance, this will include
  all sequences that have been matched to only a genus or a family (see Key features above and Midori2 README)
 
-* Lastest version as in Feb 6, 2025 `2024-10-13`
+* Lastest version as in July 3rd, 2025: `2025-03-08`
 
 When you use this, make sure to specify the full path and the basename but do not include the extensions (.ndb|.nhr|.nos etc). For example:
 ```
