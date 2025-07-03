@@ -427,18 +427,16 @@ I went ahead and setup the Midori2 in SEDNA for rainbow_bridge.
 I decided to start by setting up the COI species "sp", uniq  "uniq", which retains all haplotypes from all taxonomic labels. For instance, this will include
  all sequences that have been matched to only a genus or a family (see Key features above and Midori2 README)
 
-* Lastest version as in July 3rd, 2025: `2025-03-08`
-
 When you use this, make sure to specify the full path and the basename but do not include the extensions (.ndb|.nhr|.nos etc). For example:
 ```
 /share/all/midori2_database/2024-10-13_customblast_sp_uniq_COI/midori2_customblast_sp_uniq
 ```
  
 ***NOTES:***
-* The Midori2 database gets updated every 2 months. Make sure you are using the latest version available and note which version you are using.
+* The Midori2 database gets updated every few months. Make sure you are using the latest version available and note which version you are using.
 * If you want to learn how I made the custom database, update an existing or create a new database see my [midori2 page](https://github.com/ericgarciaresearch/noaa_sedna/blob/main/midori2.md)
 
-* ***UPDATE: as in April 16, 2025, the 2024-12-14 is latest release.***
+* ***UPDATE: as in July 3rd, 2025, the latest release is `2025-03-08`***
 
 ---
 
