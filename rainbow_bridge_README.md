@@ -880,7 +880,7 @@ Either:
 </p>
 </details>
 
-<details><summary>Output (Main Metabarcoding Results)</summary>
+<details><summary>Rainbow Metabarcoding Results</summary>
 <p>
 	
 Time to digest the main dish, the metabarcoding results :)
