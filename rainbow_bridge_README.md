@@ -1082,11 +1082,11 @@ Coming soon
 
 ### Regional Remix
 
-zOTUS found by rainbow_bridge have been matched againg the MIDORI2, a database curated from certain errors and inconsistencies. However, our results can still be further refined by utilizing databases that have been curated by expert in the region. ***Fortunately we have such curated regional database for the Hawaiian Archipelago***
+zOTUS found by rainbow_bridge have been matched againg the MIDORI2, a database curated from certain errors and inconsistencies. However, our results can still be further refined by utilizing databases that have been curated by experts in the region. ***Fortunately we have such curated regional database for the Hawaiian Archipelago***
 
-The regional remix algorithm compares metabarcoding results (rainbow or REVAMP) to a curated database of regional species and flags taxa that would normally be found outside of this region.
+The regional remix algorithm compares metabarcoding results (rainbow or REVAMP) to the Hawaiian curated database and flags taxa that would normally be found outside of this region.
 
-Follow the instructions in the [remix_input_README.md](https://github.com/ericgarciaresearch/noaa_sedna/blob/main/remix_input_README.md) to generate the input for the remix script from the output of rainbow_bridge
+Follow the instructions in the [remix_input_README.md](https://github.com/ericgarciaresearch/noaa_sedna/blob/main/remix_input_README.md) for more details and to generate the input for the remix script.
 
 ---
 
