@@ -318,12 +318,6 @@ mv or cp <files> projects/pifsc_p224_16S_fish/data
 <details><summary>Rename Files</summary>
 <p>
 
-Renaming files to something manageable
-
-Script
-
-* rename_fastqs.sh < --dry-run | --rename >
-
 All the PIFSC eDNA data I have seen comes from the same sequencing facility [Jonah Ventures](https://jonahventures.com/), 
 which has a common naming scheme for data files that looks like:
 ```
@@ -331,7 +325,21 @@ JV190_16SDegenerate_WhitneyJonathan_S045173.1.R1.fastq.gz
 ```
 Where the `S045173` is the actual sample name, the `.1` after that represent a duplicate of the same file, the `R1` represent foward reads, and the rest is repeated information. 
 
-Thus, I created the script `rename_fastqs.sh` to truncate files to just the sample name by recognizing files matching the regex 
+1. **Check the technical replicate notation**
+
+   We have notice some inconsistencies with the replicate notation from Jonah Venture. For example, some samples might have ".2" when there is only one replicate, others might have ".2" and ".3" when there is only 2 replicates, and other files might have typos like ".5", ".28", ".62" etc.
+
+   1.1 Check that the notation actually represents the number of replicates per sample and adjust as needed.
+
+   * Replicate notation for all eDNA data for the 2022 Pelagic cruise (P224) has been curated. See marker subidrectores within P224 for examples. For instance [JVB1989_COI](https://github.com/ericgarciaresearch/pifsc_eDNA_data/tree/main/P224/JVB1989_COI)
+
+2. **Renaming files to something manageable**
+
+   Script
+
+	* rename_fastqs.sh < --dry-run | --rename >
+
+I created the script `rename_fastqs.sh` to truncate files to just the sample name by recognizing files matching the regex 
 `*_S0*.fastq.gz` and using `sed` to modify the name to something like `S045173_1.R1.fastq.gz`. That is, it  keeps only the sample name and changes the "." to a "_" before the duplicate information because the extra point can cause issues later on.
 
 * Importantly, this script can give you a preview of the resulting names (`--dry-run`) before actually renamning files (`--rename`).
