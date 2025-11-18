@@ -911,12 +911,12 @@ Again, the metabarcoding results will be in the `output` directory.
 
 **FASTQC Quality Reports**
 
-Review and make the initial (before preprocessing) and filtered (after preprocessing) FASTQC reports available in your README. 
+Rename and move the initial (before preprocessing) and filtered (after preprocessing) FASTQC reports 
 ```
-output/fastqc/initial/multiqc_report.html
-output/fastqc/filtered/multiqc_report.html
+mv output/fastqc/initial/multiqc_report.html output/fastqc/initial_multiqc_report.html
+mv output/fastqc/filtered/multiqc_report.html output/fastqc/filtered_multiqc_report.html
 ```
-Push these files if you haven't done so already. Then provide the https link to them. You can use the following for reporting
+Now push these files if you haven't done so already and then provide the https link to them. You can use the following for reporting
 ```
 * [Initial](linkt_to_inial_report)
 * [Filtered](linkt_to_filtered_report)
