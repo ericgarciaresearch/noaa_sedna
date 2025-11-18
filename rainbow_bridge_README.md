@@ -310,6 +310,9 @@ Transfer your data files inside your data subdir:
 ```
 mv or cp <files> projects/pifsc_p224_16S_fish/data
 ```
+
+Raw eDNA data for PIFSC projects are hosted in the [pifsc_eDNA_data](https://github.com/ericgarciaresearch/pifsc_eDNA_data). Contact me for permission to access this repo.
+
 ---
 
 </p>
