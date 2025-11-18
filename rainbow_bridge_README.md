@@ -1,8 +1,11 @@
 # rainbow_bridge for SEDNA (NOAA's supercomputer)
 
-This guide will help you use [rainbow_bridge](https://github.com/mhoban/rainbow_bridge) in SEDNA. 
+[rainbow_bridge](https://github.com/mhoban/rainbow_bridge) is a flexible pipeline for eDNA and metabarcoding analyses. 
 
-The pipeline was been cloned in the share directory:
+* This guide will help you use this pipeline in SEDNA. 
+* Create a README for your own project where you document your work. You can use [pifsc_p224_12SFish](https://github.com/ericgarciaresearch/pifsc_p224_12SFish/blob/main/README.md) as an example.
+  
+`rainbow_bridge` was been cloned in the share directory:
 ```
 /share/all/rainbow_bridge_unzipfix
 ```
