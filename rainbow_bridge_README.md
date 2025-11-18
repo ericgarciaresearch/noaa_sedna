@@ -526,7 +526,7 @@ demuxed_barcode.tsv
 
 To make this file I need the forward and reverse sequences of the primer that was used. For PIFSC data, we stored this information in the file:
 ```
-/home/egarcia/data/PIFSC_Metabarcoding_Primers.tsv
+/home/egarcia/data/pifsc_eDNA_data/pifsc_Metabarcoding_Primers.tsv
 ```
 
 In this case, I am calling my barcode file `demuxed_barcodes.tsv` because my samples are already demultiplexed. This file then looks like this:
