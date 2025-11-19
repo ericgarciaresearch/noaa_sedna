@@ -978,7 +978,7 @@ get output/final/zotu_table_final_curated.tsv
 
 ```
 
-1.2 Open `summarize_rainbow_output.R` and run steps **"Packages and Libraries"** and **"Load Data"**
+1.2 Open `summarize_rainbow_output.R` and run **ONLY** the steps *"Packages and Libraries"* and *"Load Data"*
 
 1.3 Review Final Table
 
