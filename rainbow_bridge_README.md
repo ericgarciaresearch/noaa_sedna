@@ -909,7 +909,7 @@ Again, the metabarcoding results will be in the `output` directory.
 
 &nbsp;
 
-**FASTQC Quality Reports**
+**1. FASTQC Quality Reports**
 
 Rename and move the initial (before preprocessing) and filtered (after preprocessing) FASTQC reports 
 ```
@@ -924,6 +924,20 @@ Now push these files if you haven't done so already and then provide the https l
 See the [pifsc_p224_16S/README](https://github.com/ericgarciaresearch/pifsc_p224_16S_fish/edit/main/README.md) as an example
 
 To view these files, you will have to download them and open them with a web browser.
+
+Download the FASTQC files into the a local directory
+
+Example using sftp:
+```
+cd /home/egarcia/projects/pifsc_p224_16SFish/analyses/blast_0_0_lca_70_70_1000hits_midori2
+lcd <desired local dir>
+```
+and then
+```
+get output/fastqc/*multiqc*
+```
+
+View your files online and:
 
 * Provide a general description of the condition of your data and/or
 * Note any read flags
@@ -949,19 +963,21 @@ cp /share/all/rainbow_bridge_in-house-scripts/summarize_rainbow_output.R ../../s
 Just as before, you can run this script locally or directly in SEDNA
 
 **1. Run summarize_rainbow_output.R Locally**
-   
-1.1 Download the following main files into the same local directory
+
+Download script and rainbow output. Using sftp for example:
 ```
-../../scripts/summarize_rainbow_output.R
-preprocess/read_count_loss_preprocess.tsv
-output/zotus/zotu_table.tsv
-output/zotus/*zotus.fasta
-output/lulu/lulu_zotu_table.tsv 
-output/blast/*/blast_result_merged.tsv 
-output/taxonomy/lca/*/lca_intermediate.tsv
-output/taxonomy/lca/*/lca_taxonomy.tsv 
-output/final/zotu_table_final_curated.tsv
+get ../../scripts/summarize_rainbow_output.R
+get preprocess/read_count_loss_preprocess.tsv
+get output/zotus/zotu_table.tsv
+get output/zotus/*zotus.fasta
+get output/lulu/lulu_zotu_table.tsv 
+get output/blast/*/blast_result_merged.tsv 
+get output/taxonomy/lca/*/lca_intermediate.tsv
+get output/taxonomy/lca/*/lca_taxonomy.tsv 
+get output/final/zotu_table_final_curated.tsv
+
 ```
+
 1.2 Open `summarize_rainbow_output.R` and run steps **"Packages and Libraries"** and **"Load Data"**
 
 1.3 Review Final Table
