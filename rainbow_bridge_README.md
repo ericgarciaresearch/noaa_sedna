@@ -909,7 +909,7 @@ Again, the metabarcoding results will be in the `output` directory.
 
 &nbsp;
 
-**1. FASTQC Quality Reports**
+**A. FASTQC Quality Reports**
 
 Rename and move the initial (before preprocessing) and filtered (after preprocessing) FASTQC reports 
 ```
@@ -944,7 +944,7 @@ View your files online and:
 
 &nbsp;
 
-**Analyse Metabarcoding Results**
+**B. Analyse Metabarcoding Results**
 
 I have created an R script that can read the main files from output and analyze the main metarbarcoding results:
 
