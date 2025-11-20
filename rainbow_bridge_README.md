@@ -990,15 +990,23 @@ At least for fish, this could be fully or partially addressed with some assumpti
 * Pomacentridae
 * Sphyraenidae
 
-This is because NCBI Taxonomy does not list Order for these families. Why? I don't know. Is it because they placement of family is controversial? Missing info? or just a mistake?
+This is because NCBI Taxonomy does not list Order for these families. Most likely because the phylogenetic placement of the family is controversial or unclear. 
 
 1.3.1 Check your final table (zotu_table_final_curated.tsv) for missing info by starting the section **"Review Final Table"**
 
-* view the generated table **"incomplete_taxonomies"**
+**Run the code in ---- Review Final Table ----**
+
+* Define fish (sub)classes (first line of code)
+* Run the code to create the "incomplete_taxonomies" table
+* Save the table (following line of code)
+
+This will generate a table for any record where a fish has a missing rank. Usually the order. We need to fix this manually.
 
 1.3.2 Manually, insert the correct label when available. For fish, use the [California Academy of Sciences Eschmeyer's Catalog of Fishes](https://researcharchive.calacademy.org/research/ichthyology/catalog/fishcatmain.asp?_gl=1*1gm0x00*_gcl_au*MTIzNjA2NDI2OS4xNzQ3MzY0MDQ3*_ga*NTcxMDM2NjkuMTc0NzM2NDA0Nw..*_ga_6Y72VP61VZ*czE3NDc3MTg0ODckbzIkZzAkdDE3NDc3MTg0ODgkajU5JGwwJGgxNDkxODAwMDAwJGRpSjJfOUdBTThBOHNJUXVlX01maldMeFJXUjZZVVVUUmR3) for this. Searching in the [Species by Family page](https://researcharchive.calacademy.org/research/ichthyology/catalog/SpeciesByFamily.asp) will give you family, order and class.
 
-For example, in the example above (16S fish), I could see many NAs in **"incomplete_taxonomies"** in the Order and one in the Kingdom columns.
+* view the generated table **"incomplete_taxonomies"**
+  
+For example, in the example above (16S fish), I could see many NAs in **"incomplete_taxonomies"** in the Order 
 
 I noticed that the missing orders all were matching the families:
 * Polynemidae
@@ -1018,7 +1026,8 @@ final$order[final$family == "Pomacanthidae"] <- "Acanthuriformes"
 final$order[final$family == "Sphyraenidae"] <- "Carangiformes"
 ```
 
-Finally, I noticed that the missing kigdom belonged to the phylum "Rhodophyta" (red algae). Given that this marker is targeting fish, I did not change the NA I shouldn't be counting this record anyway.
+Note: If you view the final table, there might other records with missing orders, classes, etc. These will be things like plants, algae, bacteria, etc. These records will be included in the following plots to generate stats for the sequence run in general. However, these records will be filtered out later by the regional-remix. If you are actually studying these type of organism, you might want to fix their taxonomy issues in the table. For our purposes, we have fixed the fish records. 
+
 
 1.3.3 Run the rest of the script 
 
