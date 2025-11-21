@@ -1037,8 +1037,8 @@ This will generate the following plots:
 * p3_eval_before_after_filters.png
 * p4_pident_qcov.png
 * p5_number_of_zotus.png
-* p6_final_taxonomic_diversity.png
-* p7_number_of_lca_drops.png
+* p6_number_of_lca_drops.png
+* p7_final_taxonomic_diversity.png
 * p8_spread_taxonomic_diversity.png
 * p9_top10_species.png
 * p10_top10_genera.png
@@ -1046,10 +1046,15 @@ This will generate the following plots:
 * p12_top10_orders.png
 * p13_top10_classes.png
 * p14_top10_phyla.png
+* p15_read_count_bins_barplot.png
+* p16_read_count_bins_species_summed.png
+* p17_species_heatmap.png
+* p18_genus_heatmap.png
+* p19_family_heatmap.png
 
 1.3.4 Upload all these plots and the "incomplete_taxonomies.tsv" into `output` and push them
 
-1.4 Embed the plots into your main README. Below is the code from [pifsc_p224_16S/README](https://github.com/ericgarciaresearch/pifsc_p224_16S_fish/edit/main/README.md) as an example:
+1.4 Embed the plots into your main README. Below is some of the code from [pifsc_p224_16S/README](https://github.com/ericgarciaresearch/pifsc_p224_16S_fish/edit/main/README.md) as an example:
 ```
 ### Metabarcoding Results
 
