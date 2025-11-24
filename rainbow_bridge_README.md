@@ -676,7 +676,7 @@ modify these as needed.
 
 I like to document the settings used in a `params.txt` file:
 ```
-grep -E '^nextflow run | ^  --' run_rainbow_bridge_locally_sedna.sh > params.txt
+sed -n '/^nextflow run/,/^[[:space:]]*$/p' run_rainbow_bridge_locally_sedna.sh > params.txt
 ```
 
 ---
