@@ -913,8 +913,8 @@ Again, the metabarcoding results will be in the `output` directory.
 
 Rename and move the initial (before preprocessing) and filtered (after preprocessing) FASTQC reports 
 ```
-mv output/fastqc/initial/multiqc_report.html output/fastqc/initial_multiqc_report.html
-mv output/fastqc/filtered/multiqc_report.html output/fastqc/filtered_multiqc_report.html
+cp -L output/fastqc/initial/multiqc_report.html output/fastqc/initial_multiqc_report.html
+cp -L output/fastqc/filtered/multiqc_report.html output/fastqc/filtered_multiqc_report.html
 ```
 Now push these files if you haven't done so already and then provide the https link to them. You can use the following for reporting
 ```
