@@ -61,7 +61,7 @@ Regardless of the type of computer you use, you need to be connected to one of N
 
 **Shell**
 
-You will interacct with SEDNA via a shell :)
+You will interact with SEDNA via a shell :)
 <img width="902" height="302" alt="Screenshot 2025-12-02 at 4 35 58 PM" src="https://github.com/user-attachments/assets/3a21a709-33b3-4553-ab8e-6418819832d3" />
 
 Now that you have an account, and connected to a VPN, you should be able to access SEDNA via ssh in a local shell. 
@@ -75,6 +75,7 @@ If you do not know what a shell is, or have never worked in shell, or simply for
 * Data Carpentry's: [Introduction to the Command Line for Genomics](https://datacarpentry.github.io/shell-genomics/)
 * Feel free to look for additional lessons online as there are maaaany!
 
+<br>
 **Connecting to SEDNA:**
 
 Address:  ***sedna.nwfsc2.noaa.gov*** (IP: 161.55.52.157)
@@ -85,12 +86,16 @@ ssh <username>@sedna.nwfsc2.noaa.gov
 ```
 *your username will be given to you once you setup an account*
 
-Now read the [SEDNA bioinformatics cluster information, use & best practices](https://docs.google.com/document/d/1nn0T0OWEsQCBoCdaH6DSY69lQSbK3XnPlseyyQuU2Lc/edit?tab=t.0) if you haven't done so already.
+This will prompt you for your password!
+
+**Congratulations!!! you are not in SEDNA! :)**
 
 Each user has 4TB of space in their home directory. You can check your quota with:
 ```
 ssh nfs quota -s
 ```
+
+Now read the [SEDNA bioinformatics cluster information, use & best practices](https://docs.google.com/document/d/1nn0T0OWEsQCBoCdaH6DSY69lQSbK3XnPlseyyQuU2Lc/edit?tab=t.0) if you haven't done so already.
 
 ---
 
