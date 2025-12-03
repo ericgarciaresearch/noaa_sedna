@@ -69,11 +69,13 @@ Now that you have an account, and connected to a VPN, you should be able to acce
 * Macs computers: Macs automatically have a shell which is called "Terminal". Simply search for "Terminal" in the spotlight and you will find it.
 * Window computers: You will need to install a shell first before you can access SEDNA. Contact ITS for help.
 
-If you do not know what a shell is, or have never worked in shell, or simply forgot all the commands, then you will benefit from an shell introduction and/or interactive excercises. Here are some great online guides that will get make you feel much more comfortable about working in the HPC:
+If you do not know what a shell is, or have never worked in shell, or simply forgot all the commands, then you will benefit from an shell introduction and/or interactive excercises. Here are some great online guides that will get make you feel much more comfortable about working in the HPC. Complete these exercises in your local shell:
 
 * Software Carpentry's: [The Unix Shell](https://swcarpentry.github.io/shell-novice/index.html)
 * Data Carpentry's: [Introduction to the Command Line for Genomics](https://datacarpentry.github.io/shell-genomics/)
 * Feel free to look for additional lessons online as there are maaaany!
+
+**Now you are ready to connect to SENDA!!!**
 
 <br>
 
