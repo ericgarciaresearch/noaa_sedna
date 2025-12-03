@@ -76,6 +76,7 @@ If you do not know what a shell is, or have never worked in shell, or simply for
 * Feel free to look for additional lessons online as there are maaaany!
 
 <br>
+
 **Connecting to SEDNA:**
 
 Address:  ***sedna.nwfsc2.noaa.gov*** (IP: 161.55.52.157)
@@ -84,16 +85,11 @@ Navigation to Sedna (on the NMFS network, or through VPN), type in your shell: 
 ```
 ssh <username>@sedna.nwfsc2.noaa.gov
 ```
-*your username will be given to you once you setup an account*
+*your username will be given to you once you setup an account. Check your VPN and internet connection if you get a message about not recognizing of resolving the host*
 
-This will prompt you for your password!
+* This will prompt you for your password!
 
 **Congratulations!!! you are not in SEDNA! :)**
-
-Each user has 4TB of space in their home directory. You can check your quota with:
-```
-ssh nfs quota -s
-```
 
 Now read the [SEDNA bioinformatics cluster information, use & best practices](https://docs.google.com/document/d/1nn0T0OWEsQCBoCdaH6DSY69lQSbK3XnPlseyyQuU2Lc/edit?tab=t.0) if you haven't done so already.
 
@@ -104,6 +100,11 @@ Now read the [SEDNA bioinformatics cluster information, use & best practices](ht
 When you first login into SEDNA you will be in the login node. You know you are in the login now when your prompt line reads something like:
 ```
 (base) [userID@sedna currentDIR]$
+```
+
+Each user has 4TB of space in their home directory. You can check your quota with:
+```
+ssh nfs quota -s
 ```
 
 It is ok to do some light processes like navigation, listing, file organization, etc. However, you should NOT do any mid to heavy computations in the login node. You should instead either run a script, which will automatically grab a computing node, or you can use `srun` to start an interactive job on a computing node (i.e. sdandard, medmem or himem nodes).
