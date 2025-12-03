@@ -55,13 +55,31 @@ You will need to create an new password:
 * both upper and lower case characters
 * contain digits and symbols
 
-**Connecting to SEDNA:**
+**VPN**
 
-You need to be on the VPN. Ask IT to help you set up the VPN in your computer (PIFSC you can submit a [Jira ticket](https://apps-st.fisheries.noaa.gov/jirasm/servicedesk/customer/portal/4)).
+Regardless of the type of computer you use, you need to be connected to one of NOAA's VPNs to access SEDNA. Ask IT to help you set up the VPN in your computer (PIFSC you can submit a [Jira ticket](https://apps-st.fisheries.noaa.gov/jirasm/servicedesk/customer/portal/4)).
+
+**Shell**
+
+You will interacct with SEDNA via a shell :)
+<img width="902" height="302" alt="Screenshot 2025-12-02 at 4 35 58 PM" src="https://github.com/user-attachments/assets/3a21a709-33b3-4553-ab8e-6418819832d3" />
+
+Now that you have an account, and connected to a VPN, you should be able to access SEDNA via ssh in a local shell. 
+
+* Macs computers: Macs automatically have a shell which is called "Terminal". Simply search for "Terminal" in the spotlight and you will find it.
+* Window computers: You will need to install a shell first before you can access SEDNA. Contact ITS for help.
+
+If you do not know what a shell is, or have never worked in shell, or simply forgot all the commands, then you will benefit from an shell introduction and/or interactive excercises. Here are some great online guides that will get make you feel much more comfortable about working in the HPC:
+
+* Software Carpentry's: [The Unix Shell](https://swcarpentry.github.io/shell-novice/index.html)
+* Data Carpentry's: [Introduction to the Command Line for Genomics](https://datacarpentry.github.io/shell-genomics/)
+* Feel free to look for additional lessons online as there are maaaany!
+
+**Connecting to SEDNA:**
 
 Address:  ***sedna.nwfsc2.noaa.gov*** (IP: 161.55.52.157)
 
-Navigation to Sedna (on the NMFS network, or through VPN): 
+Navigation to Sedna (on the NMFS network, or through VPN), type in your shell: 
 ```
 ssh <username>@sedna.nwfsc2.noaa.gov
 ```
@@ -86,6 +104,8 @@ When you first login into SEDNA you will be in the login node. You know you are 
 It is ok to do some light processes like navigation, listing, file organization, etc. However, you should NOT do any mid to heavy computations in the login node. You should instead either run a script, which will automatically grab a computing node, or you can use `srun` to start an interactive job on a computing node (i.e. sdandard, medmem or himem nodes).
 
 All jobs on SEDNA are managed by [SLURM](https://slurm.schedmd.com/documentation.html). What this means is that you will submit a job via slurm where you request some set of resources (memory, cpus, time). Slurm will put you in the queue to get those resources. Once the resources are available, your job will start. 
+
+It is **VERY IMPORTANT** that you do not skip reading the "Guidelines & rules for use of Sedna" and the "SLURM" sections in SEDNA documentation.
 
 There are two types of jobs: interactive and batch
 
