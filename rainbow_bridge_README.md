@@ -308,6 +308,7 @@ Document all your moves in your README. This is very important because:
 <details><summary>Get your Data</summary>
 <p>
 
+**Data Files**
 
 Transfer your data files inside your data subdir:
 ```
@@ -315,6 +316,24 @@ mv or cp <files> projects/pifsc_p224_16S_fish/data
 ```
 
 Raw eDNA data for PIFSC projects are hosted in the [pifsc_eDNA_data](https://github.com/ericgarciaresearch/pifsc_eDNA_data). Contact me for permission to access this repo.
+
+See 12SFish repo for an example of how you can copy your pelagic data in parallel.
+
+**Metadata**
+
+If you have any metadata, this is a good place and time to extract that info.
+
+For the PIFSC Pelagic Cruise, P224, we have created a subdir the above git repo: `/home/egarcia/data/pifsc_eDNA_data/P224/` that contains the actual data and metadata.
+
+Furthermore, the metadata contains cruise wise metadata `eDNA_Metadata_BigeyeSE2204_20231024.tsv`, and subdirectories for each marker with a list of the samples especifically sequenced for the marker `pelagicsamples<marker>_p224_to-process.txt` 
+
+I made the script `extract_pelagic_metadata.sh` to extract most relevant metadata from these files. Example using 12SFish data
+```
+cd projects/pifsc_p224_16S_fish/data
+cp ~/data/pifsc_eDNA_data/P224/JVB1989_MiFishU/pelagicsamples12SFish_p224_wreplicates_to-process.txt
+bash /share/all/scripts/egarcia/extract_pelagic_metadata.sh pelagicsamples12SFish_p224_to-process.txt
+```
+this will create file `sample_site_rep.tsv` , make this available in your project's README
 
 ---
 
