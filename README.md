@@ -10,7 +10,7 @@ Many of the steps and info in this README were summarised from the above documen
 
 You're presumably working with genomic data, and your tiny laptop doesn't have enough memory, cpus, or storage to analyze these data. This is why we need SEDNA. Basically,  SEDNA is a bunch of computers that live at NWFSC (FYI- this is where all "the cloud" is too). These computers have more memory and storage than your computer and don't need to turn off at the end of the day, so we can run large, memory intensive, and long jobs on SEDNA. To do this, we have to access SEDNA via the command line and submit "jobs", which is just a set of commands we're telling SEDNA to run. This is how you will do your analyses.
 
-When you submit a job, SEDNA distributes it to the compute nodes. You have to tell SEDNA exactly how many resources you want it to use. For example, how much memory, time, cores, etc. We will talk about this more later in this document.
+When you submit a job in SEDNA, SLURM is the scheduler (just another program) that decides when and where your jobs run, managing access to shared resources so many users can work at once. Partitions are groups of computers (or compute nodes) with specific limits or purposes (e.g., short jobs, high-memory jobs), and cores are the individual CPU units within a node that actually perform the calculations for your job. You have to tell SLURM exactly how many resources you want it to use. For example, how much memory, time, cores, etc. We will talk about this more later in this document.
 
 ---
 
@@ -91,7 +91,7 @@ ssh <username>@sedna.nwfsc2.noaa.gov
 
 * This will prompt you for your password!
 
-**Congratulations!!! you are not in SEDNA! :)**
+**Congratulations!!! you are now in SEDNA! :)**
 
 Now read the [SEDNA bioinformatics cluster information, use & best practices](https://docs.google.com/document/d/1nn0T0OWEsQCBoCdaH6DSY69lQSbK3XnPlseyyQuU2Lc/edit?tab=t.0) if you haven't done so already.
 
@@ -129,23 +129,26 @@ Now my prompt looks like:
 ```
 (base) [egarcia@node36 currentDIR]$
 ```
-In this case, we asked for 4 gb of memory for 2 hours on the standard partition. We ask for a bash job (i.e., just your normal command line). 
+In this case, we asked for 4 gb of memory for 2 hours on the standard partition, and SLURM has allocated my request to node 36. We ask for a bash job (i.e., just your normal command line). 
+
+Now, you can run commands (and modest computations as needed) straight in the command line:
+```
+echo "Hello!"
+```
+
+This is useful when you are troubleshooting code, need to check that your code is working, etc. Yet, it is HIGHLY recommended (basically required) to run jobs non-interactively using batch/sbatch jobs.
 
 ### batch jobs
 
-Most jobs and the true power of a SEDNA is via batch jobs. These are jobs that we submit to run non-interactively. 
+Most jobs and the true power of a SEDNA is via batch jobs. These are jobs that we submit to run non-interactively, meaning they run in the background and are automatically allocated by SLURM. 
 
-
-```bash
-sbatch test.sbatch
+For example, in your home directory create a test script with nano:
 ```
-and after we submit will say:
+nano test.sbatch
 ```
-Submitted batch job 2060966
-```
+`nano` is a widely used command line text editor. If you are not familiar with nano, you can find many tutorials online such as [this one](https://www.howtogeek.com/42980/the-beginners-guide-to-nano-the-linux-command-line-text-editor/). Feel free to use any other text editor you are familiar with.
 
-where `test.sbatch` might look like this:
-
+Copy and paste the following:
 ```bash
 #!/bin/bash
 #SBATCH --partition=standard
@@ -155,7 +158,16 @@ where `test.sbatch` might look like this:
 echo "Hello!"
 ```
 
-Notice that we requested the same resources as our `srun` job, above.
+Now execute with:
+```bash
+sbatch test.sbatch
+```
+and after we submit your pront will say something like:
+```
+Submitted batch job 2060966
+```
+
+In this case, we have requested the same resources as our `srun` job, above but everything
 
 This will write the output to our std out file: `slurm-2060966.out`
 
@@ -338,7 +350,7 @@ This activates `rainbow_bridge` in your current session.
 	* See SLURM script examples at the end of this README
 
 Script Components:
-1. SLURM request block. This is where you specified the resources you want suchas memory, number of cores, and several other option
+1. SLURM request block. This is where you specified the resources you want such as memory, number of cores, and several other options
 2. You do need to include the activation of modules, dependencies, software, etc in your script.
 3. Your actual code, program execution, etc.
    
@@ -350,7 +362,7 @@ More generally, be aware of the advantages and disadvantages:
 
 Some Pros:
 * Is very quick! No need to write a script for small computations like listing files, counting files, counting lines in files, searching or modifying files, and many more.
-* It is specially useful when you're troubleshooting specific code from a script. For instance, running step by step to find where an error if the offending code is not obvious from the output
+* It is especially useful when you're troubleshooting specific code from a script. For instance, running step by step to find where an error if the offending code is not obvious from the output
 * Likewise if you just want to run some code that doesn't take much time, etc.
 
 Some Cons:
