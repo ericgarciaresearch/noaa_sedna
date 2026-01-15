@@ -38,10 +38,11 @@ See [Midori2's README](https://www.reference-midori.info/download.php) in their 
 /share/all/midori2_database/2024-12-14_customblast_sp_uniq_12S
 /share/all/midori2_database/2025-03-08_customblast_sp_uniq_16S
 /share/all/midori2_database/2025-03-08_customblast_sp_uniq_12S
+/share/all/midori2_database/2025-04-24_customblast_sp_uniq_COI/
 ```
 **if you add addintional databases please add them to the list above**
 
-***As in April 30th, 2025, the 2025-03-08 is the latest release***
+***As in January 15th, 2026, the 2025-08-14 is the latest release***
 
 ---
 
