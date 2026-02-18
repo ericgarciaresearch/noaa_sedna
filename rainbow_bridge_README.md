@@ -717,7 +717,6 @@ sed -n '/^nextflow run/,/^[[:space:]]*$/p' run_rainbow_bridge_locally_sedna.sh >
 </p>
 </details>
 
----
 
 <details><summary>Execute rainbow_bridge</summary>
 <p>
