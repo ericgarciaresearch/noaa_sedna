@@ -703,6 +703,22 @@ sed -n '/^nextflow run/,/^[[:space:]]*$/p' run_rainbow_bridge_locally_sedna.sh >
 </p>
 </details>
 
+<details><summary>Database and Assigmnet Caveats</summary>
+<p>
+
+* Assignment Errors: Misannotion of sequences do happen in databases (e.g., incorrect species or genus assignments). Thus incorrect taxonomic identifications can be present in final results.
+
+* Gaps in Reference Databases: Every database, including Midori2, have been created by researchers with specific interest. Taxonomic groups poorly studied or that are cryptic or rare in nature cryptic, might not be fully represented or completely absent in databases.
+
+* Biases in Reference Databases: Similarly, species of high interest such as economically important species or model organisms are likely to have better representation than other taxa in databases.
+
+
+
+</p>
+</details>
+
+---
+
 <details><summary>Execute rainbow_bridge</summary>
 <p>
 
