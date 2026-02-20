@@ -925,6 +925,52 @@ Either:
 2. Run the `plot_rainbow_preprocess.R` in SEDNA
   * Coming soon
 
+
+**Review Read Preprocess Summary**
+
+These are the main parameters you might want to modify if you are losing a lot of data during preprocessing:
+```
+  --min-quality (default 20)
+  --min-align-len (default 12)
+  --min-len (default 50)
+  --primer-mismatch (default 3)
+```
+
+Review your preprocess report as it will review the state of your data. Use the following diagram to guide you in modifying parameters according to the step if which you are losing data:
+
+```mermaid
+flowchart TD
+
+
+A[Start. Review pipeline summary table.] --> B{Large data loss at trim_merge?}
+
+B -- Yes --> C{Primer dimers approximately equal to unaligned reads?}
+
+C -- Yes --> D[Loss driven by primer dimers. No collapse parameter change recommended.]
+
+C -- No --> E[Test overlap. Lower minalignmentlength to 8 or 6.]
+
+E --> F{Many aligned but not collapsed pairs?}
+
+F -- Yes --> G[Overlap likely limiting. Further adjust minalignmentlength cautiously.]
+
+F -- No --> H{High truncated collapsed reads?}
+
+H -- Yes --> I[Possible aggressive quality trimming. Consider lowering minquality cautiously.]
+
+H -- No --> J[trim_merge behaving as expected.]
+
+B -- No --> K{Large data loss at ngsfilter?}
+
+K -- Yes --> L[Test primer-mismatch 3. For degenerate markers COI 18S ITS test primer-mismatch 4.]
+
+K -- No --> M{Large data loss at l_filtered?}
+
+M -- Yes --> N[Test lowering min-len threshold.]
+
+M -- No --> O[Pipeline performing as expected.]
+```
+
 --- 
 
 </p>
