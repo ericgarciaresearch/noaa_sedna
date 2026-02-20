@@ -929,12 +929,59 @@ Either:
 **Review Read Preprocess Summary**
 
 These are the main parameters you might want to modify if you are losing a lot of data during preprocessing:
-```
-  --min-quality (default 20)
-  --min-align-len (default 12)
-  --min-len (default 50)
-  --primer-mismatch (default 3)
-```
+
+*--min-quality (default: 20)*
+
+Minimum Phred quality score used when trimming low-quality bases from read ends.
+Bases with quality ≤ this value are removed before downstream processing.
+Higher values = stricter trimming.
+
+When to adjust:
+
+If you see many truncated collapsed reads, consider lowering slightly (e.g., 18–15).
+
+Do not lower aggressively unless quality profiles support it (check FastQC).
+
+*--min-align-len (default: 12)*
+
+Minimum number of overlapping bases required between R1 and R2 for reads to be merged (collapsed).
+Lower values allow shorter overlaps; higher values require stronger overlap evidence.
+
+When to adjust:
+
+If many reads are well aligned but not collapsing, try 8 or 6.
+
+Especially relevant for short amplicons or trimmed reads with reduced overlap.
+
+*--min-len (default: 50)*
+
+Minimum read length required to retain a sequence after filtering.
+Reads shorter than this threshold are discarded.
+
+When to adjust:
+
+If you observe large losses at l_filtered.
+
+If aggressive trimming shortens reads below expected amplicon size.
+
+Lower cautiously (e.g., 40) and confirm biological plausibility.
+
+*--primer-mismatch (default: 2)*
+
+Maximum mismatches allowed when matching primer sequences during primer removal or demultiplexing.
+Higher values allow more variation in primer binding.
+
+When to adjust:
+
+If there is high data loss at ngsfilter.
+
+Try 3, especially for degenerate or variable markers (COI, 18S, ITS).
+
+and/or Try 4 for broad taxonomic amplification (COI, 18S).
+
+Avoid very high values to prevent off-target matches.
+
+--- 
 
 Review your preprocess report as it will review the state of your data. Use the following diagram to guide you in modifying parameters according to the step if which you are losing data:
 
