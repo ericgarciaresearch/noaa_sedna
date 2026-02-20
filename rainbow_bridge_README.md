@@ -1018,8 +1018,7 @@ M -- Yes --> N[Test lowering min-len threshold.]
 
 M -- No --> O[Pipeline performing as expected.]
 ```
-
---- 
+ 
 
 </p>
 </details>
