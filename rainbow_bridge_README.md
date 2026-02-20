@@ -932,7 +932,7 @@ These are the main parameters you might want to modify if you are losing a lot o
 
 ```
 --min-quality (default: 20)
-```
+
 Minimum Phred quality score used when trimming low-quality bases from read ends.
 Bases with quality ≤ this value are removed before downstream processing.
 Higher values = stricter trimming.
