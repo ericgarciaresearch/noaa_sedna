@@ -984,7 +984,7 @@ Avoid very high values to prevent off-target matches.
 ```
 --- 
 
-Review your preprocess report as it will review the state of your data. Use the following diagram to guide you in modifying parameters according to the step if which you are losing data:
+Review your preprocess report as it will review the state of your data. You may use the following diagram to guide you in modifying parameters according to the step if which you are losing data:
 
 ```mermaid
 flowchart TD
