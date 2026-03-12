@@ -257,13 +257,13 @@ We give every project a separate GitHub repository that can be treated a stand a
 Now create a git repo for your specific project. One way to do this is:
 
 1. Go to your persoal or organization's Git. Click "Repositories", and click in the green "New" bottom
-2. Give a descriptive name without making it too long (example:"pifsc_p224_16S_fish"), click "Add a README file", then "Create repository"
+2. Give a descriptive name without making it too long (example:"pifsc_p224_12SFish"), click "Add a README file", then "Create repository"
 * This will take you to the webpage of your new repo.
 3. Now, click in the green "Code" bottom and copy the displayed HTTPS link
 4. In SEDNA, navigate to your projects dir and `git clone <your new repo's HTTPS link>`
 ```
 cd /home/egarcia/projects/
-git clone https://github.com/ericgarciaresearch/pifsc_p224_16S_fish.git
+git clone https://github.com/ericgarciaresearch/pifsc_p224_12SFish.git
 ```
 * This will make a copy in SEDNA where you can start working
 
@@ -271,12 +271,12 @@ git clone https://github.com/ericgarciaresearch/pifsc_p224_16S_fish.git
 
 This hidden file tell git what large files to ignore so you don't have issues pushing to git
 ```
-cp /share/all/rainbow_bridge_in-house-scripts/.gitignore pifsc_p224_16S_fish
+cp /share/all/rainbow_bridge_in-house-scripts/.gitignore pifsc_p224_12SFish
 ```
 
 Next, cd into your cloned repo and make the following subdirectories: data, scripts and analyses
 ```
-cd /home/egarcia/projects/pifsc_p224_16S_fish
+cd /home/egarcia/projects/pifsc_p224_12SFish
 mkdir data		# this is where you'll place your datafiles
 mkdir scripts		# place your scripts here
 mkdir analyses		# create subdirectories here for each rainbow run (w/diff. parameters etc)
@@ -284,7 +284,7 @@ mkdir analyses		# create subdirectories here for each rainbow run (w/diff. param
 
 If you did not make a README, make one now:
 ```
-nano projects/pifsc_p224_16S_fish/README.md
+nano projects/pifsc_p224_12SFish/README.md
 ```
 where:
 * **nano** is the text editor I like but you can use whatever other one (vim for example). Here is one [nano tutorial](https://www.geeksforgeeks.org/nano-text-editor-in-linux/) of many in the web
@@ -312,7 +312,7 @@ Document all your moves in your README. This is very important because:
 
 Transfer your data files inside your data subdir:
 ```
-mv or cp <files> projects/pifsc_p224_16S_fish/data
+mv or cp <files> projects/pifsc_p224_12SFish/data
 ```
 
 Raw eDNA data for PIFSC projects are hosted in the [pifsc_eDNA_data](https://github.com/ericgarciaresearch/pifsc_eDNA_data). Contact me for permission to access this repo.
@@ -329,11 +329,41 @@ Furthermore, the metadata contains cruise wise metadata `eDNA_Metadata_BigeyeSE2
 
 I made the script `extract_pelagic_metadata.sh` to extract most relevant metadata from these files. Example using 12SFish data
 ```
-cd projects/pifsc_p224_16S_fish/data
+cd projects/pifsc_p224_12SFish/data
 cp ~/data/pifsc_eDNA_data/P224/JVB1989_MiFishU/pelagicsamples12SFish_p224_wreplicates_to-process.txt
 bash /share/all/scripts/egarcia/extract_pelagic_metadata.sh pelagicsamples12SFish_p224_to-process.txt
 ```
 this will create file `sample_site_rep.tsv` , make this available in your project's README
+
+Check that your file looks similar to this:
+```
+sample  site    replicate
+S045200 AD_1    1
+S045201 AD_1    2
+S045202 AD_1    3
+S045203 AD_1    4
+S045196 AD_2    1
+S045198 AD_2    3
+S045192 AD_3    1
+S045193 AD_3    2
+S045194 AD_3    3
+S045195 AD_3    4
+S045188 AD_4    1
+S045189 AD_4    2
+S045190 AD_4    3
+S045191 AD_4    4
+S045184 AD_5    1
+S045185 AD_5    2
+S045186 AD_5    3
+S045180 AD_6    1
+S045181 AD_6    2
+S045182 AD_6    3
+S045183 AD_6    4
+S045204 AD_ctrl ctrl
+S045175 AN_1    1
+S045176 AN_1    2
+S045177 AN_1    3
+```
 
 ---
 
@@ -377,7 +407,7 @@ If your data files look similar to the described above, try the dry run below. O
 
 Renaming my files now. Lets do a dry run first
 ```
-cd /home/egarcia/projects/pifsc_p224_16S_fish/data
+cd /home/egarcia/projects/pifsc_p224_12SFish/data
 srun /share/all/scripts/egarcia/rename_fastqs.sh --dry-run
 ```
 The printed output looks like this:
@@ -439,7 +469,7 @@ This scripts lives at
 /share/all/scripts/egarcia/check_fastq_awk.sh
 ```
 
-to execute with
+execute with
 ```
 srun bash /share/all/scripts/egarcia/check_fastq_awk.sh "<path_to_seq_files>"
 ```
@@ -504,6 +534,49 @@ I have also generated the script `fix_bad_fastq.sh` which attempts to fix faulty
 </p>
 </details>
 
+<details><summary>Check Read Content - Sequence Artifacts</summary>
+<p>
+
+So far we check the integrity of the actual files but we have not take a look at the content of the files, the sequences themselves. In the case of pelagic eDNA projects. The abundance of DNA in the open ocean is sporadic, producing a wide range of eDNA concentration in samples. As a result of low levels of DNA in samples, the sequencing of eDNA data can include artifacts. 
+
+Here we check for primer dimers and other short-read articats based on the Nextera adapters used by the JonahVentures sequencing facility.
+
+This scripts lives at
+```
+/share/all/scripts/egarcia/check_dimers.sh 
+```
+
+The `check_dimers.sh` script identifies primer dimers by scanning raw sequencing reads for the premature appearance of adapter sequences. 
+For instance, in a standard MiFish metabarcoding run, a valid read should consist of a ~44 bp leader sequence (sequencing forward primer), 
+followed by the biological insert (the target 12S rRNA gene, typically ~163–185 bp), and finally the downstream Nextera adapter. 
+However, primer dimers occur when the Forward and Reverse primers anneal to each other instead of the target DNA, 
+creating a very short "empty" insert of only ~39 bp (the length of the reverse primer). 
+Because the read length (250 bp) far exceeds this short artifact, the sequencer reads through the leader, 
+the short dimer "insert," and immediately into the adapter sequence starting around base position 83. 
+The script detects this by flagging any read where the Nextera adapter sequence (`CTGTCTCTTAT`) appears within the first 100 base pairs, 
+allowing for rapid quantification of failed reactions across large datasets. 
+
+Checking for these artifacts can explain large loss of data in QC steps of metabarcoding pipelines.
+
+**Check for Sequence Artifacts**
+
+From your data subdir, execute the script with
+```
+srun bash /share/all/scripts/egarcia/check_dimers.sh 
+```
+
+The script will produce:
+
+* primer_dimer_report.tsv: per file report
+* average_primer_dimer.tsv: average across files
+
+Later, you will included the second one in the QC - Preprocessing Report
+
+---
+
+</p>
+</details>
+
 <details><summary>Create Supporting Files (barcode, sample_map, and params.yml files)</summary>
 <p>
 
@@ -535,7 +608,7 @@ demuxed_barcode.tsv
 
 | #assay |  sample |  barcodes | forward_primer |  reverse_primer | extra_information |
 | --- | --- | --- | --- | --- | --- |
-| 16S_fish | S040713_1 | : | GACCCTATGGAGCTTTAGAC | CGCTGTTATCCCTADRGTAACT |  confirmed in JVB1836-16SDegenerate-testmethods.txt|
+| 12SFish | S040713_1 | : | GACCCTATGGAGCTTTAGAC | CGCTGTTATCCCTADRGTAACT |  confirmed in JVB1836-16SDegenerate-testmethods.txt|
 
 
 &nbsp;
@@ -552,7 +625,7 @@ In this case, I am calling my barcode file `demuxed_barcodes.tsv` because my sam
 
 | #assay |  sample |  barcodes | forward_primer |  reverse_primer | extra_information |
 | --- | --- | --- | --- | --- | --- |
-| 16S_fish | S040713_1 | : | GACCCTATGGAGCTTTAGAC | CGCTGTTATCCCTADRGTAACT |  confirmed in JVB1836-16SDegenerate-testmethods.txt|
+| 12SFish | S040713_1 | : | GACCCTATGGAGCTTTAGAC | CGCTGTTATCCCTADRGTAACT |  confirmed in JVB1836-16SDegenerate-testmethods.txt|
 
 Where the header line has to start with #, "S040713_1" is the name of a random sample, and ":" is the 
 character that must separate the barcodes use to idenfity samples. Since my samples are already 
@@ -562,7 +635,7 @@ one line per sample with unique combinations of barcodes. See rainbow documentat
 You can copy the block below and just change the content for future runs/primers (but make sure you maintain a tsv format). You can also copy the file in SEDNA
 ```
 #assay	sample	barcodes	forward_primer	 reverse_primer	extra_information
-16S_fish	S040713_1	:	GACCCTATGGAGCTTTAGAC	CGCTGTTATCCCTADRGTAACT	confirmed in JVB1836-16SDegenerate-testmethods.txt
+12SFish	S040713_1	:	GACCCTATGGAGCTTTAGAC	CGCTGTTATCCCTADRGTAACT	confirmed in JVB1836-16SDegenerate-testmethods.txt
 ```
 
 &nbsp;
@@ -645,7 +718,7 @@ Normally, I would recommend using a params yml file but currently `NEXTFLOW` in 
 
 First copy the base script 
 ```
-cd /home/egarcia/projects/pifsc_p224_16S_fish/
+cd /home/egarcia/projects/pifsc_p224_12SFish/
 cp /share/all/rainbow_bridge_in-house-scripts/run_rainbow_bridge_locally_sedna.sh scripts
 ```
 
@@ -866,9 +939,9 @@ cd preprocess
 
 You can either create a README from scratch `nano README_preprocess.md` or copy the following README as a template and modify as needed.
 ```
-cp /home/egarcia/projects/pifsc_p224_16S_fish/analyses/blast_0_0_lca_70_70_1000hits_midori2/preprocess/README_preprocess.md .
+cp /home/egarcia/projects/pifsc_p224_12SFish/analyses/blast_0_0_lca_70_70_1000hits_midori2/preprocess/README_preprocess.md .
 ```
-This readme can also be downloaded from git [here](https://github.com/ericgarciaresearch/pifsc_p224_16S_fish/blob/main/analyses/blast_0_0_lca_70_70_1000hits_midori2/preprocess/README_preprocess.md)
+This readme can also be downloaded from git [here](https://github.com/ericgarciaresearch/pifsc_p224_12SFish/blob/main/analyses/blast_0_0_lca_70_70_1000hits_midori2/preprocess/README_preprocess.md)
 
 &nbsp;
 &nbsp;
@@ -918,7 +991,7 @@ Either:
       * ```
         ![plot1](barplot_preprocess_read_summary.png)
         ```
-    * Full example [here](https://github.com/ericgarciaresearch/pifsc_p224_16S_fish/edit/main/analyses/blast_0_0_lca_70_70_1000hits_midori2/preprocess/README_preprocess.md)
+    * Full example [here](https://github.com/ericgarciaresearch/pifsc_p224_12SFish/edit/main/analyses/blast_0_0_lca_70_70_1000hits_midori2/preprocess/README_preprocess.md)
 
 **PUSH your README!**
 
@@ -1030,7 +1103,7 @@ Time to digest the main dish, the metabarcoding results :)
 
 Navigate to your run directory:
 ```
-cd /home/egarcia/projects/pifsc_p224_16S_fish/analyses/blast_0_0_lca_70_70_1000hits_midori2
+cd /home/egarcia/projects/pifsc_p224_12SFish/analyses/blast_0_0_lca_70_70_1000hits_midori2
 ```
 Again, the metabarcoding results will be in the `output` directory. 
 
@@ -1048,7 +1121,7 @@ Now push these files if you haven't done so already and then provide the https l
 * [Initial](linkt_to_inial_report)
 * [Filtered](linkt_to_filtered_report)
 ```
-See the [pifsc_p224_16S/README](https://github.com/ericgarciaresearch/pifsc_p224_16S_fish/edit/main/README.md) as an example
+See the [pifsc_p224_16S/README](https://github.com/ericgarciaresearch/pifsc_p224_12SFish/edit/main/README.md) as an example
 
 To view these files, you will have to download them and open them with a web browser.
 
@@ -1181,7 +1254,7 @@ This will generate the following plots:
 
 1.3.4 Upload all these plots and the "incomplete_taxonomies.tsv" into `output` and push them
 
-1.4 Embed the plots into your main README. Below is some of the code from [pifsc_p224_16S/README](https://github.com/ericgarciaresearch/pifsc_p224_16S_fish/edit/main/README.md) as an example:
+1.4 Embed the plots into your main README. Below is some of the code from [pifsc_p224_16S/README](https://github.com/ericgarciaresearch/pifsc_p224_12SFish/edit/main/README.md) as an example:
 ```
 ### Metabarcoding Results
 
