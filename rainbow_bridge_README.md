@@ -537,7 +537,7 @@ I have also generated the script `fix_bad_fastq.sh` which attempts to fix faulty
 <details><summary>Check Read Content - Sequence Artifacts</summary>
 <p>
 
-So far we check the integrity of the actual files but we have not take a look at the content of the files, the sequences themselves. In the case of pelagic eDNA projects. The abundance of DNA in the open ocean is sporadic, producing a wide range of eDNA concentration in samples. As a result of low levels of DNA in samples, the sequencing of eDNA data can include artifacts. 
+So far we checked the integrity of the actual files but we have not take a look at the content of the files, the sequences themselves. In the case of pelagic eDNA projects, the abundance of DNA in the open ocean is sporadic producing a wide range of eDNA concentration in samples. As a result of low levels of DNA in samples, the sequencing of eDNA data can include artifacts. 
 
 Here we check for primer dimers and other short-read articats based on the Nextera adapters used by the JonahVentures sequencing facility.
 
@@ -570,7 +570,7 @@ The script will produce:
 * primer_dimer_report.tsv: per file report
 * average_primer_dimer.tsv: average across files
 
-Later, you will included the second one in the QC - Preprocessing Report
+Later, you will include the average estimation in the QC - Preprocessing Report
 
 ---
 
