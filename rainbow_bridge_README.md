@@ -238,7 +238,7 @@ If you got these results, you are ready to try running rainbow_bridge in a scrip
 
 We will be running rainbow using sbatch scripts. In this case, it is not necessary to use `srun` as a node will be automatically deployed by the script. Furthermore, rainbow can still be executed locally (see above) or remotely using a batch script. We will be runnig /share/all/rainbow_bridge_unzipfix locally as this is the version that is currently working in SEDNA (May 2025), but eventually we will be running remotely to ensure we are using the lastest version of the pipeline.
 
-<details><summary>Organization and Directories</summary>
+<details><summary>Organization, Directories and Project Info</summary>
 <p>
 
 ### Organization
@@ -273,6 +273,7 @@ This hidden file tell git what large files to ignore so you don't have issues pu
 ```
 cp /share/all/rainbow_bridge_in-house-scripts/.gitignore pifsc_p224_12SFish
 ```
+**Subdirs**
 
 Next, cd into your cloned repo and make the following subdirectories: data, scripts and analyses
 ```
@@ -282,9 +283,9 @@ mkdir scripts		# place your scripts here
 mkdir analyses		# create subdirectories here for each rainbow run (w/diff. parameters etc)
 ```
 
-If you did not make a README, make one now:
+If you did not make a README, make one now insider the repo:
 ```
-nano projects/pifsc_p224_12SFish/README.md
+nano README.md
 ```
 where:
 * **nano** is the text editor I like but you can use whatever other one (vim for example). Here is one [nano tutorial](https://www.geeksforgeeks.org/nano-text-editor-in-linux/) of many in the web
@@ -297,8 +298,28 @@ Document all your moves in your README. This is very important because:
 * Allows other to replicate your work
 * Allows your future self to understand what you did now
 
+*You have created a new README but it might be useful to copy a README from another project that is semi- or complete so you get some structure or you can build upon that format*
 
-***You have created a new README but it might be useful to copy a README from another project is has been semi- or complete so you get some structure or you can build upon that format***
+**Project Info**
+
+Create a `project_info.tsv` file to populate the README and subsequent reports
+
+For example, below is the info I am using for the pifsc_p224_12SFish project. You can add or remove rows as needed. Populate the information specific to your project by changing the text after the "\t" in the following block:
+
+From you project's home directiory, create project info file with:
+```
+echo -e "Project Title\tUsing multi-marker eDNA metabarcoding to characterize pelagic ecosystem species composition in the Central North Pacific" > project_info.tsv
+echo -e "Cruise\t2022 Pacific Cruise (SE2204)" >> project_info.tsv
+echo -e "Location\tCental Pacific, multiple latitudes" >> project_info.tsv
+echo -e "Samples\t243 Initial samples (unique filtes). 465 including filter replicates" >> project_info.tsv
+echo -e "Genetic marker\tMiFish 12S" >> project_info.tsv
+echo -e "Pipeline used\trainbow_bridge" >> project_info.tsv
+echo -e "Reference Database\tMidori2 2025-03-08_sp_uniq_12S" >> project_info.tsv
+echo -e "Analyses done by\tDr. Eric Garcia (eric.e.garcia@noaa.gov)" >> project_info.tsv
+echo -e "Center information\tPacific Islands Fisheries Science Center" >> project_info.tsv
+echo -e "Agency information\tNational Oceanic and Atmospheric Administration" >> project_info.tsv
+
+```
 
 ---
 
@@ -310,9 +331,9 @@ Document all your moves in your README. This is very important because:
 
 **Data Files**
 
-Transfer your data files inside your data subdir:
+Make a copy of your data files inside your data subdir:
 ```
-mv or cp <files> projects/pifsc_p224_12SFish/data
+cp <files> projects/pifsc_p224_12SFish/data
 ```
 
 Raw eDNA data for PIFSC projects are hosted in the [pifsc_eDNA_data](https://github.com/ericgarciaresearch/pifsc_eDNA_data). Contact me for permission to access this repo.
