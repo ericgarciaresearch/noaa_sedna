@@ -560,7 +560,7 @@ I have also generated the script `fix_bad_fastq.sh` which attempts to fix faulty
 
 So far we checked the integrity of the actual files but we have not take a look at the content of the files, the sequences themselves. In the case of pelagic eDNA projects, the abundance of DNA in the open ocean is sporadic producing a wide range of eDNA concentration in samples. As a result of low levels of DNA in samples, the sequencing of eDNA data can include artifacts. 
 
-Here we check for primer dimers and other short-read articats based on the Nextera adapters used by the JonahVentures sequencing facility.
+Here we check for primer dimers and other short-read articats based on sequencing adapters. In this case, we will check for the Nextera adapter used by the JonahVentures sequencing facility `(CTGTCTCTTAT)`, but the script can be used with any other adapter or motif. 
 
 This scripts lives at
 ```
@@ -583,8 +583,9 @@ Checking for these artifacts can explain large loss of data in QC steps of metab
 
 From your data subdir, execute the script with
 ```
-srun bash /share/all/scripts/egarcia/check_dimers.sh 
+srun bash /share/all/scripts/egarcia/check_dimers.sh CTGTCTCTTAT
 ```
+Modify the adapter/motif as needed.
 
 The script will produce:
 
