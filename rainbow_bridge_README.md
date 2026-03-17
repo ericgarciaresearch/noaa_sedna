@@ -583,7 +583,8 @@ Checking for these artifacts can explain large loss of data in QC steps of metab
 
 From your data subdir, execute the script with
 ```
-srun bash /share/all/scripts/egarcia/check_dimers.sh CTGTCTCTTAT
+cp /share/all/scripts/egarcia/check_dimers.sh ../scripts
+srun bash check_dimers.sh CTGTCTCTTAT
 ```
 Modify the adapter/motif as needed.
 
@@ -977,7 +978,8 @@ Two options here:
 
 2. Use `tsv2mdtable.sh` to transform the tsv into markdown sintax:
 ```
-srun /share/all/rainbow_bridge_in-house-scripts/tsv2mdtable.sh ../../../data/average_primer_dimer.tsv
+cp /share/all/rainbow_bridge_in-house-scripts/tsv2mdtable.sh ../../../scritps
+srun ../../../scripts/tsv2mdtable.sh ../../../data/average_primer_dimer.tsv
 ```
 This will print the following:
 ```
