@@ -968,6 +968,27 @@ This readme can also be downloaded from git [here](https://github.com/ericgarcia
 &nbsp;
 &nbsp;
 
+**Annotate the Primer Content**
+
+Previously, the primer content has been estimated by running `check_dimers.sh`. Annotate the average primer content across files in your preprocess README (project_dir/data/average_primer_dimer.tsv)
+
+Two options here:
+1. Manually create a table in your README and copy the values from average_primer_dimer.tsv into it, you can append to the bottom on your README with the following code:
+
+2. Use `tsv2mdtable.sh` to transform the tsv into markdown sintax:
+```
+srun /share/all/rainbow_bridge_in-house-scripts/tsv2mdtable.sh ../../../data/average_primer_dimer.tsv
+```
+This will print the following:
+```
+| Avg_Total_Reads | Avg_Dimer_Reads | Avg_%_Dimers |
+| --- | --- | --- |
+| 26337 | 17078 | 65.76 |
+
+```
+now you copy and paste this into your README
+
+
 **Generate Read Count Summary**
 
 
