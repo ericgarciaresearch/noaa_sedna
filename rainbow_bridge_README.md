@@ -20,7 +20,7 @@ Please take a few hours to get familiar with the rainbow_bridge README (previous
 
 ---
 
-## Before Starting Read This
+### Before Starting Read This
 
 <details><summary>rainbow_bridge General Info</summary>
 <p>
@@ -233,7 +233,7 @@ If you got these results, you are ready to try running rainbow_bridge in a scrip
 
 ---
 
-## Metabarcoding Module
+# Metabarcoding Module
 
 This is the first module of the pipeline where you will setup and organize your project and generate the main metabarcoding results.
  This first analyses of your dataset and metabarcoding results will be further refined and curated in the follwing module.
@@ -841,7 +841,7 @@ sbatch run_rainbow_bridge_locally_sedna.sh
 </p>
 </details>
 
-
+&nbsp;
 ### Reviewing Results
 
 <details><summary>Check your Run</summary>
@@ -1362,6 +1362,7 @@ This will generate the following plots:
 </p>
 </details>
 
+&nbsp;
 ### Refining Results
 
 <details><summary>Compare Rainbow Results to other Pipelines</summary>
@@ -1440,7 +1441,7 @@ If something goes wrong, you will need to make those copies again.
 
 ---
 
-## Regional Remix Module
+# Regional Remix Module
 
 
 <details><summary>Running Regional Remix</summary>
@@ -1454,7 +1455,7 @@ TBD
 
 ---
 
-## Analysis Module
+# Analysis Module
 
 
 <details><summary>Creating Plots</summary>
