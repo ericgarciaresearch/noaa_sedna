@@ -1457,12 +1457,45 @@ TBD
 
 # Analysis Module
 
+This module will allow you to generate multiple analysis and visualizations of your dataset. 
 
-<details><summary>Creating Plots</summary>
+By this point, your dataset should be clean of contamination, refined with normalized read counts and curated taxonomic assignments, and ready for analyses. Let get busy! 
+
+<details><summary>Generate Figures and Analyses</summary>
 <p>
 
+Create a directory for the output of the analysis module inside the `analyses` main subdirectory
+```
+cd <project_dir>/analyses
+mkdir analyses_module
+cd analyses_module
+```
 
-TBD
+create a README for this module
+```
+nano README_analyses.md
+```
+
+Place the ouput of the previous module in this new directory:
+```
+cp ../remix_module/ASVs_counts.tsv .
+cp ../remix_module/ASVs_counts_NOUNKNOWNS_percentabund.tsv .
+cp ../remix_module/asvTaxonomyTable.txt .
+cp ../remix_module/sample_metadata_forR.txt .
+```
+
+Copy the required scripts:
+```
+cp /share/all/rainbow_bridge_in-house-scripts/maps_P224.R .
+cp/share/all/rainbow_bridge_in-house-scripts/krona_P224.sh .
+cp/share/all/rainbow_bridge_in-house-scripts/import_ASVTables2REVAMP_P224.sh .
+cp/share/all/rainbow_bridge_in-house-scripts/run_figure_scripts.sh .
+```
+
+Execute the `run_figure_scripts.sh`
+```
+srun run_figure_scripts.sh
+```
 
 </p>
 </details>
