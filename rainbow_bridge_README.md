@@ -841,7 +841,7 @@ sbatch run_rainbow_bridge_locally_sedna.sh
 </p>
 </details>
 
-&nbsp;
+
 ### Reviewing Results
 
 <details><summary>Check your Run</summary>
@@ -1362,7 +1362,6 @@ This will generate the following plots:
 </p>
 </details>
 
-&nbsp;
 ### Refining Results
 
 <details><summary>Compare Rainbow Results to other Pipelines</summary>
