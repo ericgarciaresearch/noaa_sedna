@@ -246,6 +246,7 @@ Two reports will be generated:
 Use these reports to assess pipeline success and whether subsequent runs with tailored parameter are neeed for your specific dataset. 
 Once you are content with the pipeline and dataset performance, generate the output needed for the following module, the `regional_remix`
 
+&nbsp;
 ### Running `rainbow_bridge` 
 
 
@@ -841,7 +842,6 @@ sbatch run_rainbow_bridge_locally_sedna.sh
 </details>
 
 &nbsp;
-
 ### Reviewing Results
 
 <details><summary>Check your Run</summary>
@@ -1362,10 +1362,7 @@ This will generate the following plots:
 </p>
 </details>
 
----
-
 &nbsp;
-
 ### Refining Results
 
 <details><summary>Compare Rainbow Results to other Pipelines</summary>
@@ -1446,8 +1443,26 @@ If something goes wrong, you will need to make those copies again.
 
 ## Regional Remix Module
 
-<details><Running Regional Remix</summary>
+
+<details><summary>Running Regional Remix</summary>
 <p>
+
+
+TBD
+
+</p>
+</details>
+
+---
+
+## Analysis Module
+
+
+<details><summary>Creating Plots</summary>
+<p>
+
+
+TBD
 
 </p>
 </details>
