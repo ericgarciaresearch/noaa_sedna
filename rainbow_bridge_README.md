@@ -233,7 +233,20 @@ If you got these results, you are ready to try running rainbow_bridge in a scrip
 
 ---
 
-## Running `rainbow_bridge` 
+## Metabarcoding Module
+
+This is the first module of the pipeline where you will setup and organize your project and generate the main metabarcoding results.
+ This first analyses of your dataset and metabarcoding results will be further refined and curated in the follwing module.
+
+Two reports will be generated:
+
+* Preprocessing Report (README and PDF)
+* Metabarcoding Report (README and PDF)
+
+Use these reports to assess pipeline success and whether subsequent runs with tailored parameter are neeed for your specific dataset. 
+Once you are content with the pipeline and dataset performance, generate the output needed for the following module, the `regional_remix`
+
+### Running `rainbow_bridge` 
 
 
 We will be running rainbow using sbatch scripts. In this case, it is not necessary to use `srun` as a node will be automatically deployed by the script. Furthermore, rainbow can still be executed locally (see above) or remotely using a batch script. We will be runnig /share/all/rainbow_bridge_unzipfix locally as this is the version that is currently working in SEDNA (May 2025), but eventually we will be running remotely to ensure we are using the lastest version of the pipeline.
@@ -824,14 +837,12 @@ sbatch run_rainbow_bridge_locally_sedna.sh
 ```
 *Can take multiple hours depending on the size of your dataset*
 
----
-
 </p>
 </details>
 
----
+&nbsp;
 
-## Reviewing Results
+### Reviewing Results
 
 <details><summary>Check your Run</summary>
 <p>
@@ -941,7 +952,7 @@ If you got an error please document it here so that future users can get a head 
 </p>
 </details>
 
-<details><summary>Read fate in preprocess</summary>
+<details><summary>Read fate in preprocess (Preprocess Report)</summary>
 <p>
 
 Is time to analyze your results!!! 
@@ -1141,7 +1152,7 @@ M -- No --> O[Pipeline performing as expected.]
 </p>
 </details>
 
-<details><summary>Rainbow Metabarcoding Results</summary>
+<details><summary>First Metabarcoding Results (Metabarcoding Report)</summary>
 <p>
 	
 Time to digest the main dish, the metabarcoding results :)
@@ -1353,7 +1364,9 @@ This will generate the following plots:
 
 ---
 
-## Further Analyses
+&nbsp;
+
+### Refining Results
 
 <details><summary>Compare Rainbow Results to other Pipelines</summary>
 <p>
@@ -1368,16 +1381,73 @@ Coming soon
 </details>
 
 
-<details><summary>Refining Rainbow Results</summary>
+<details><summary>Create input for next module</summary>
 <p>
 
 ### Regional Remix
 
 zOTUS found by rainbow_bridge have been matched againg the MIDORI2, a database curated from certain errors and inconsistencies. However, our results can still be further refined by utilizing databases that have been curated by experts in the region. ***Fortunately we have such curated regional database for the Hawaiian Archipelago***
 
-The regional remix algorithm compares metabarcoding results (rainbow or REVAMP) to the Hawaiian curated database and flags taxa that would normally be found outside of this region.
+The regional remix algorithm compares metabarcoding results to the Hawaiian curated database and flags taxa that would normally be found outside of this region.
 
-Follow the instructions in the [remix_input_README.md](https://github.com/ericgarciaresearch/noaa_sedna/blob/main/remix_input_README.md) for more details and to generate the input for the remix script.
+In order to use the regional remix the output from metabarcoding pipelines needs
+to be transformed into the format required by the remix script.
+
+Use the following instructions to generate the input for the regional remix from metabarcoding pipeline output
+
+**Formatting rainbow_bridge output**
+
+The following script transforms the output of rainbow into the input files for the remix
+
+* (rainbow2remix.sh)[]
+
+Copy this file into your scripts directory
+```
+cd <main repo dir>
+cp /share/all/rainbow_bridge_in-house-scripts/rainbow2remix.sh scripts
+```
+
+Make a directory for the remix analysis and move there
+```
+mkdir -p analyses
+mkdir -p analyses/remix
+cd analyses/remix
+```
+
+Locate and copy the following files from the output of rainbow into the remix dir:
+* The final curated zotu table: "zotu_table_final_curated.tsv"
+* The LCA intermediate file: "lca_intermediate.tsv"
+* The fasta file with the zotu sequences: "<run dir name>_zotus.fasta"
+
+Example:
+```
+cp ../blast_0_0_lca_70_70_1000hits_midori2/output/zotus/blast_0_0_lca_70_70_1000hits_midori2_zotus.fasta .
+cp ../blast_0_0_lca_70_70_1000hits_midori2/output/taxonomy/lca/qcov70_pid70_diff1/lca_intermediate.tsv .
+cp ../blast_0_0_lca_70_70_1000hits_midori2/output/final/zotu_table_final_curated.tsv .
+```
+
+Execute `rainbow2remix.sh`
+```
+sbatch ../../scripts/rainbow2remix.sh
+```
+
+Check the `rainbow2remix-*.out` file and see that the script found all files and generated no errors.
+
+If the script run successfully, it would have generated the `remix_sum.tsv` and `zotu_seqs.tsv` 
+which are the two input files for the remix script 
+
+Note: This script will delete the copies of the rainbow output you just made. 
+If something goes wrong, you will need to make those copies again.
+
+</p>
+</details>
+
+---
+
+## Regional Remix Module
+
+<details><Running Regional Remix</summary>
+<p>
 
 </p>
 </details>
