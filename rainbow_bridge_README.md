@@ -1441,6 +1441,7 @@ If something goes wrong, you will need to make those copies again.
 
 # Regional Remix Module
 
+The regional remix algorithm compares metabarcoding results to the relevant regional curated database and flags taxa that would normally be found outside of this region. In addition, the remix removes contamination, normalized read counts, and curates taxonomic assigments of ASVs.
 
 <details><summary>Running Regional Remix</summary>
 <p>
