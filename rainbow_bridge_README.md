@@ -1443,6 +1443,12 @@ If something goes wrong, you will need to make those copies again.
 
 The regional remix algorithm compares metabarcoding results to the relevant regional curated database and flags taxa that would normally be found outside of this region. In addition, the remix removes contamination, normalized read counts, and curates taxonomic assigments of ASVs.
 
+One report will be generated:
+
+* Remix Report (README and PDF)
+
+Use this report to assess the impact of contamination in your dataset, and to understand how well known are the analyzed taxonomic group in the region of interest. 
+
 <details><summary>Running Regional Remix</summary>
 <p>
 
@@ -1459,6 +1465,10 @@ TBD
 This module will allow you to generate multiple analysis and visualizations of your dataset. 
 
 By this point, your dataset should be clean of contamination, refined with normalized read counts and curated taxonomic assignments, and ready for analyses. Let get busy! 
+
+One report will be generated:
+
+* Analysis Report (README and PDF)
 
 <details><summary>Generate Figures and Analyses</summary>
 <p>
