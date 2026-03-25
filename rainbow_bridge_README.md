@@ -1436,6 +1436,7 @@ One report will be generated:
 
 Use this report to assess the impact of contamination in your dataset, and to understand how well known are the analyzed taxonomic group in the region of interest. 
 
+&nbsp;
 <details><summary>Running Regional Remix</summary>
 <p>
 
@@ -1459,6 +1460,7 @@ One report will be generated:
 
 Use this report to interpret results, assess the success of your entire project, and discuss potential further analyses to reach your final conclusions.
 
+&nbsp;
 <details><summary>Generate Figures and Analyses</summary>
 <p>
 
