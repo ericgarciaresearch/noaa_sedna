@@ -1471,7 +1471,7 @@ mkdir analyses_module
 cd analyses_module
 ```
 
-create a README for this module
+Create a README for this module
 ```
 nano README_analyses.md
 ```
