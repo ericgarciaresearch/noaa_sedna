@@ -1457,6 +1457,8 @@ One report will be generated:
 
 * Analysis Report (README and PDF)
 
+Use this report to interpret results, assess the success of your entire project, and discuss potential further analyses to reach your final conclusions.
+
 <details><summary>Generate Figures and Analyses</summary>
 <p>
 
