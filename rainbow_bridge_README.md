@@ -1363,25 +1363,12 @@ This will generate the following plots:
 &nbsp;
 ### Refining Results
 
-<details><summary>Compare Rainbow Results to other Pipelines</summary>
-<p>
-
-**REVAMP**
-
-Coming soon
-
----
-
-</p>
-</details>
-
-
 <details><summary>Create input for next module</summary>
 <p>
 
-### Regional Remix
+zOTUS (Hereinafter referred to as ASVs) found by rainbow_bridge have been matched againg the MIDORI2, a database curated from certain errors and inconsistencies. However, our results can still be further refined by utilizing databases that have been curated by experts in the region. ***Fortunately we have such curated regional database for the Hawaiian Archipelago***
 
-zOTUS found by rainbow_bridge have been matched againg the MIDORI2, a database curated from certain errors and inconsistencies. However, our results can still be further refined by utilizing databases that have been curated by experts in the region. ***Fortunately we have such curated regional database for the Hawaiian Archipelago***
+### Regional Remix
 
 The regional remix algorithm compares metabarcoding results to the Hawaiian curated database and flags taxa that would normally be found outside of this region.
 
