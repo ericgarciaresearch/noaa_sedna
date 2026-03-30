@@ -1220,7 +1220,7 @@ Just as before, you can run this script locally or directly in SEDNA
 
 Download script and rainbow output. Using sftp for example:
 ```
-get ../../scripts/summarize_rainbow_output.R
+get ../../scripts/run_pipeline_metabarcoding_report.R
 get preprocess/read_count_loss_preprocess.tsv
 get output/zotus/zotu_table.tsv
 get output/zotus/*zotus.fasta
