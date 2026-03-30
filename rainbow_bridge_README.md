@@ -1013,7 +1013,7 @@ Execute the `read_calculator_rainbow_preprocess.sh` script
 srun ../../../scripts/read_calculator_rainbow_preprocess.sh
 ```
 * This script creates **read_count_loss_preprocess.tsv** file that reports the number of reads remaning after each step is run as well as the percent of reads loss in each step relative to the previous
-* We will then visualize the read fate processing this tsv file with the R script **plot_rainbow_preprocess.R**
+* We will then visualize the read fate processing this tsv file with the R script **plot_preprocess_results.R**
 
 If your read calculator worked ok you should see a tsv file that looks like this:
 
@@ -1033,11 +1033,11 @@ Review your table and look for read flags or disernable patterns.
 
 Now that you have `read_count_loss_preprocess.tsv` you can use the following custom Rscript to make plots to visualize and easily identify patterns.
 ```
-cp /share/all/rainbow_bridge_in-house-scripts/plot_rainbow_preprocess.R ../../../scripts
+cp /share/all/rainbow_bridge_in-house-scripts/plot_preprocess_results.R ../../../scripts
 ```
 
 Either:
-1. Download both `plot_rainbow_preprocess.R` and `read_count_loss_preprocess.tsv`, and run in your local computer
+1. Download both `plot_preprocess_results.R` and `read_count_loss_preprocess.tsv`, and run in your local computer
   * Upload plots into the `preprocess` dir
   * Push all files
   * Embed plot inside the README. 
@@ -1049,7 +1049,7 @@ Either:
 
 **PUSH your README!**
 
-2. Run the `plot_rainbow_preprocess.R` in SEDNA
+2. Run the `plot_preprocess_results.R` in SEDNA
   * Coming soon
 
 
@@ -1220,7 +1220,7 @@ Just as before, you can run this script locally or directly in SEDNA
 
 Download script and rainbow output. Using sftp for example:
 ```
-get ../../scripts/plot_rainbow_results.R
+get ../../scripts/plot_metabarcoding_results.R
 get preprocess/read_count_loss_preprocess.tsv
 get output/zotus/zotu_table.tsv
 get output/zotus/*zotus.fasta
