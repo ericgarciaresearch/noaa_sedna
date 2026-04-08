@@ -47,7 +47,7 @@ When you submit a job in SEDNA, SLURM is the scheduler (just another program) th
 
 **SEDNA Account**
 
-First of all, you need to get an account setup. Talk to your supervisor for this or if you work at PIFSC you can submit a [Jira ticket](https://apps-st.fisheries.noaa.gov/jirasm/servicedesk/customer/portal/4) 
+First of all, you need to get an account setup. Talk to your supervisor for this or if you work at PIFSC you can submit a [Jira ticket](https://apps-st.fisheries.noaa.gov/jira/servicedesk/customer/portal/15) 
 
 You will need to create an new password:
 * 14 characters long
@@ -57,7 +57,7 @@ You will need to create an new password:
 
 **VPN**
 
-Regardless of the type of computer you use, you need to be connected to one of NOAA's VPNs to access SEDNA. Ask IT to help you set up the VPN in your computer (PIFSC you can submit a [Jira ticket](https://apps-st.fisheries.noaa.gov/jirasm/servicedesk/customer/portal/4)).
+Regardless of the type of computer you use, you need to be connected to one of NOAA's VPNs to access SEDNA. Ask IT to help you set up the VPN in your computer (PIFSC you can submit a [Jira ticket](https://apps-st.fisheries.noaa.gov/jira/servicedesk/customer/portal/15).
 
 **Shell**
 
