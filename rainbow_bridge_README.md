@@ -1440,8 +1440,492 @@ Use this report to assess the impact of contamination in your dataset, and to un
 <details><summary>Running Regional Remix</summary>
 <p>
 
+# regional-remix
 
-TBD
+**regional-remix** is an R-based post-processing pipeline for eDNA metabarcoding data. It takes raw amplicon sequence variant (ASV) output from upstream metabarcoding workflows and produces taxonomically validated, contamination-corrected, volume-standardized species detection tables suitable for biodiversity analysis and data archiving.
+
+* This guide documents how the pipeline works and what each stage does.
+* When using this pipeline for a new study, create a project-specific README documenting your inputs, settings, and any deviations from defaults.
+
+The pipeline script:
+
+```
+regional-remix/code/regional-remix.R
+```
+
+Companion QC report:
+```
+regional-remix/code/Remix-Summary-Doc_AllMarkers_Tabs.Rmd
+```
+
+Please read this guide fully before running - there are several interactive prompts and study-specific settings that must be configured correctly before executing the script.
+
+---
+
+<details><summary>regional-remix General Info</summary>
+<p>
+
+**regional-remix** is a flexible pipeline for processing eDNA metabarcoding data. It is designed to work with ASV output from the JonahVentures (`JV`) or Rainbow Bridge (`RB`) upstream metabarcoding pipelines, and supports multiple genetic markers targeting different taxonomic groups.
+
+Supported markers:
+
+| Marker | Target Group |
+|---|---|
+| `MiFish` | Fishes (12S rRNA) |
+| `16SDegen` | Fishes (16S rRNA) |
+| `18Sv9` | Eukaryotes |
+| `COI` | Metazoans |
+| `ITS2` | Corals & Sponges |
+| `23S` | Algae |
+| `16SCeph` | Cephalopods |
+| `18SCeph` | Cephalopods |
+
+Key features:
+* Taxonomic validation via the [World Register of Marine Species (WoRMS)](https://www.marinespecies.org/) API
+* Percent-similarity-based taxonomic resolution capping
+* Regional species filtering using a curated local reference list
+* Known contamination removal (marker-specific and universal)
+* Volume normalization for cross-sample comparability
+* Negative control contamination subtraction (ESV-level, volume-standardized)
+* Large-volume sample flagging and exclusion
+* Two-step replicate averaging (PCR replicate → field replicate → site)
+* Exports for occupancy modeling and biodiversity analyses through [REVAMP](https://github.com/aomlomics/revamp)
+
+---
+</p>
+</details>
+
+<details><summary>Required Inputs</summary>
+<p>
+
+The following files must be present and correctly formatted before running the pipeline. Paths shown are relative to the project root.
+
+The most critical file inputs are the sequencing outputs from either JonahVentures or RainbowBridge metabarcoding pipelines. Each pipeline has it's own unique output files and they must be treated differently.
+
+**JonahVentures Data**
+
+**Sequencing outputs** (`inputs/reads-esvs/`):
+```
+{run}-{marker.full}-read-data.csv     # ASV read counts, wide format (one row per ASV, one column per sample)
+{run}-{marker.full}-esv-data.csv      # ASV sequences and taxonomy assignments
+```
+
+
+**RainbowBridge Data**
+
+**Sequencing outputs** (`inputs/reads-esvs/Rainbow_Bridge_output/`):
+
+***Note: Keep track of the input directory, as RainbowBridge input goes in a subdirectory.***
+
+```
+zotu_table_final_curated_{markerRB}.tsv     # zOTU read counts, wide format (one row per zOTU, one column per sample)
+lca_intermediate_{markerRB}.tsv             # Per-BLAST-hit taxonomy table (long format, one row per hit per zOTU)
+remix_sum_{markerRB}.tsv                    # Summary table: accession numbers, % match, sequence, hit counts per zOTU
+```
+
+
+Once the required metabarcoding data is in place, you can move onto the metadata.
+
+**Field metadata** (`inputs/metadata/`):
+```
+{metadata_file}.csv                   # Sample metadata including site, depth, volume, and QC flags
+{run}-samples.csv                     # Sample ID list
+sample_metadata.csv                   # REVAMP-formatted sample metadata (required for REVAMP export, see REVAMP section)
+```
+
+**Reference lists** (`inputs/`):
+```
+contaminants.csv                      # Known contaminant taxa (marker-specific and/or universal)
+
+inputs/species-lists/{taxon}/
+    {region}FaunaList.csv             # Regional species reference list
+    RevisionsTo{region}List_{study}.csv   # Study-specific taxonomic additions or corrections
+```
+
+**Required metadata columns:**
+
+| Column | Description |
+|---|---|
+| `Sample` | Unique sample identifier |
+| `site` | Unique site identifier |
+| `site.rep` | Field replicate identifier |
+| `Site.ID` | Site label used for reporting |
+| `CTD.cast` | Cast type (used to identify negative controls: `"control"`) |
+| `volume` | Filtered water volume (liters) |
+| `QC` | Quality control flag (`"FAIL"` samples are excluded) |
+| `day.night` | Sampling time period |
+| `depth` | Sample depth |
+| `station` | Station identifier |
+| `sta.depth` | Station-depth combination identifier |
+| `replicate` | Replicate label |
+
+---
+</p>
+</details>
+
+<details><summary>Interactive Configuration</summary>
+<p>
+
+When the script is run, a series of dialog prompts will ask for the following inputs:
+
+1. **Has your input changed?** - If `"no"`, skips re-importing raw data (useful when re-running filters only)
+2. **Sequencing run ID** - e.g., `JVB1989`
+3. **Marker name** - must match one of the supported marker names (see table above)
+4. **Pipeline source** - `JV` (JonahVentures) or `RB` (Rainbow Bridge)
+5. **Sample column range** - first and last sample columns in the read data file
+6. **Regional filter** - whether to apply (`yes`) or bypass (`no`) the regional species filter
+
+---
+</p>
+</details>
+
+---
+
+### Pipeline Stages
+
+The pipeline proceeds through six sequential processing stages. After all stages complete, checkpoint objects for each stage are saved to an `.RData` file used by the QC report:
+
+```
+RemixSummaryTables_{marker}.RData
+```
+
+---
+
+<details><summary>Stage 01 - Raw Input & Quality Control</summary>
+<p>
+
+Raw ASV reads and ESV tables are imported and joined with field sample metadata. The pipeline validates the merge and flags potential issues:
+* Samples with a QC flag of `"FAIL"` are excluded before any processing
+* Duplicate sample IDs are detected and reported
+* Samples present in the sequencing output but absent from metadata are identified and flagged.
+
+Taxonomy name fields are cleaned to remove common annotation artifacts:
+* `"sp."` designations are blanked - these are not species-level assignments
+* Any text after the third word in a species name is removed (trailing database annotations)
+* `"cf."` qualifiers are stripped
+
+**Checkpoint objects:**
+```r
+stage01_rawInput_reads        # full read table after import and name cleaning
+stage01_rawInput_esvs         # ESV table after import and name cleaning
+stage01_rawInput_sampCount    # number of sample columns
+```
+
+---
+</p>
+</details>
+
+<details><summary>Stage 02 - WoRMS Taxonomic Cross-Reference</summary>
+<p>
+
+All taxonomic assignments are validated against the [World Register of Marine Species (WoRMS)](https://www.marinespecies.org/) using the `worrms` R package. This step:
+* Reconciles names to currently accepted valid names
+* Confirms marine status - non-marine taxa are removed
+* Resolves taxonomic synonyms
+
+Percent sequence similarity thresholds are applied to cap taxonomic resolution. Assignments that do not meet the threshold for a given level are blanked at that level:
+
+| Taxonomic Level | Minimum % Match |
+|---|---|
+| Species | ≥ 97% |
+| Genus | ≥ 90% |
+| Family | ≥ 80% |
+
+Assignments falling below the family threshold are removed entirely. Assignments in the 90–96% range at the species level are flagged as ambiguous and may be reviewed or blanked depending on marker configuration.
+
+**Checkpoint objects:**
+```r
+stage02_wormsCrossRef_reads        # reads after WoRMS validation
+stage02_wormsCrossRef_esvs         # ESVs after WoRMS validation
+stage02_wormsCrossRef_sampCount    # number of sample columns
+```
+
+---
+</p>
+</details>
+
+<details><summary>Stage 03 - Regional Species Filter</summary>
+<p>
+
+Detections are cross-referenced against a curated regional species reference list. 
+The purpose of this step is to remove taxonomic assignments that, while valid in WoRMS, are biogeographically implausible for the study region. Taxa not represented in the reference list at the assigned taxonomic level are blanked.
+
+The regional reference list is composed of:
+* A base regional fauna list compiled from published literature and databases
+* Study-specific additions or corrections (flagged with `localFlag_Update == 1` in the revisions file)
+
+Blanking is preferred over row-dropping to preserve the ASV record structure for downstream QC review. A `localFlag` column records whether each detection was confirmed against the regional list. It assigns a number 1 to 5 for each ASV which corresponds to the following logic:
+
+*   1 = Species in local fauna list
+*   2 = Genus in local fauna list, no species-level match
+*   3 = Family in local fauna list, no genus-level match
+*   4 = Family in local fauna list, but species/genus assignment not recorded
+*   5 = Not represented locally at any rank
+
+This step can be bypassed at runtime (see **Interactive Configuration**) if no regional list is available or applicable for your study region.
+
+**Checkpoint objects:**
+```r
+stage03_regionalFilter            # reads after regional filtering
+stage03_regionalFilter_sampCount  # number of sample columns
+```
+
+---
+</p>
+</details>
+
+<details><summary>Stage 04 - Known Contamination Removal</summary>
+<p>
+
+A user-maintained contamination reference file (`contaminants.csv`) is applied to remove ASVs assigned to known contaminant taxa. The file uses a `marker` column to control which entries are applied:
+
+| `marker` value | Behavior |
+|---|---|
+| `"universal"` | Applied to all markers |
+| `"{marker}"` (e.g., `"MiFish"`) | Applied to that marker only |
+| `"blank"` | Species name is blanked at assignment level; ASV row is retained |
+
+The `tax` column specifies the taxonomic level at which the filter is applied (e.g., `"Species"`, `"Genus"`, `"Family"`). This allows precise targeting of contamination at whatever level is known with confidence.
+
+The `"blank"` entry type is used for taxa where the species-level assignment is unreliable but the ASV itself should not be removed - for example, when a genus is valid but no species-level assignment can be trusted.
+
+**Checkpoint objects:**
+```r
+stage04_KnownContam            # reads after contamination removal
+stage04_KnownContam_sampCount  # number of sample columns
+```
+
+---
+</p>
+</details>
+
+<details><summary>Stage 05 - Volume Standardization, Sample Exclusion & Negative Control Correction</summary>
+<p>
+
+This stage handles three related tasks that must occur together before replicate averaging.
+
+**Volume standardization**
+
+Raw read counts are converted to reads per liter to normalize for variation in filtered water volume across samples:
+```r
+read.L = floor(read.count / volume)
+```
+
+**Large-volume sample exclusion**
+
+Samples filtered through volumes substantially larger than the standard field replicate volume are excluded from analysis to maintain comparability across samples. These samples are archived separately for reference. The volume threshold is study-specific and should be set to reflect the standard filter volume used in the study design.
+
+**Negative control contamination correction**
+
+Negative field controls (procedural blanks) are used to identify and subtract background contamination:
+
+1. For each ASV detected in any negative control, the maximum volume-standardized read count is computed across all controls, stratified by station and day/night period
+2. This maximum contamination value is subtracted from all corresponding environmental samples within the same stratum
+3. Adjusted read counts are floored at zero
+
+```r
+read.L.adj = read.L - max.contam    # floored at 0
+```
+
+Stratifying by station and day/night accounts for the fact that contamination profiles may differ across spatial and temporal groupings within a study. Subtraction diagnostics - including which ESVs changed and which detections shifted from present to absent - are exported to the  `filtering/` directory for review.
+
+Negative control samples are removed from the dataset after correction.
+
+**Checkpoint objects:**
+```r
+stage05_negativeControl           # wide-format read table after negative control subtraction
+stage05_negativeControl_sampCount
+stage06_readsAdjusted             # long-format, metadata-joined table after volume standardization
+stage06_readsAdjusted_sampCount
+```
+
+---
+</p>
+</details>
+
+<details><summary>Stage 06 - Replicate Averaging & Spatial Aggregation</summary>
+<p>
+
+Following contamination correction, reads are aggregated spatially in two sequential steps. Ceiling rounding is applied at each step to avoid fractional read counts.
+
+**Step 1 - PCR replicates → field replicate**
+
+For each ESV, reads are averaged across PCR replicates within each field replicate (`site.rep`). The number of PCR replicates with a positive detection is recorded (`Npcr`), which can be used as a detection confidence metric in downstream analyses.
+
+```r
+reads2.stl.met.siterep <- reads2.stl.met %>%
+  group_by(ESV, site.rep, ...) %>%
+  summarise(
+    read.mean = ceiling(mean(read.L.adj)),
+    Npcr      = length(pcrrep[read.L.adj > 0])
+  )
+```
+
+**Step 2 - Field replicates → site**
+
+Field replicate means are then averaged to produce site-level estimates:
+
+```r
+reads2.stl.met.site <- reads2.stl.met.siterep %>%
+  group_by(ESV, site, ...) %>%
+  summarise(read.mean = ceiling(mean(read.mean)))
+```
+
+Final outputs are produced at two resolutions:
+* ESV × field replicate - for occupancy modeling
+* Species × site - for community biodiversity analysis
+
+---
+</p>
+</details>
+
+---
+
+### Outputs
+
+All outputs are written to:
+```
+outputs/{pipeline}/markers/{marker}/
+```
+
+Within the output directory, a number of subdirectories are created. These subdirectories contain a grouping of each of the outputs from the remix, organized by what sort of data the output contains.
+
+
+### `filtering/`
+
+| Output File | Summary |
+|---|---|
+| `{run}_{marker}_samples_excluded_no_metadata.csv` | Samples dropped from the pipeline because no matching metadata entry was found. Lists the file IDs and reason for exclusion. | 
+| `{run}_{marker}-esvs_worms_crossref_completed.csv` | ESV table after WoRMS cross-referencing, with validated taxonomy. One row per BLAST hit per ESV. | 
+| `{run}_{marker}-reads_worms_crossref_completed.csv` | Wide-format reads table after WoRMS cross-referencing. One row per ESV with sample read counts as columns. |
+| `{run}_{marker}_TaxaList_prefilter.csv` | Summary of all taxa present before regional filtering, with read stats. Used to compare pre- vs. post-filter diversity. |
+| `{run}_{marker}_SpeciesList_prefilter.csv` | Same as above but restricted to species-level assignments only. |
+| `{run}_{marker}_esvs_regionalfilter_excludedTaxa.csv` | ESVs removed by the regional filter because they had no match in the local fauna list. |
+| `{run}_{marker}_ChangedTaxa_postRegionalFilter_dedup.csv` | ESVs whose species assignment changed after regional filtering, deduplicated to one row per ESV. Documents what was reassigned and to what. |
+| `{run}_{marker}_reads_regionfilter_Inspect_97match_noRegionalHits_dedup.csv` | High-match ESVs (≥ species threshold) with no regional hit, deduplicated. These are candidates for range extensions or gaps in the local fauna list. |
+| `{run}_{marker}_reads_regionfilter_Inspect_98match_noRegionalHits.csv` | Same as above but the full un-deduplicated rows, useful for reviewing all BLAST hits for these ESVs. |
+| `{run}_{marker}_excluded_genera_nonHI.csv` | Genera present in the data that are not recorded in the Hawaii fauna list and were therefore dropped to family level. Includes WoRMS-validated phylum/class for context. |
+| `{run}_{marker}_reads_regionfilter_LocalMonoGenus_changes.csv` | Preview of species assignments made via the locally monospecific genus (LMG) rule before they are committed. Documents which ESVs received an LMG assignment and what species was assigned. |
+| `{run}_{marker}_reads_regionfilter_AmbiguousGenera_less90pct_bygen.csv` | Genera below the 90% match threshold, summarized by genus and family. Used to audit which genera were blanked to family level. |
+| `{run}_{marker}_reads_regionfilter_AmbiguousGenera_less90pct_byESV.csv` | Same threshold inspection as above but at full ESV resolution rather than summarized. |
+| `{run}_{marker}_reads_regionfilter_AmbiguousFamily_less80pct_bygen.csv` | Families below the 80% match threshold, summarized by family. Documents which families were blanked to a higher rank. |
+| `{run}_{marker}_reads_regionfilter_AmbiguousFamily_less80pct_byESV.csv` | Same as above at full ESV resolution. |
+| `{run}_{marker}_reads_regionfilter_AmbiguousSpecies.csv` | ESVs with multiple tied top regional hits and no resolved species assignment. Useful for identifying taxa requiring manual review. |
+| `{run}_{marker}_reads_regionfilter_AmbiguousSpecies_SumByPair.csv` | The ambiguous ESVs above summarized by species pair and family, sorted by total read count. Prioritizes which ambiguous assignments are most impactful. |
+| `{run}_{marker}_reads_regionfilter_allESVs.csv` | Full export of all ESVs with their regional filter results attached. The comprehensive audit trail for Section 04 filtering. |
+| `{run}_{marker}_reads_excluded_Mammals.csv` | All mammal reads documented before removal (MiFish/16SDegen markers only). Includes both marine and non-marine mammals. |
+| `{run}_{marker}_reads_MarineMammals.csv` | Subset of mammal reads that are legitimate marine mammal detections (MiFish/16SDegen only). Retained separately rather than discarded. |
+| `{run}_{marker}_reads_regionalfilter_excludedTaxa_localFlag5.csv` | Taxa removed at the localFlag = 5 step (not locally represented at any rank). Marker-specific: applies to fish markers using the localFlag filter. |
+| `{run}_{marker}_reads_excluded_non-cephalopod.csv` | Non-cephalopod reads excluded when running cephalopod-specific markers (16SCeph, 18SCeph). |
+| `{run}_{marker}_reads_regionalfilter_excludedTaxa.csv` | Terrestrial contaminants (insects, arachnids, humans, etc.) removed during marker-specific cleanup for 18Sv9, COI, ITS2, and 23S. |
+| `{run}_{marker}_NegativeControl_Contamination_wide.csv` | Negative control read counts in wide format (one column per control sample). Used to audit which ESVs appear in blanks. |
+| `{run}_{marker}_NegativeControl_Contamination_long.csv` | Same negative control data in long format. |
+| `{run}_{marker}_NegativeControl_Contamination_Max-for-Subtraction.csv` | The maximum contamination value per ESV × station × day.night used as the subtraction threshold. Documents the exact values removed from each sample. |
+| `{run}_{marker}_NegativeControl_Contamination_Subtraction-Changes.csv` | Report of how read counts changed after contamination subtraction, including how many ESVs were zeroed out per sample. |
+
+---
+
+### `assignments/`
+
+| Output File | Summary |
+|---|---|
+| `{run}_{marker}_reads_postfilter_allESVs_withSamples.csv` | Wide-format ESV table after all filtering steps (reads2). The final cleaned ESV-by-sample count matrix before volume standardization. |
+| `{run}_{marker}_reads2-stl-met.csv` | Contamination-corrected, volume-standardized reads in long format (reads/L). The authoritative analysis-ready file for most downstream work. |
+| `{run}_{marker}_reads2-stl-met-siterep.csv` | PCR-replicate-averaged reads per field replicate (site.rep level), volume standardized. Intermediate between raw PCR reps and full site averages. |
+| `{run}_{marker}_Species-by-Site_Long_AllTaxa.csv` | Species by site matrix in long format with read means and eDNA Index. One row per species–site combination. |
+| `{run}_{marker}_Taxa-by-Site_Long_AllTaxa.csv` | Same as above but using the finest available taxonomic rank (species, genus, or family) rather than species only. |
+| `{run}_{marker}_Taxa-by-Site_AllTaxa_Wide_Reads.csv` | Taxa by site in wide format with read means as values. Suitable for direct import into community ecology tools. |
+| `{run}_{marker}_Taxa-by-StationDepth_Long_AllTaxa.csv` | Taxa collapsed to station × depth combinations in long format. Useful for depth-stratified analyses. |
+| `{run}_{marker}_Taxa-by-StationDepth_AllTaxa_Wide_Reads.csv` | Same station-depth data pivoted wide with taxa as rows and station-depth combinations as columns. |
+| `{run}_{marker}_Species-by-Site_AllTaxa_Wide_Reads.csv` | Species by site community matrix in wide format with mean read counts. Standard format for diversity and ordination analyses. |
+| `{run}_{marker}_Species-by-Site_AllHabitats_Wide_eDNAIndex.csv` | Species by site matrix using eDNA Index values instead of raw reads. eDNA Index normalizes within-sample relative abundance across sites. |
+| `{run}_{marker}_Species-by-Site_Long.csv` | Species by site in long format with both read counts and eDNA Index merged. Combines the two abundance metrics for flexible downstream use. |
+| `{run}_{marker}_Species-by-Site_AllTaxa_Wide_ESVs.csv` | Species by site matrix where cell values are ESV richness (count of unique ESVs) rather than read counts. Used to assess within-species diversity. |
+| `{run}_{marker}_Genus-by-Site_AllTaxa_Wide_Reads.csv` | Genus by site community matrix in wide format with mean read counts. |
+| `{run}_{marker}_Genus-by-Site_AllHabitats_Wide_eDNAIndex.csv` | Genus by site matrix using eDNA Index values. |
+| `{run}_{marker}_Genus-by-Site_Long_AllTaxa.csv` | Genus by site in long format with both read counts and eDNA Index merged. |
+| `{run}_{marker}_Site-Species-Matrix_allspecies.csv` | Community matrix formatted as sites (rows) × species (columns) with read abundances. Intended for multivariate analyses where sites are observations. |
+| `{run}_{marker}_Site-Taxa-Matrix_alltaxa.csv` | Same site-as-rows community matrix but using finest available taxonomic rank instead of species only. |
+
+---
+
+### `assignments/export_for_occupancy/`
+
+| Output File | Summary |
+|---|---|
+| `{run}_{marker}_ESVs-by-replicate_long.csv` | One row per ESV and PCR replicate combination, including zero-read rows. The complete detection/non-detection record required for occupancy modeling. |
+| `{run}_{marker}_ESVs-by-replicate_long_nozeros.csv` | Same as above with zero-read rows removed. Smaller file for uses that do not need explicit absences. |
+| `{run}_{marker}_Species-by-replicate_long.csv` | Read counts aggregated to species level per PCR replicate, excluding blank species. Used for species-level occupancy models. |
+| `{run}_{marker}_Genus-by-replicate_long.csv` | Read counts aggregated to genus level per PCR replicate. Used for genus-level occupancy models. |
+
+---
+
+### `summaries/`
+
+| Output File | Summary |
+|---|---|
+| `{run}_{marker}_Site-Replicate-Summary_withControls_precontfilter.csv` | Per-sample read summary including negative controls, before contamination subtraction. Baseline for evaluating contamination levels. |
+| `{run}_{marker}_Site-Replicate-Summary_excludingControls_precontfilter.csv` | Same pre-subtraction summary with negative controls removed. |
+| `{run}_{marker}_Site-Replicate-Summary_excludingControls_aftercontfilter.csv` | Post-subtraction per-sample summary with controls excluded. Shows the net effect of the contamination correction step. |
+| `{run}_{marker}_sample_summary_table_project.csv` | Per-sample summary of raw, standardized, and contamination-adjusted read totals at the project level. |
+| `{run}_{marker}_sample_summary_table.csv` | Expanded per-sample summary including all QC fields and flags for failed samples. |
+| `{run}_{marker}_sample_summary_failed-rerun.csv` | Summary rows for samples flagged as failed (no usable read data). Used to track which samples need to be re-run. |
+| `{run}_{marker}_specieslist_AllTaxa_sitefreq-esv-reads.csv` | Master species list with site frequency, ESV richness per species, and mean read statistics. |
+| `{run}_{marker}_Taxalist_AllTaxaLevels_sitefreq-esv-reads.csv` | Same as above but for all taxonomic ranks, including unresolved genera and families. |
+| `{run}_{marker}_genuslist_AllTaxa_sitefreq-esv-reads.csv` | Master genus list with site frequency, ESV richness, species richness, and read statistics per genus. |
+
+---
+
+### `REVAMP/`
+
+| Output File | Summary |
+|---|---|
+| `sample_metadata_forR.txt` | Sample metadata for REVAMP's R plotting functions, with coordinates rounded to the nearest 5° and day/night labels. |
+| `sample_metadata_exact.txt` | Sample metadata for REVAMP with exact GPS coordinates and ISO eventDate timestamps. |
+| `asvTaxonomyTable.txt` | ASV taxonomy table mapping each ASV to its Kingdom → Species assignment. One row per ASV. |
+| `ASVs_counts.tsv` | Contamination-corrected raw read counts per ASV and REVAMP sample. Used as the primary count input to REVAMP. |
+| `ASVs_counts_NOUNKNOWNS_percentabund.tsv` | Within-sample relative abundance (%) per ASV and REVAMP sample, excluding unclassified ASVs. |
+
+---
+
+### `phyloseq/`
+
+| Output File | Summary |
+|---|---|
+| `{run}_{marker}_phyloseq.rds` | A phyloseq object (`.rds`) containing the OTU count matrix, taxonomy table, and sample metadata. Ready for direct import into phyloseq-based analyses. |
+
+---
+
+### Root `outputs/` directory
+
+| Output File | Summary |
+|---|---|
+| `RemixSummaryTables_{marker}.RData` | R workspace snapshot containing staged data objects at six key processing checkpoints (raw input through contamination-corrected reads). Used to audit the data at each pipeline stage without rerunning. |
+
+---
+### QC Report
+
+After the pipeline completes, generate the QC report by knitting:
+```
+Remix-Summary-Doc_AllMarkers_Tabs.Rmd
+```
+
+This loads `RemixSummaryTables_{marker}.RData` and produces a tabbed HTML report including:
+* Sample and read counts at each pipeline stage
+* ASV richness by taxonomic level across stages
+* Negative control contamination summaries
+* Per-site replicate success rates and zero-read sample counts
+
+---
+
+### Notes
+
+* The regional filter (Stage 03) can be bypassed at runtime if no regional reference list is available for your study region.
+* The large-volume exclusion threshold (Stage 05) is study-specific. Set it to reflect the standard filter volume used in your study design.
+* Negative control correction is applied per-replicate before averaging - this ordering is methodologically important. Applying correction after averaging would underestimate contamination removal.
+* REVAMP exports are generated after contamination correction but before final spatial averaging, so they reflect per-replicate detection data.
+* Stage checkpoint objects track sample counts, read totals, and ESV richness at each step. Review the QC report after each run to confirm that read loss at each stage is as expected.
+
 
 </p>
 </details>
