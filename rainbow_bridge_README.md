@@ -502,9 +502,10 @@ This scripts lives at
 /share/all/scripts/egarcia/check_fastq_awk.sh
 ```
 
-execute with
+Navigate to data dir and execute with
 ```
-srun bash /share/all/scripts/egarcia/check_fastq_awk.sh "<path_to_seq_files>"
+cd /home/egarcia/projects/pifsc_p224_12SFish/data
+srun bash /share/all/scripts/egarcia/check_fastq_awk.sh "."
 ```
 
 You will see a summary of the results printed straight in the standard output, stdout, that looks like this (example using 4 files):
