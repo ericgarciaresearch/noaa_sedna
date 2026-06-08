@@ -139,8 +139,8 @@ cd /share/all/midori2_database
 
 Execute `clean_midori2fasta_for_makeblastdb.sh` with:
 ```
-# bash clean_midori2fasta_for_makeblastdb.sh  <input dir> <input_fasta> <output_fasta>
-bash clean_midori2fasta_for_makeblastdb.sh 2024-10-13_customblast_sp_uniq_COI MIDORI2_UNIQ_SP_NUC_GB263_CO1_RAW.fasta MIDORI2_UNIQ_SP_NUC_GB263_CO1_RAW_cleanedformakeblastdb.fasta
+# srun bash clean_midori2fasta_for_makeblastdb.sh  <input dir> <input_fasta> <output_fasta>
+srun bash clean_midori2fasta_for_makeblastdb.sh 2024-10-13_customblast_sp_uniq_COI MIDORI2_UNIQ_SP_NUC_GB263_CO1_RAW.fasta MIDORI2_UNIQ_SP_NUC_GB263_CO1_RAW_cleanedformakeblastdb.fasta
 ```
 where `input_dir` is the directory with the midori2 file you downloaded, `input_fasta` is the input file name, and `output_fasta` is the "cleaned" output file name, which will be used to make the database
 
