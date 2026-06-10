@@ -43,7 +43,7 @@ See [Midori2's README](https://www.reference-midori.info/download.php) in their 
 ```
 **if you add addintional databases please add them to the list above**
 
-***As in January 15th, 2026, the 2025-08-14 is the latest release***
+***As in Jun 9th, 2026, the 2026-04-07_ is the latest release***
 
 ---
 
