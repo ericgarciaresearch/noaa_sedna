@@ -164,7 +164,14 @@ MH535960.1.Vannella_sp._1973054 1973054
 ...
 ```
 
-Then, download the singularity image of the latest version of blastn (.sif executable file):
+Next, download the singularity image of the latest version of blastn (.sif executable file). For this, we'll need to activate singluarity by loading rainbow_bridge:
+```
+source ~/.bashrc
+module load bio/rainbow_bridge/202502 2>/dev/null
+mamba activate rainbow_bridge
+```
+
+Now, download the latest singularity image:
 ```
 cd /share/all/midori2_database
 
