@@ -597,8 +597,9 @@ Checking for these artifacts can explain large loss of data in QC steps of metab
 From your data subdir, execute the script with
 ```
 cp /share/all/scripts/egarcia/check_dimers.sh ../scripts
-srun bash check_dimers.sh CTGTCTCTTAT
+srun bash ../scripts/check_dimers.sh CTGTCTCTTAT
 ```
+
 Modify the adapter/motif as needed.
 
 The script will produce:
