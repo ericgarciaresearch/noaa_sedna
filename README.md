@@ -394,12 +394,13 @@ where the date is the day I installed it.
 
 Here some info:
 ```
+module load bio/blast/2.15.0+
 blastdbcmd -db nt -info
 
 Database: Nucleotide collection (nt)
-        113,641,112 sequences; 2,853,029,940,118 total bases
+	129,214,979 sequences; 4,062,804,486,161 total bases
 
-Date: Mar 22, 2025  5:12 PM     Longest sequence: 99,994,136 bases
+Date: Jul 12, 2026  6:16 AM	Longest sequence: 99,996,439 bases
 
 BLASTDB Version: 5
 ```
