@@ -1,4 +1,6 @@
-# rainbow_bridge for SEDNA (NOAA's supercomputer)
+# RAMeN in SEDNA (NOAA's supercomputer)
+
+RAMeN: Regionally-curated, Adaptable, Multi-locus, eDNA, aNalysis pipeline, is a versatile, end-to-end pipeline providing curated eDNA metabarcoding analyses across single or multiple loci. The framework consists of three modular components featuring automated scripts that streamline the user experience. These modules allow users to assess dataset integrity, evaluate pipeline performance, curate taxonomic assignments, and visualize comprehensive analyses of metabarcoding results. By combining a containerized workflow for metabarcoding with R-based curation and analysis modules, RAMeN is highly accessible and operational on both local machines and high-performance computing (HPC) clusters. Furthermore, each module functions independently, giving users the flexibility to utilize the full pipeline or integrate their own pre-processed data into specific modules.
 
 [rainbow_bridge](https://github.com/mhoban/rainbow_bridge) is a flexible pipeline for eDNA and metabarcoding analyses. 
 
