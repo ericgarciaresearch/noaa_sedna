@@ -251,7 +251,7 @@ BLASTDB Version: 5
 
 Now, open permissions to avoid potential problems accessing the database and kill your screen as needed:
 ```
-chmod 775 *
+chmod 777 *
 exit			# kicks you out of the interactive node allocated by srun
 exit			# kicks you out of screen and puts you back in the login node
 ```
