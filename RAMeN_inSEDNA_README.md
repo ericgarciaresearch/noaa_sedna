@@ -501,13 +501,13 @@ D) Creates Read summaries
 
 This scripts lives at
 ```
-/share/all/scripts/egarcia/check_fastq_awk.sh
+/share/all/scripts/egarcia/check_fastq.sh
 ```
 
 Navigate to data dir and execute with
 ```
 cd /home/egarcia/projects/pifsc_p224_12SFish/data
-srun bash /share/all/scripts/egarcia/check_fastq_awk.sh "."
+srun bash /share/all/scripts/egarcia/check_fastq.sh "."
 ```
 
 You will see a summary of the results printed straight in the standard output, stdout, that looks like this (example using 4 files):
